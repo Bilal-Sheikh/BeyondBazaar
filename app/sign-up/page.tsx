@@ -4,38 +4,21 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
-import { UserAuthForm } from "@/components/user-auth-form";
+import { SignUpForm } from "@/components/sign-up-form";
 
 export const metadata: Metadata = {
 	title: "Authentication",
 	description: "Authentication forms built using the components.",
 };
 
-export default function SignUpForm() {
+export default function SignUp() {
 	return (
 		<>
-			<div className="md:hidden">
-				<Image
-					src=""
-					width={1280}
-					height={843}
-					alt="Authentication"
-					className="block dark:hidden"
-				/>
-				<Image
-					src=""
-					width={1280}
-					height={843}
-					alt="Authentication"
-					className="hidden dark:block"
-				/>
-			</div>
-			<div className="container relative hidden h-[800px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+			<div className="container relative grid max-w-none h-[800px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
 				<Link
-					href="/"
+					href="/sign-in"
 					className={cn(
-						buttonVariants({ variant: "ghost" }),
+						buttonVariants({ variant: "outline" }),
 						"absolute right-4 top-4 md:right-8 md:top-8"
 					)}
 				>
@@ -69,7 +52,7 @@ export default function SignUpForm() {
 						</blockquote>
 					</div>
 				</div>
-				<UserAuthForm />
+				<SignUpForm />
 			</div>
 		</>
 	);

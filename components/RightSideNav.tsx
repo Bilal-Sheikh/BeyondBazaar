@@ -33,7 +33,7 @@ export default function RightSideNav({ user }: NavbarProps) {
             <UserButton afterSignOutUrl="/" />
           ) : (
             <Link
-              href={"/sign-up"}
+              href={"/sign-in"}
               className={buttonVariants({
                 variant: "default",
               })}

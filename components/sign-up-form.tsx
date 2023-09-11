@@ -8,10 +8,11 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import SignInOAuthButtons from "./SignInOAuthButtons";
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface SignUpFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+export function SignUpForm({ className, ...props }: SignUpFormProps) {
 	const { isLoaded, signUp, setActive } = useSignUp();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const [pendingVerification, setPendingVerification] = React.useState(false);
@@ -87,7 +88,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 							<div className={cn("grid gap-6", className)} {...props}>
 								<form>
 									<div className="grid gap-2">
-										<div className="grid gap-1">
+										<div className="grid gap-1 py-4">
 											<Label className="sr-only" htmlFor="email">
 												Email
 											</Label>
@@ -130,14 +131,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 										</span>
 									</div>
 								</div>
-								<Button variant="outline" type="button" disabled={isLoading}>
-									{isLoading ? (
-										<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-									) : (
-										<Icons.gitHub className="mr-2 h-4 w-4" />
-									)}{" "}
-									Github
-								</Button>
+								<SignInOAuthButtons />
 							</div>
 						</div>
 					)}
@@ -152,7 +146,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 								</p>
 							</div>
 							<form>
-								<div className="grid gap-2">
+								<div className="grid gap-2 py-4">
 									<div className="grid gap-1">
 										<Input
 											value={code}
