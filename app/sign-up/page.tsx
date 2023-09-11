@@ -5,6 +5,9 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { SignUpForm } from "@/components/sign-up-form";
+import Image from "next/image";
+import logoBlack from "../../public/logoBlack.png";
+import shopping from "../../public/shopping.jpg";
 
 export const metadata: Metadata = {
 	title: "Authentication",
@@ -24,31 +27,34 @@ export default function SignUp() {
 				>
 					Login
 				</Link>
+
+				<Link
+					href={"/"}
+					className="h-32 w-32 absolute left-4 top-4 md:right-8 md:top-8"
+				>
+					<Image alt="Logo" src={logoBlack} />
+				</Link>
+
 				<div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
-					<div className="absolute inset-0 bg-zinc-900" />
-					<div className="relative z-20 flex items-center text-lg font-medium">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							className="mr-2 h-6 w-6"
-						>
-							<path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
-						</svg>
-						Acme Inc
+					<Image
+						src={shopping}
+						alt="bg image"
+						layout="fill"
+						objectFit="cover"
+					/>
+
+					<div className="relative flex items-start justify-start h-32 w-32">
+						<Link href={"/"}>
+							<Image alt="Logo" src={logoBlack} />
+						</Link>
 					</div>
 					<div className="relative z-20 mt-auto">
 						<blockquote className="space-y-2">
 							<p className="text-lg">
-								&ldquo;This library has saved me countless hours of work and
-								helped me deliver stunning designs to my clients faster than
-								ever before.&rdquo;
+								&ldquo;Shop till you drop with our seamless and user-friendly
+								e-commerce app, offering a wide range of products and convenient
+								shopping experience.&rdquo;
 							</p>
-							<footer className="text-sm">Sofia Davis</footer>
 						</blockquote>
 					</div>
 				</div>

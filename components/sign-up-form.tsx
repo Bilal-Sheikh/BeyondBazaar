@@ -9,17 +9,20 @@ import { Label } from "./ui/label";
 import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import SignInOAuthButtons from "./SignInOAuthButtons";
+import { useToast } from "@/components/ui/use-toast";
+import { error } from "console";
 
 interface SignUpFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function SignUpForm({ className, ...props }: SignUpFormProps) {
+	const router = useRouter();
+	const { toast } = useToast();
 	const { isLoaded, signUp, setActive } = useSignUp();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const [pendingVerification, setPendingVerification] = React.useState(false);
 	const [code, setCode] = React.useState("");
 	const [emailAddress, setEmailAddress] = React.useState("");
 	const [password, setPassword] = React.useState("");
-	const router = useRouter();
 
 	async function onSubmit(e: React.SyntheticEvent) {
 		e.preventDefault();
@@ -27,9 +30,8 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 			return;
 		}
 
-		setIsLoading(true);
-
 		try {
+			setIsLoading(true);
 			await signUp.create({
 				emailAddress,
 				password,
@@ -40,8 +42,15 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 
 			// change the UI to our pending section.
 			setPendingVerification(true);
+			setIsLoading(false);
 		} catch (err: any) {
-			console.error(JSON.stringify(err, null, 2));
+			setIsLoading(false);
+			console.error(JSON.stringify(err.errors[0].longMessage, null, 2));
+			toast({
+				variant: "destructive",
+				title: "Error",
+				description: err.errors[0].longMessage,
+			});
 		}
 	}
 
@@ -51,9 +60,8 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 			return;
 		}
 
-		setIsLoading(true);
-
 		try {
+			setIsLoading(true);
 			const completeSignUp = await signUp.attemptEmailAddressVerification({
 				code,
 			});
@@ -65,9 +73,16 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 			if (completeSignUp.status === "complete") {
 				await setActive({ session: completeSignUp.createdSessionId });
 				router.push("/");
+				setIsLoading(false);
 			}
 		} catch (err: any) {
-			console.error(JSON.stringify(err, null, 2));
+			setIsLoading(false);
+			console.error(JSON.stringify(err.errors[0].longMessage, null, 2));
+			toast({
+				variant: "destructive",
+				title: "Error",
+				description: err.errors[0].longMessage,
+			});
 		}
 	};
 

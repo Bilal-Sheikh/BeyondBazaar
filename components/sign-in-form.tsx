@@ -10,10 +10,12 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { useRouter } from "next/navigation";
 import SignInOAuthButtons from "./SignInOAuthButtons";
+import { useToast } from "./ui/use-toast";
 
 interface SignInFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function SignInForm({ className, ...props }: SignInFormProps) {
+	const { toast } = useToast();
 	const { isLoaded, signIn, setActive } = useSignIn();
 	const [emailAddress, setEmailAddress] = useState("");
 	const [password, setPassword] = useState("");
@@ -27,6 +29,7 @@ export function SignInForm({ className, ...props }: SignInFormProps) {
 		}
 
 		try {
+			setIsLoading(true);
 			const result = await signIn.create({
 				identifier: emailAddress,
 				password,
@@ -36,12 +39,19 @@ export function SignInForm({ className, ...props }: SignInFormProps) {
 				console.log(result);
 				await setActive({ session: result.createdSessionId });
 				router.push("/");
+				setIsLoading(true);
 			} else {
 				/*Investigate why the login hasn't completed */
 				console.log(result);
 			}
 		} catch (err: any) {
+			setIsLoading(false);
 			console.error("error", err.errors[0].longMessage);
+			toast({
+				variant: "destructive",
+				title: "Error",
+				description: err.errors[0].longMessage,
+			});
 		}
 	};
 
