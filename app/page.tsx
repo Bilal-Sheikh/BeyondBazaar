@@ -14,8 +14,9 @@ export default async function Home() {
 				<div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center">
 					<h1 className="font-bold text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
 						The
-						<span className="px-2 bg-gradient-to-r from-green-400 to-indigo-600 bg-clip-text text-transparent md:px-4">
-							BEST
+						<span className="bg-gradient-to-r from-green-400 to-indigo-600 bg-clip-text text-transparent">
+							{" "}
+							BEST{" "}
 						</span>
 						E-commerce website in the world ;)
 					</h1>
