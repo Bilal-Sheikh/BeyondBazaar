@@ -106,6 +106,11 @@
   resolved "https://registry.npmjs.org/@floating-ui/utils/-/utils-0.1.1.tgz"
   integrity sha512-m0G6wlnhm/AX0H12IOWtK8gASEMffnX08RtKkCgTdHb9JpHKGloI7icFfLg9ZmQeavcvR0PKmzxClyuFPSjKWw==
 
+"@hookform/resolvers@^3.3.1":
+  version "3.3.1"
+  resolved "https://registry.npmjs.org/@hookform/resolvers/-/resolvers-3.3.1.tgz"
+  integrity sha512-K7KCKRKjymxIB90nHDQ7b9nli474ru99ZbqxiqDAWYsYhOsU3/4qLxW91y+1n04ic13ajjZ66L3aXbNef8PELQ==
+
 "@jridgewell/gen-mapping@^0.3.2":
   version "0.3.3"
   resolved "https://registry.npmjs.org/@jridgewell/gen-mapping/-/gen-mapping-0.3.3.tgz"
@@ -1655,6 +1660,11 @@ react-dom@18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
+react-hook-form@^7.46.1:
+  version "7.46.1"
+  resolved "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.46.1.tgz"
+  integrity sha512-0GfI31LRTBd5tqbXMGXT1Rdsv3rnvy0FjEk8Gn9/4tp6+s77T7DPZuGEpBRXOauL+NhyGT5iaXzdIM2R6F/E+w==
+
 react-remove-scroll-bar@^2.3.3:
   version "2.3.4"
   resolved "https://registry.npmjs.org/react-remove-scroll-bar/-/react-remove-scroll-bar-2.3.4.tgz"
@@ -1823,7 +1833,7 @@ svix-fetch@^3.0.0:
 
 svix@^1.12.0:
   version "1.12.0"
-  resolved "https://registry.yarnpkg.com/svix/-/svix-1.12.0.tgz#d39531171eca8ac6039e918c306ff56525a9b7e0"
+  resolved "https://registry.npmjs.org/svix/-/svix-1.12.0.tgz"
   integrity sha512-6iIYxR/BoVEBDokTcvApcqq4M2szpFOwV8NwuYyvf4cRpz7JEV1KFQDMkNxEi9aR1idkhK4bSmeQYIx1HyGiJw==
   dependencies:
     "@stablelib/base64" "^1.0.0"
@@ -2039,3 +2049,8 @@ zod@3.21.4:
   version "3.21.4"
   resolved "https://registry.npmjs.org/zod/-/zod-3.21.4.tgz"
   integrity sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==
+
+zod@^3.22.2:
+  version "3.22.2"
+  resolved "https://registry.npmjs.org/zod/-/zod-3.22.2.tgz"
+  integrity sha512-wvWkphh5WQsJbVk1tbx1l1Ly4yg+XecD+Mq280uBGt9wa5BKSWf4Mhp6GmrkPixhMxmabYY7RbzlwVP32pbGCg==

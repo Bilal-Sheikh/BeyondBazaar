@@ -1,6 +1,8 @@
 "use client";
 
+import * as z from "zod";
 import * as React from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/icons";
 import { Button } from "./ui/button";
@@ -8,11 +10,30 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import SignInOAuthButtons from "./SignInOAuthButtons";
 import { useToast } from "@/components/ui/use-toast";
-import { error } from "console";
+import {
+	Form,
+	FormControl,
+	FormDescription,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/components/ui/form";
+import SignInOAuthButtons from "./SignInOAuthButtons";
+import { useForm } from "react-hook-form";
 
 interface SignUpFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+
+const formSchema = z.object({
+	firstName: z.string().nonempty({ message: "First name is required" }),
+	lastName: z.string().nonempty({ message: "Last name is required" }),
+	emailAddress: z.string().email({ message: "Invalid email address" }),
+	password: z
+		.string()
+		.min(6, { message: "Password must be at least 6 characters" })
+		.max(30, { message: "Password must be at most 20 characters" }),
+});
 
 export function SignUpForm({ className, ...props }: SignUpFormProps) {
 	const router = useRouter();
@@ -21,20 +42,34 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const [pendingVerification, setPendingVerification] = React.useState(false);
 	const [code, setCode] = React.useState("");
-	const [emailAddress, setEmailAddress] = React.useState("");
-	const [password, setPassword] = React.useState("");
 
-	async function onSubmit(e: React.SyntheticEvent) {
-		e.preventDefault();
+	// 1. Define your form.
+	const form = useForm<z.infer<typeof formSchema>>({
+		resolver: zodResolver(formSchema),
+		defaultValues: {
+			firstName: "",
+			lastName: "",
+			emailAddress: "",
+			password: "",
+		},
+	});
+
+	// async function onSubmit(e: React.SyntheticEvent) {
+	async function onSubmit(values: z.infer<typeof formSchema>) {
+		// e.preventDefault();
 		if (!isLoaded) {
 			return;
 		}
 
+		// console.log(values);
+
 		try {
 			setIsLoading(true);
 			await signUp.create({
-				emailAddress,
-				password,
+				firstName: values.firstName,
+				lastName: values.lastName,
+				emailAddress: values.emailAddress,
+				password: values.password,
 			});
 
 			// send the email.
@@ -101,41 +136,76 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 								</p>
 							</div>
 							<div className={cn("grid gap-6", className)} {...props}>
-								<form>
-									<div className="grid gap-2">
-										<div className="grid gap-1 py-4">
-											<Label className="sr-only" htmlFor="email">
-												Email
-											</Label>
-											<Input
-												id="email"
-												placeholder="Enter your email"
-												type="email"
-												autoCapitalize="none"
-												autoComplete="email"
-												autoCorrect="off"
-												disabled={isLoading}
-												onChange={(e) => setEmailAddress(e.target.value)}
-											/>
-											<Input
-												id="password"
-												placeholder="Enter your password"
-												type="password"
-												autoCapitalize="none"
-												autoComplete="password"
-												autoCorrect="off"
-												disabled={isLoading}
-												onChange={(e) => setPassword(e.target.value)}
-											/>
-										</div>
-										<Button disabled={isLoading} onClick={onSubmit}>
-											{isLoading && (
-												<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+								<Form {...form}>
+									<form onSubmit={form.handleSubmit(onSubmit)}>
+										<FormField
+											control={form.control}
+											name="firstName"
+											render={({ field }) => (
+												<FormItem className="py-2">
+													<FormLabel>First Name *</FormLabel>
+													<FormControl>
+														<Input
+															placeholder="Enter your First Name"
+															{...field}
+														/>
+													</FormControl>
+													<FormMessage />
+												</FormItem>
 											)}
+										/>
+										<FormField
+											control={form.control}
+											name="lastName"
+											render={({ field }) => (
+												<FormItem className="py-2">
+													<FormLabel>Last Name *</FormLabel>
+													<FormControl>
+														<Input
+															placeholder="Enter your Last Name"
+															{...field}
+														/>
+													</FormControl>
+													<FormMessage />
+												</FormItem>
+											)}
+										/>
+										<FormField
+											control={form.control}
+											name="emailAddress"
+											render={({ field }) => (
+												<FormItem className="py-2">
+													<FormLabel>Email Address *</FormLabel>
+													<FormControl>
+														<Input placeholder="Enter your Email" {...field} />
+													</FormControl>
+													<FormMessage />
+												</FormItem>
+											)}
+										/>
+										<FormField
+											control={form.control}
+											name="password"
+											render={({ field }) => (
+												<FormItem className="py-2 pb-6">
+													<FormLabel>Password *</FormLabel>
+													<FormControl>
+														<Input
+															type="password"
+															placeholder="Enter your Password"
+															{...field}
+														/>
+													</FormControl>
+													<FormMessage />
+												</FormItem>
+											)}
+										/>
+										<Button className="w-full" type="submit">
 											Submit
 										</Button>
-									</div>
-								</form>
+									</form>
+								</Form>
+
 								<div className="relative">
 									<div className="absolute inset-0 flex items-center">
 										<span className="w-full border-t" />
