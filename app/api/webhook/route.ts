@@ -1,6 +1,5 @@
 import { prisma } from "@/lib/db";
 import { headers } from "next/headers";
-import { NextResponse } from "next/server";
 import { Webhook } from "svix";
 import { UserWebhookEvent } from "@clerk/nextjs/server";
 
@@ -55,14 +54,17 @@ export async function POST(req: Request) {
 	const eventType = evt.type;
 	const { id, first_name, last_name, ...attributes } = evt.data;
 
+	//@ts-ignore
+	const email = evt.data.email_addresses[0].email_address;
+
 	console.log("EVENT DATA :::", evt.data);
 	console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
 	console.log("EVENT TYPE ::: ", eventType);
+	console.log("EMAIL ADDRESSES ::: ", email);
 
 	if (
 		String(eventType) === "user.created" ||
-		String(eventType) === "user.updated" ||
-		String(eventType) === "user.deleted"
+		String(eventType) === "user.updated"
 	) {
 		await prisma.user.upsert({
 			where: { externalId: id as string },
@@ -70,6 +72,7 @@ export async function POST(req: Request) {
 				externalId: id as string,
 				firstName: first_name as string,
 				lastName: last_name as string,
+				email: email as string,
 				attributes,
 			},
 			update: { attributes },
