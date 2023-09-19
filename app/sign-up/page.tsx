@@ -18,6 +18,7 @@ export default function SignUp() {
 	return (
 		<>
 			<div className="container relative grid max-w-none h-[800px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+				
 				<Link
 					href="/sign-in"
 					className={cn(

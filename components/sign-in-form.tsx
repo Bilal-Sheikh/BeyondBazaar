@@ -5,12 +5,13 @@ import { useState } from "react";
 import { useSignIn } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/icons";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { useRouter } from "next/navigation";
 import SignInOAuthButtons from "./SignInOAuthButtons";
 import { useToast } from "./ui/use-toast";
+import Link from "next/link";
 
 interface SignInFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -115,6 +116,16 @@ export function SignInForm({ className, ...props }: SignInFormProps) {
 								</div>
 							</div>
 							<SignInOAuthButtons />
+
+							<Link
+								href="/seller-sign-up"
+								className={cn(
+									buttonVariants({ variant: "link" }),
+									"absolute w-max right-1/3 bottom-36 md:left-4 lg:top-8 lg:left-1/2"
+								)}
+							>
+								Become a Seller ?
+							</Link>
 						</div>
 					</div>
 				</div>

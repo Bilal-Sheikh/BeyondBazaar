@@ -5,7 +5,7 @@ import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/icons";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { useSignUp } from "@clerk/nextjs";
@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/form";
 import SignInOAuthButtons from "./SignInOAuthButtons";
 import { useForm } from "react-hook-form";
+import Link from "next/link";
 
 interface SignUpFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -132,7 +133,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 									Create an account
 								</h1>
 								<p className="text-sm text-muted-foreground">
-									Enter your email below to create your account
+									Enter your details below to create your account
 								</p>
 							</div>
 							<div className={cn("grid gap-6", className)} {...props}>
@@ -217,6 +218,17 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 									</div>
 								</div>
 								<SignInOAuthButtons />
+
+
+								<Link
+									href="/seller-sign-up"
+									className={cn(
+										buttonVariants({ variant: "link" }),
+										"absolute w-max right-1/3 bottom-3 md:left-4 lg:top-8 lg:left-1/2"
+									)}
+								>
+									Become a Seller ?
+								</Link>
 							</div>
 						</div>
 					)}

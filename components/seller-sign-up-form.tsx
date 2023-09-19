@@ -113,7 +113,7 @@ export function SellerSignUpForm({ className, ...props }: SignUpFormProps) {
 				console.log("MAKING A POST REQ");
 				try {
 					axios
-						.post("/api/seller-sign", {
+						.post("/api/seller-sign-in", {
 							userId: completeSignUp.createdUserId,
 							role: "SELLER",
 						})
@@ -141,124 +141,125 @@ export function SellerSignUpForm({ className, ...props }: SignUpFormProps) {
 
 	return (
 		<>
-			<div className="lg:p-8">
-				<div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-					{!pendingVerification && (
-						<div>
-							<div className="flex flex-col space-y-2 text-center">
-								<h1 className="text-2xl font-semibold tracking-tight">
-									Create an account
-								</h1>
-								<p className="text-sm text-muted-foreground">
-									Enter your email below to create your account
+			<div className="mx-auto pt-10 flex w-full flex-col justify-center space-y-6 md:pt-4 sm:w-[350px]">
+				{!pendingVerification && (
+					<div>
+						<div className="flex flex-col space-y-2 text-center">
+							<h1 className="text-2xl font-semibold tracking-tight">
+								Create Your Seller Account
+							</h1>
+							<p className="text-sm text-muted-foreground">
+								Enter your details below to create your account.
+								<p className="text-yellow-600">
+								⚠️ We recommend using a fresh email address.
 								</p>
-							</div>
-							<div className={cn("grid gap-6", className)} {...props}>
-								<Form {...form}>
-									<form onSubmit={form.handleSubmit(onSubmit)}>
-										<FormField
-											control={form.control}
-											name="firstName"
-											render={({ field }) => (
-												<FormItem className="py-2">
-													<FormLabel>First Name *</FormLabel>
-													<FormControl>
-														<Input
-															placeholder="Enter your First Name"
-															{...field}
-														/>
-													</FormControl>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
-										<FormField
-											control={form.control}
-											name="lastName"
-											render={({ field }) => (
-												<FormItem className="py-2">
-													<FormLabel>Last Name *</FormLabel>
-													<FormControl>
-														<Input
-															placeholder="Enter your Last Name"
-															{...field}
-														/>
-													</FormControl>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
-										<FormField
-											control={form.control}
-											name="emailAddress"
-											render={({ field }) => (
-												<FormItem className="py-2">
-													<FormLabel>Email Address *</FormLabel>
-													<FormControl>
-														<Input placeholder="Enter your Email" {...field} />
-													</FormControl>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
-										<FormField
-											control={form.control}
-											name="password"
-											render={({ field }) => (
-												<FormItem className="py-2 pb-6">
-													<FormLabel>Password *</FormLabel>
-													<FormControl>
-														<Input
-															type="password"
-															placeholder="Enter your Password"
-															{...field}
-														/>
-													</FormControl>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
-										<Button className="w-full" type="submit">
-											Submit
-										</Button>
-									</form>
-								</Form>
-							</div>
+							</p>
 						</div>
-					)}
-					{pendingVerification && (
-						<div>
-							<div className="flex flex-col space-y-2 text-center">
-								<h1 className="text-2xl font-semibold tracking-tight">
-									Verify Email
-								</h1>
-								<p className="text-sm text-muted-foreground">
-									We have send you a code on your email address.
-								</p>
-							</div>
-							<form>
-								<div className="grid gap-2 py-4">
-									<div className="grid gap-1">
-										<Input
-											value={code}
-											id="code"
-											placeholder="Enter your code"
-											type="text"
-											disabled={isLoading}
-											onChange={(e) => setCode(e.target.value)}
-										/>
-										<Button disabled={isLoading} onClick={onPressVerify}>
-											{isLoading && (
-												<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-											)}
-											Verify Email
-										</Button>
-									</div>
+						<div className={cn("grid gap-6", className)} {...props}>
+							<Form {...form}>
+								<form onSubmit={form.handleSubmit(onSubmit)}>
+									<FormField
+										control={form.control}
+										name="firstName"
+										render={({ field }) => (
+											<FormItem className="py-2">
+												<FormLabel>First Name *</FormLabel>
+												<FormControl>
+													<Input
+														placeholder="Enter your First Name"
+														{...field}
+													/>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
+										name="lastName"
+										render={({ field }) => (
+											<FormItem className="py-2">
+												<FormLabel>Last Name *</FormLabel>
+												<FormControl>
+													<Input
+														placeholder="Enter your Last Name"
+														{...field}
+													/>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
+										name="emailAddress"
+										render={({ field }) => (
+											<FormItem className="py-2">
+												<FormLabel>Email Address *</FormLabel>
+												<FormControl>
+													<Input placeholder="Enter your Email" {...field} />
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
+										name="password"
+										render={({ field }) => (
+											<FormItem className="py-2 pb-6">
+												<FormLabel>Password *</FormLabel>
+												<FormControl>
+													<Input
+														type="password"
+														placeholder="Enter your Password"
+														{...field}
+													/>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<Button className="w-full" type="submit">
+										Submit
+									</Button>
+								</form>
+							</Form>
+						</div>
+					</div>
+				)}
+				{pendingVerification && (
+					<div>
+						<div className="flex flex-col space-y-2 text-center">
+							<h1 className="text-2xl font-semibold tracking-tight">
+								Verify Email
+							</h1>
+							<p className="text-sm text-muted-foreground">
+								We have send you a code on your email address.
+							</p>
+						</div>
+						<form>
+							<div className="grid gap-2 py-4">
+								<div className="grid gap-1">
+									<Input
+										value={code}
+										id="code"
+										placeholder="Enter your code"
+										type="text"
+										disabled={isLoading}
+										onChange={(e) => setCode(e.target.value)}
+									/>
+									<Button disabled={isLoading} onClick={onPressVerify}>
+										{isLoading && (
+											<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+										)}
+										Verify Email
+									</Button>
 								</div>
-							</form>
-						</div>
-					)}
-				</div>
+							</div>
+						</form>
+					</div>
+				)}
 			</div>
 		</>
 	);
