@@ -11,7 +11,17 @@ if (!WEBHOOK_SECRET) {
 type Event = {
 	type: UserWebhookEvent;
 	object: "event";
-	data: Record<string, string | number>;
+	data: {
+		id: string;
+		first_name: string;
+		last_name: string;
+		public_metadata: {
+			role: string;
+		};
+		email_addresses: {
+			email_address: string;
+		}[];
+	};
 };
 
 export async function POST(req: Request) {
@@ -52,30 +62,39 @@ export async function POST(req: Request) {
 
 	// Get the ID and type
 	const eventType = evt.type;
-	const { id, first_name, last_name, ...attributes } = evt.data;
+	const { id, first_name, last_name, public_metadata, ...attributes } =
+		evt.data;
 
-	//@ts-ignore
 	const email = evt.data.email_addresses[0].email_address;
+	const role = public_metadata.role;
 
-	console.log("EVENT DATA :::", evt.data);
+	console.log("EVENT DATA ::::::::", evt.data);
 	console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
-	console.log("EVENT TYPE ::: ", eventType);
-	console.log("EMAIL ADDRESSES ::: ", email);
+	console.log("EVENT TYPE ::::::::: ", eventType);
+	console.log("EMAIL ADDRESSES :::::: ", email);
+	console.log("ROLE FROM EVT.DATA :::::::: ", role);
 
 	if (
 		String(eventType) === "user.created" ||
 		String(eventType) === "user.updated"
 	) {
+		console.log("ADDING IN DATABASE::::::::::::::::");
 		await prisma.user.upsert({
-			where: { externalId: id as string },
+			where: { externalId: id },
 			create: {
-				externalId: id as string,
-				firstName: first_name as string,
-				lastName: last_name as string,
-				email: email as string,
+				externalId: id,
+				firstName: first_name,
+				lastName: last_name,
+				email: email,
+				role: role,
 				attributes,
 			},
-			update: { attributes },
+			update: {
+				firstName: first_name,
+				lastName: last_name,
+				role: role,
+				attributes,
+			},
 		});
 	}
 

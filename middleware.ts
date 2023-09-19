@@ -9,6 +9,7 @@ export default authMiddleware({
         "/sso-callback(.*)",
         "/sign-in",
         "/sign-up",
+        "/seller-sign-up",
         "/api(.*)"
     ],
 });
