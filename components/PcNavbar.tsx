@@ -16,6 +16,7 @@ import {
 	NavigationMenuViewport,
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { buttonVariants } from "./ui/button";
 
 const clothing: { title: string; href: string; description: string }[] = [
 	{
@@ -132,7 +133,11 @@ const ListItem = React.forwardRef<
 });
 ListItem.displayName = "ListItem";
 
-export default function PcNavbar() {
+interface NavbarProps {
+	role: string;
+}
+
+export default function PcNavbar({ role }: NavbarProps) {
 	return (
 		<>
 			{/* LEFT SIDE NAV */}
@@ -141,72 +146,102 @@ export default function PcNavbar() {
 					<Image src={logoBlack} alt="Logo" width={130} />
 				</Link>
 
-				<NavigationMenu>
-					<NavigationMenuList>
-						<NavigationMenuItem>
-							<NavigationMenuTrigger>Clothing</NavigationMenuTrigger>
-							<NavigationMenuContent>
-								<ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-									{clothing.map((component) => (
-										<ListItem
-											key={component.title}
-											title={component.title}
-											href={component.href}
-										>
-											{component.description}
-										</ListItem>
-									))}
-								</ul>
-							</NavigationMenuContent>
-						</NavigationMenuItem>
-						<NavigationMenuItem>
-							<NavigationMenuTrigger>Accessories</NavigationMenuTrigger>
-							<NavigationMenuContent>
-								<ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-									{accessories.map((component) => (
-										<ListItem
-											key={component.title}
-											title={component.title}
-											href={component.href}
-										>
-											{component.description}
-										</ListItem>
-									))}
-								</ul>
-							</NavigationMenuContent>
-						</NavigationMenuItem>
-						<NavigationMenuItem>
-							<NavigationMenuTrigger>Electronics</NavigationMenuTrigger>
-							<NavigationMenuContent>
-								<ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-									{electronics.map((component) => (
-										<ListItem
-											key={component.title}
-											title={component.title}
-											href={component.href}
-										>
-											{component.description}
-										</ListItem>
-									))}
-								</ul>
-							</NavigationMenuContent>
-						</NavigationMenuItem>
-						<NavigationMenuItem>
-							<Link href="/" legacyBehavior passHref>
-								<NavigationMenuLink className={navigationMenuTriggerStyle()}>
-									Mobiles
-								</NavigationMenuLink>
-							</Link>
-						</NavigationMenuItem>
-						<NavigationMenuItem>
-							<Link href="/" legacyBehavior passHref>
-								<NavigationMenuLink className={navigationMenuTriggerStyle()}>
-									Wierd Stuff
-								</NavigationMenuLink>
-							</Link>
-						</NavigationMenuItem>
-					</NavigationMenuList>
-				</NavigationMenu>
+				{role === "SELLER" ? (
+					<NavigationMenu>
+						<NavigationMenuList>
+							<NavigationMenuItem>
+								<Link href="/add-product" legacyBehavior passHref>
+									<NavigationMenuLink className={navigationMenuTriggerStyle()}>
+										Add Product
+									</NavigationMenuLink>
+								</Link>
+							</NavigationMenuItem>
+
+							<NavigationMenuItem>
+								<Link href="/" legacyBehavior passHref>
+									<NavigationMenuLink className={navigationMenuTriggerStyle()}>
+										View Products
+									</NavigationMenuLink>
+								</Link>
+							</NavigationMenuItem>
+
+							<NavigationMenuItem>
+								<Link href="/" legacyBehavior passHref>
+									<NavigationMenuLink className={navigationMenuTriggerStyle()}>
+										View Your Shop
+									</NavigationMenuLink>
+								</Link>
+							</NavigationMenuItem>
+						</NavigationMenuList>
+					</NavigationMenu>
+				) : (
+					<NavigationMenu>
+						<NavigationMenuList>
+							<NavigationMenuItem>
+								<NavigationMenuTrigger>Clothing</NavigationMenuTrigger>
+								<NavigationMenuContent>
+									<ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+										{clothing.map((component) => (
+											<ListItem
+												key={component.title}
+												title={component.title}
+												href={component.href}
+											>
+												{component.description}
+											</ListItem>
+										))}
+									</ul>
+								</NavigationMenuContent>
+							</NavigationMenuItem>
+							<NavigationMenuItem>
+								<NavigationMenuTrigger>Accessories</NavigationMenuTrigger>
+								<NavigationMenuContent>
+									<ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+										{accessories.map((component) => (
+											<ListItem
+												key={component.title}
+												title={component.title}
+												href={component.href}
+											>
+												{component.description}
+											</ListItem>
+										))}
+									</ul>
+								</NavigationMenuContent>
+							</NavigationMenuItem>
+							<NavigationMenuItem>
+								<NavigationMenuTrigger>Electronics</NavigationMenuTrigger>
+								<NavigationMenuContent>
+									<ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+										{electronics.map((component) => (
+											<ListItem
+												key={component.title}
+												title={component.title}
+												href={component.href}
+											>
+												{component.description}
+											</ListItem>
+										))}
+									</ul>
+								</NavigationMenuContent>
+							</NavigationMenuItem>
+							<NavigationMenuItem>
+								<Link href="/" legacyBehavior passHref>
+									<NavigationMenuLink className={navigationMenuTriggerStyle()}>
+										Mobiles
+									</NavigationMenuLink>
+								</Link>
+							</NavigationMenuItem>
+							<NavigationMenuItem>
+								<Link href="/" legacyBehavior passHref>
+									<NavigationMenuLink className={navigationMenuTriggerStyle()}>
+										Wierd Stuff
+									</NavigationMenuLink>
+								</Link>
+							</NavigationMenuItem>
+						</NavigationMenuList>
+					</NavigationMenu>
+				)}
 			</div>
 		</>
 	);

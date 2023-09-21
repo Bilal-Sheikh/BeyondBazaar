@@ -118,7 +118,7 @@ export function SellerSignUpForm({ className, ...props }: SignUpFormProps) {
 							role: "SELLER",
 						})
 						.then((data) => {
-							console.log("POSR DATA ::::::::: ", data);
+							console.log("POST DATA ::::::::: ", data);
 						});
 				} catch (error) {
 					console.error("ERROR ::::::::: ", error);
@@ -148,12 +148,13 @@ export function SellerSignUpForm({ className, ...props }: SignUpFormProps) {
 							<h1 className="text-2xl font-semibold tracking-tight">
 								Create Your Seller Account
 							</h1>
-							<p className="text-sm text-muted-foreground">
-								Enter your details below to create your account.
-								<p className="text-yellow-600">
-								⚠️ We recommend using a fresh email address.
-								</p>
-							</p>
+							<div className="text-sm text-muted-foreground">
+								Enter your details below to create your account. <br />
+								<h1 className="text-yellow-500">
+									⚠️ We recommend using a fresh email address for seller
+									accounts.
+								</h1>
+							</div>
 						</div>
 						<div className={cn("grid gap-6", className)} {...props}>
 							<Form {...form}>

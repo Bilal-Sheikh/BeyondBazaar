@@ -18,9 +18,11 @@ type Event = {
 		public_metadata: {
 			role: string;
 		};
-		email_addresses: {
-			email_address: string;
-		}[];
+		email_addresses: [
+			{
+				email_address: string;
+			}
+		];
 	};
 };
 
@@ -65,8 +67,8 @@ export async function POST(req: Request) {
 	const { id, first_name, last_name, public_metadata, ...attributes } =
 		evt.data;
 
-	const email = evt.data.email_addresses[0].email_address;
-	const role = public_metadata.role;
+	const email = evt.data.email_addresses[0]?.email_address;
+	const role = public_metadata?.role;
 
 	console.log("EVENT DATA ::::::::", evt.data);
 	console.log(`Webhook with and ID of ${id} and type of ${eventType}`);

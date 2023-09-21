@@ -22,21 +22,26 @@ import {
 
 interface NavbarProps {
 	user: User | null;
+	role: string;
 }
 
-export default function RightSideNav({ user }: NavbarProps) {
+export default function RightSideNav({ user, role }: NavbarProps) {
 	return (
 		<>
 			<div className="flex flex-1 items-center justify-end gap-3">
-				<Button
-					variant={"outline"}
-					className="text-xs w-full justify-start text-gray-400 sm:w-2/5 sm:text-sm"
-				>
-					<div className="p-1">
-						<Search size={17} />
-					</div>
-					Search products...
-				</Button>
+				{role === "SELLER" ? (
+					<></>
+				) : (
+					<Button
+						variant={"outline"}
+						className="text-xs w-full justify-start text-gray-400 sm:w-2/5 sm:text-sm"
+					>
+						<div className="p-1">
+							<Search size={17} />
+						</div>
+						Search products...
+					</Button>
+				)}
 
 				<div>
 					<ModeToggle />

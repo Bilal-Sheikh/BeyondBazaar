@@ -2,7 +2,7 @@ import { SellerSignUpForm } from "@/components/seller-sign-up-form";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import logoBlack from "../../public/logoBlack.png";
+import logoBlack from "@/public/logoBlack.png";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 

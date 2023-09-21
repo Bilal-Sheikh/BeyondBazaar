@@ -6,20 +6,21 @@ import RightSideNav from "./RightSideNav";
 
 export default async function navbar() {
 	const user = await currentUser();
+	const role = user?.publicMetadata?.role as string;
 
 	return (
 		<>
 			<header className="sticky top-0 bg-background border-b">
 				<div className="container flex h-16 items-center gap-4">
 					<div className="hidden lg:block ">
-						<PcNavbar />
+						<PcNavbar role={role} />
 					</div>
 
 					<div className="block lg:hidden">
-						<MobileNavbar user={user} />
+						<MobileNavbar user={user} role={role}/>
 					</div>
 
-					<RightSideNav user={user} />
+					<RightSideNav user={user} role={role} />
 				</div>
 			</header>
 		</>
