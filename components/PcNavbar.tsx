@@ -152,7 +152,7 @@ export default function PcNavbar({ role }: NavbarProps) {
 							<NavigationMenuItem>
 								<Link href="/add-product" legacyBehavior passHref>
 									<NavigationMenuLink className={navigationMenuTriggerStyle()}>
-										Add Product
+										Add New Product
 									</NavigationMenuLink>
 								</Link>
 							</NavigationMenuItem>
@@ -160,7 +160,7 @@ export default function PcNavbar({ role }: NavbarProps) {
 							<NavigationMenuItem>
 								<Link href="/" legacyBehavior passHref>
 									<NavigationMenuLink className={navigationMenuTriggerStyle()}>
-										View Products
+										View Your Products
 									</NavigationMenuLink>
 								</Link>
 							</NavigationMenuItem>

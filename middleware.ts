@@ -13,6 +13,7 @@ export default authMiddleware({
 
 		"/seller-sign-up",
 		"/add-product",
+		"/aa",
 
 		"/api(.*)",
 	],

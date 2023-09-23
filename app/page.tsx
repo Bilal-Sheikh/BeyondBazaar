@@ -9,5 +9,10 @@ export default async function Home() {
 	const role = user?.publicMetadata?.role;
 	console.log("ROLE FROM FRONTEND ::::::::::::::", role);
 
-	return <>{role === "SELLER" ? <SellerDashboard /> : <UserDashboard />}</>;
+	return (
+		<>
+			{role === "SELLER" ? <SellerDashboard /> : <UserDashboard />}
+			<Footer />
+		</>
+	);
 }

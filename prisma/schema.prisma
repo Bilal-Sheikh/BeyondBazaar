@@ -7,6 +7,39 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+enum Role {
+    USER
+    SELLER
+}
+
+enum Category {
+    MENS_TOP_WEAR
+    MENS_BOTTOM_WEAR
+
+    WOMENS_TOP_WEAR
+    WOMENS_BOTTOM_WEAR
+
+    MENS_FOOTWEAR
+    WOMENS_FOOTWEAR
+
+    KIDS
+
+    WALLETS
+    WATCHES
+    BELTS
+    BAGS
+    PERFUMES
+
+    GAMING
+    POWERBANK
+    HEADPHONES
+    MOBILE_ACCESSORIES
+
+    MOBILES
+
+    OTHERS
+}
+
 model User {
     id         Int      @id @default(autoincrement())
     externalId String   @unique
@@ -17,15 +50,24 @@ model User {
     attributes Json
     createdAt  DateTime @default(now())
     updatedAt  DateTime @updatedAt
+
+    // Add a field to represent the products posted by this user
+    postedProducts Product[]
 }
 
-// model Seller {
-//     id         Int      @id @default(autoincrement())
-//     externalId String   @unique
-//     firstName  String
-//     lastName   String
-//     email      String   @unique
-//     attributes Json
-//     createdAt  DateTime @default(now())
-//     updatedAt  DateTime @updatedAt
-// }
+model Product {
+    id            Int      @id @default(autoincrement())
+    name          String
+    description   String
+    price         Float
+    imageUrl      String?
+    stockQuantity Int?
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+
+    category Category[] // Product with multiple categories
+
+    // Reference to the user who posted this product
+    postedBy   User @relation(fields: [postedById], references: [id])
+    postedById Int // Foreign key to the User who posted this product
+}

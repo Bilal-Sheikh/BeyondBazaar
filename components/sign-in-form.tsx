@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import SignInOAuthButtons from "./SignInOAuthButtons";
 import { useToast } from "./ui/use-toast";
 import Link from "next/link";
+import { Loader2 } from "lucide-react"
 
 interface SignInFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 

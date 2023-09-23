@@ -4,13 +4,13 @@ import MobileNavbar from "./MobileNavbar";
 import { currentUser } from "@clerk/nextjs";
 import RightSideNav from "./RightSideNav";
 
-export default async function navbar() {
+export default async function Navbar() {
 	const user = await currentUser();
 	const role = user?.publicMetadata?.role as string;
 
 	return (
 		<>
-			<header className="sticky top-0 bg-background border-b">
+			<header className="sticky top-0 bg-background border-b z-50">
 				<div className="container flex h-16 items-center gap-4">
 					<div className="hidden lg:block ">
 						<PcNavbar role={role} />

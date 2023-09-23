@@ -10,6 +10,7 @@ export default function DashboardLayout({
 		<section>
 			<Navbar />
 			{children}
+			<Footer />
 		</section>
 	);
 }

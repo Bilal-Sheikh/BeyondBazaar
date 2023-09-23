@@ -1,0 +1,54 @@
+<>
+/* applied to container */
+.custom-container {
+	background-color: none;
+	border-style: dashed;
+	width: 350px;
+	height: 200px;
+	cursor: pointer;
+}
+
+/* applied to label */
+.custom-label{
+	font-size: 0.9rem;
+	color: #3b82f6;
+	cursor: pointer;
+}
+
+/* applied to button */
+.custom-button {
+	font-size: 0.9rem;
+	background-color: #3b82f6;
+	padding: 20px;
+	margin-top: 20px;
+}
+
+/* applied to button when not ready */
+.custom-button-not-ready {
+	background-color: rgb(239 68 68 / 0.5);
+	color: rgb(0 0 0 / 0.5);
+	cursor: not-allowed;
+}
+
+/* applied to button when readying */
+.custom-button-ready {
+	color: #ecfdf5;
+  }
+
+/* applied to button when uploading */
+.custom-button-uploading {
+	background-color: #60a5fa;
+	color: rgb(0 0 0 / 0.5);
+	cursor: not-allowed;
+}
+
+.custom-button-uploading::after {
+	background-color: rgb(234 88 12 / 1) !important;
+  }
+
+/* applied to upload indicator when uploading */
+.custom-class > *[data-ut-element="button"][data-state="uploading"]::after {
+	background-color: #60a5fa;
+}
+
+</>
