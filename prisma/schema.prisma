@@ -42,32 +42,31 @@ enum Category {
 
 model User {
     id         Int      @id @default(autoincrement())
-    externalId String   @unique
+    clerkId    String   @unique
     firstName  String
     lastName   String
     email      String   @unique
-    role       String?
+    role       Role     @default(USER)
     attributes Json
     createdAt  DateTime @default(now())
     updatedAt  DateTime @updatedAt
 
-    // Add a field to represent the products posted by this user
     postedProducts Product[]
 }
 
 model Product {
-    id            Int      @id @default(autoincrement())
+    id            Int    @id @default(autoincrement())
     name          String
     description   String
-    price         Float
-    imageUrl      String?
-    stockQuantity Int?
-    createdAt     DateTime @default(now())
-    updatedAt     DateTime @updatedAt
+    price         Int
+    imageUrl      String
+    stockQuantity Int
 
-    category Category[] // Product with multiple categories
+    category Category
 
-    // Reference to the user who posted this product
-    postedBy   User @relation(fields: [postedById], references: [id])
-    postedById Int // Foreign key to the User who posted this product
+    postedBy   User   @relation(fields: [postedById], references: [clerkId])
+    postedById String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }

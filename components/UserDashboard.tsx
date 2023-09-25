@@ -1,10 +1,24 @@
 import React from "react";
 import Navbar from "./Navbar";
+import axios from "axios";
 
-export default function UserDashboard() {
+export default async function UserDashboard() {
+
+	// works
+	// let prod
+	// try {
+	// 	const { data } = await axios.get("http://localhost:3000/api/view-products");
+	// 	console.log("DATA", data);
+	// 	prod = data
+	// } catch (error) {
+	// 	console.log(error);
+	// }
+
 	return (
 		<div>
 			<Navbar />
+			{/* <div>{JSON.stringify(prod)} works </div>  */}
+			
 			<section className="space-y-6 pb-16 pt-14 md:pb-24 md:pt-20 lg:py-40">
 				<div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center">
 					<h1 className="font-bold text-3xl sm:text-5xl md:text-6xl lg:text-7xl">

@@ -82,9 +82,9 @@ export async function POST(req: Request) {
 	) {
 		console.log("ADDING IN DATABASE::::::::::::::::");
 		await prisma.user.upsert({
-			where: { externalId: id },
+			where: { clerkId: id },
 			create: {
-				externalId: id,
+				clerkId: id,
 				firstName: first_name,
 				lastName: last_name,
 				email: email,

@@ -158,7 +158,7 @@ export default function PcNavbar({ role }: NavbarProps) {
 							</NavigationMenuItem>
 
 							<NavigationMenuItem>
-								<Link href="/" legacyBehavior passHref>
+								<Link href="/view-products" legacyBehavior passHref>
 									<NavigationMenuLink className={navigationMenuTriggerStyle()}>
 										View Your Products
 									</NavigationMenuLink>

@@ -262,16 +262,23 @@ export default function page() {
 		};
 
 		try {
-			const res = await axios.post("/api/add-product", product);
+			const { data } = await axios.post("/api/add-product", product);
 
-			console.log("RESPONSE AXIOS :::::::::::::::::", res);
+			console.log("RESPONSE AXIOS :::::::::::::::::", data);
 
-			if (res.data) {
+			if (data.success === true) {
 				setIsLoading(false);
 				toast({
 					variant: "default",
 					title: "Success",
 					description: "Product Added Successfully",
+				});
+			} else {
+				setIsLoading(false);
+				toast({
+					variant: "destructive",
+					title: "Error",
+					description: "Product was not added. Please try again",
 				});
 			}
 		} catch (error) {

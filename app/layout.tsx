@@ -5,7 +5,6 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/toaster";
-import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
