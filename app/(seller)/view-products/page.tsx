@@ -19,7 +19,7 @@ export default async function page() {
 
 	return (
 		<div className="flex flex-wrap justify-center items-center p-14">
-			<ProductsList products={products}/>
+			<ProductsList products={products} />
 		</div>
 	);
 }

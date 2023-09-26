@@ -1,6 +1,6 @@
 "use client";
 
-import { OurFileRouter } from "@/app/api/uploadthing/core";
+import { OurFileRouter } from "@/app/api/(seller)/uploadthing/core";
 import { useState } from "react";
 import Image from "next/image";
 import { Check, ChevronsUpDown, Trash } from "lucide-react";

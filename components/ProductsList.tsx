@@ -53,9 +53,22 @@ import {
 
 export default function ProductsList({ products }) {
 	// const seller = products.data.firstName + " " + products.data.lastName;
+	const sellerId = products.data.clerkId;
 
-	const handleDelete = () => {
-		console.log("Delete");
+	const handleDelete = async (productId) => {
+		console.log("DELETION STARTED FOR PRODUCT :::::::::::::::::::", productId);
+
+		const { data } = await axios.delete(
+			"http://localhost:3000/api/delete-product",
+			{
+				headers: {
+					ProductId: productId,
+					ClerkId: sellerId,
+				},
+			}
+		);
+
+		console.log("PRODCUCT DELETE :::::::::::::::::::", data.message);
 	};
 
 	return (
@@ -102,7 +115,9 @@ export default function ProductsList({ products }) {
 												</AlertDialogHeader>
 												<AlertDialogFooter>
 													<AlertDialogCancel>Cancel</AlertDialogCancel>
-													<AlertDialogAction onClick={handleDelete}>
+													<AlertDialogAction
+														onClick={() => handleDelete(product.id)}
+													>
 														Delete
 													</AlertDialogAction>
 												</AlertDialogFooter>
