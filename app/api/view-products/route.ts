@@ -34,6 +34,7 @@ export async function GET() {
 		return NextResponse.json({
 			success: true,
 			message: "Successfully retrieved the products.",
+			data,
 			postedProducts: postedProducts,
 		});
 	} catch (error) {

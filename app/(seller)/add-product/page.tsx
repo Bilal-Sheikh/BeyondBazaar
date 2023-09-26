@@ -293,7 +293,7 @@ export default function page() {
 
 	return (
 		<>
-			<div className="my-24 flex justify-center items-center">
+			<div className="my-10 flex justify-center items-center">
 				<Card className="w-5/6">
 					<CardHeader>
 						<CardTitle>Add New Product</CardTitle>
@@ -331,7 +331,7 @@ export default function page() {
 										</FormItem>
 									)}
 								/>
-								<div className="grid grid-flow-col justify-stretch gap-4">
+								<div className="lg:grid lg:grid-flow-col lg:justify-stretch lg:gap-4">
 									<FormField
 										control={form.control}
 										name="price"
@@ -645,7 +645,7 @@ export default function page() {
 												Add an image of your product.
 											</FormDescription>
 											<FormControl>
-												<div className="flex flex-col items-start justify-start">
+												<div className="lg:flex lg:flex-col lg:items-start lg:justify-start">
 													{uploadComplete ? (
 														<>
 															{/* If upload is complete, show imgList */}

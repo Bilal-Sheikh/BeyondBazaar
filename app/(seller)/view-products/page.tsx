@@ -1,32 +1,25 @@
 import * as React from "react";
-import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import { currentUser } from "@clerk/nextjs";
-import axios from "axios";
 import ProductsList from "@/components/ProductsList";
+import axios from "axios";
+import { currentUser } from "@clerk/nextjs";
+
+async function getProducts() {
+	const user = await currentUser();
+	const { data } = await axios.get("http://localhost:3000/api/view-products", {
+		headers: {
+			ClerkId: user?.id,
+		},
+	});
+	return data;
+}
 
 export default async function page() {
+	const products = await getProducts();
+	// console.log("PRODUCTS :::::::::::::::::::::::::", products);
+
 	return (
-		<>
-			<div className="flex h-screen p-14">
-				<ProductsList />
-			</div>
-		</>
+		<div className="flex flex-wrap justify-center items-center p-14">
+			<ProductsList products={products}/>
+		</div>
 	);
 }

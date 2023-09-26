@@ -1,5 +1,7 @@
+"use client";
+
 import axios from "axios";
-import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,73 +23,131 @@ import {
 } from "@/components/ui/select";
 import { currentUser } from "@clerk/nextjs";
 import Image from "next/image";
+import { Badge } from "@/components/ui/badge";
+import {
+	Divide,
+	MoreHorizontal,
+	MoreVertical,
+	Pencil,
+	Trash,
+} from "lucide-react";
+import {
+	DropdownMenuLabel,
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
-async function getProducts() {
-	const user = await currentUser();
-	const { data } = await axios.get("http://localhost:3000/api/view-products", {
-		headers: {
-			ClerkId: user?.id,
-		},
-	});
-	return data;
-}
+export default function ProductsList({ products }) {
+	// const seller = products.data.firstName + " " + products.data.lastName;
 
-export default async function ProductsList() {
-	const products = await getProducts();
-	console.log("PRODUCTS :::::::::::::::::::::::::", products);
+	const handleDelete = () => {
+		console.log("Delete");
+	};
 
 	return (
 		<>
+			{products.postedProducts.length === 0 && (
+				<div className="my-40 lg:my-52 place-content-center text-center text-2xl font-bold">
+					No products found. Please add some products.
+				</div>
+			)}
 			{products.postedProducts.map((product) => (
-				//  id: 7,
-				//  name: 'mens top',
-				//  description: 'dsdadsa',
-				//  price: 3,
-				//  imageUrl: 'https://utfs.io/f/ad86ab91-dae4-435b-ace8-2c207696cd2a-iitxnl.jpg',
-				//  stockQuantity: 1,
-				//  category: 'MENS_TOP_WEAR',
-				//  postedById: 'user_2VsxfrKbGFDWMCfuOoLqscuSlpW',
-				//  createdAt: 2023-09-25T10:46:34.409Z,
-				//  updatedAt: 2023-09-25T10:46:34.409Z
-				<Card className="w-[350px]" key={product.id}>
+				<Card className="w-[300px] m-2" key={product.id}>
 					<CardHeader>
-						<CardTitle>{product.name}</CardTitle>
-						{/* <CardDescription>
-							Deploy your new project in one-click.
-						</CardDescription> */}
+						<div className="flex justify-between items-center">
+							<div>
+								<Badge className="">{product.category}</Badge>
+							</div>
+							<div>
+								<DropdownMenu>
+									<DropdownMenuTrigger>
+										<MoreVertical />
+									</DropdownMenuTrigger>
+									<DropdownMenuContent>
+										<DropdownMenuLabel>Options</DropdownMenuLabel>
+										<DropdownMenuSeparator />
+										<DropdownMenuItem>
+											<Pencil className="mr-2 h-4 w-4" />
+											Edit
+										</DropdownMenuItem>
+										<AlertDialog>
+											<AlertDialogTrigger className="text-red-600 flex flex-auto justify-center items-center px-2">
+												<Trash className="mr-2 h-4 w-4" /> Delete
+											</AlertDialogTrigger>
+											<AlertDialogContent>
+												<AlertDialogHeader>
+													<AlertDialogTitle>
+														Are you absolutely sure you want to delete this
+														item?
+													</AlertDialogTitle>
+													<AlertDialogDescription>
+														This action cannot be undone. This will permanently
+														delete your item and remove your product from our
+														servers.
+													</AlertDialogDescription>
+												</AlertDialogHeader>
+												<AlertDialogFooter>
+													<AlertDialogCancel>Cancel</AlertDialogCancel>
+													<AlertDialogAction onClick={handleDelete}>
+														Delete
+													</AlertDialogAction>
+												</AlertDialogFooter>
+											</AlertDialogContent>
+										</AlertDialog>
+									</DropdownMenuContent>
+								</DropdownMenu>
+							</div>
+						</div>
+						<div className="flex flex-col space-y-1.5">
+							<AspectRatio ratio={3 / 2}>
+								<Image src={product.imageUrl} alt="product" fill />
+							</AspectRatio>
+						</div>
 					</CardHeader>
 					<CardContent>
 						<div className="grid w-full items-center gap-4">
-							<div className="flex flex-col space-y-1.5">
-								<AspectRatio ratio={3 / 2}>
-									<Image
-										src={product.imageUrl}
-										alt="product"
-										sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-										fill
-									/>
-								</AspectRatio>
-							</div>
-							<div className="flex flex-col space-y-1.5">
-								<Label htmlFor="framework">Framework</Label>
-								<Select>
-									<SelectTrigger id="framework">
-										<SelectValue placeholder="Select" />
-									</SelectTrigger>
-									<SelectContent position="popper">
-										<SelectItem value="next">Next.js</SelectItem>
-										<SelectItem value="sveltekit">SvelteKit</SelectItem>
-										<SelectItem value="astro">Astro</SelectItem>
-										<SelectItem value="nuxt">Nuxt.js</SelectItem>
-									</SelectContent>
-								</Select>
+							<CardTitle className="line-clamp-4 text-lg font-semibold tracking-tight transition-colors first:mt-0">
+								{product.name}
+							</CardTitle>
+							<CardDescription className="line-clamp-4 text-sm text-muted-foreground first:mt-0">
+								{product.description}
+							</CardDescription>
+							<div className="flex space-y-1 justify-between items-center">
+								<div>
+									<Label>Price: </Label>
+									<br />
+									<Label className="scroll-m-20 border-b pb-2 text-lg font-semibold tracking-tight transition-colors first:mt-0">
+										$ {product.price}
+									</Label>
+								</div>
+								<div>
+									<Label className="scroll-m-20 pb-2 text-lg tracking-tight transition-colors first:mt-0">
+										Stocks: {product.stockQuantity}
+									</Label>
+								</div>
 							</div>
 						</div>
 					</CardContent>
-					<CardFooter className="flex justify-between">
-						<Button variant="outline">Cancel</Button>
-						<Button>Deploy</Button>
-					</CardFooter>
+					{/* <CardFooter>
+						<p className="text-sm text-muted-foreground">
+							Product by: <br />
+							{seller}
+						</p>
+					</CardFooter> */}
 				</Card>
 			))}
 		</>
