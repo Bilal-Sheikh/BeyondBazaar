@@ -12,17 +12,33 @@ export default async function Navbar() {
 		<>
 			<header className="sticky top-0 bg-background border-b z-50">
 				<div className="container flex h-16 items-center gap-4">
-					<div className="hidden lg:block">
+					<div className="max-sm:hidden max-md:hidden max-lg:hidden lg:block">
 						<PcNavbar role={role} />
 					</div>
 
-					<div className="block lg:hidden">
-						<MobileNavbar user={user} role={role}/>
+					<div className="max-sm:block max-md:block max-lg:block lg:hidden">
+						<MobileNavbar user={user} role={role} />
 					</div>
 
 					<RightSideNav user={user} role={role} />
 				</div>
 			</header>
+
+			{/* works */}
+			{/* <header className="sticky top-0 bg-background border-b z-50">
+				<div className="container flex h-16 items-center gap-4">
+					<div className="max-sm:hidden max-md:hidden max-lg:hidden lg:block">
+						<PcNavbar role={role} />
+					</div>
+
+					<div className="max-sm:block max-md:block max-lg:block lg:hidden">
+						<MobileNavbar user={user} role={role} />
+					</div>
+
+					<RightSideNav user={user} role={role} />
+				</div>
+			</header> */}
+			
 		</>
 	);
 }

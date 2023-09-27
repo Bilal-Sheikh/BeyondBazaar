@@ -47,7 +47,7 @@ export default function RightSideNav({ user, role }: NavbarProps) {
 					<ModeToggle />
 				</div>
 
-				<div className="hidden lg:block">
+				<div className="max-sm:hidden max-md:hidden max-lg:hidden lg:block">
 					{/* <DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button variant="outline">Open</Button>
