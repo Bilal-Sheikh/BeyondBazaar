@@ -82,7 +82,6 @@ export default function AddProducts() {
 	const [open, setOpen] = React.useState(false);
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const { toast } = useToast();
-
 	const [uploadComplete, setUploadComplete] = useState(false);
 	const [images, setImages] = useState<
 		{
@@ -91,26 +90,26 @@ export default function AddProducts() {
 		}[]
 	>([]);
 
-	const img = (
-		<>
-			{/* {title} */}
-			<ul>
-				{images.map((image) => (
-					<li key={image.fileUrl} className="mt-2">
-						{/* <Link href={image.fileUrl} target="_blank">
-							{image.fileUrl}
-						</Link> */}
-						<Image
-							src={image.fileUrl}
-							alt="product_img"
-							width={700}
-							height={700}
-						/>
-					</li>
-				))}
-			</ul>
-		</>
-	);
+	// const img = (
+	// 	<>
+	// 		{/* {title} */}
+	// 		<ul>
+	// 			{images.map((image) => (
+	// 				<li key={image.fileUrl} className="mt-2">
+	// 					{/* <Link href={image.fileUrl} target="_blank">
+	// 						{image.fileUrl}
+	// 					</Link> */}
+	// 					<Image
+	// 						src={image.fileUrl}
+	// 						alt="product_img"
+	// 						width={700}
+	// 						height={700}
+	// 					/>
+	// 				</li>
+	// 			))}
+	// 		</ul>
+	// 	</>
+	// );
 
 	const handleClientUploadComplete = (res?: UploadFileResponse[]) => {
 		if (res) {
@@ -135,7 +134,7 @@ export default function AddProducts() {
 		toast({
 			variant: "destructive",
 			title: "Error",
-			description: "Something went wrong. Please go back and try again",
+			description: "❌ Something went wrong. Please go back and try again",
 		});
 		// alert(`ERROR! ${error.message}`);
 	};
@@ -153,6 +152,8 @@ export default function AddProducts() {
 	});
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
+		form.reset();
+		setUploadComplete(false);
 		setIsLoading(true);
 		console.log("VALUES::::::::::::::::::::::", values);
 
@@ -178,14 +179,14 @@ export default function AddProducts() {
 				toast({
 					variant: "default",
 					title: "Success",
-					description: "Product Added Successfully",
+					description: "✅ Product Added Successfully",
 				});
 			} else {
 				setIsLoading(false);
 				toast({
 					variant: "destructive",
 					title: "Error",
-					description: "Product was not added. Please try again",
+					description: "❌ Product was not added. Please try again",
 				});
 			}
 		} catch (error) {
@@ -193,7 +194,7 @@ export default function AddProducts() {
 			toast({
 				variant: "destructive",
 				title: "Error",
-				description: "Something went wrong. Please go back and try again",
+				description: "❌ Something went wrong. Please go back and try again",
 			});
 		}
 	}
@@ -560,7 +561,13 @@ export default function AddProducts() {
 													{uploadComplete ? (
 														<>
 															{/* If upload is complete, show imgList */}
-															{img}
+															{/* {img} */}
+															<Image
+																src={images[0].fileUrl}
+																alt="product_img"
+																width={700}
+																height={700}
+															/>
 															<Button
 																onClick={() => setUploadComplete(false)}
 																variant="destructive"

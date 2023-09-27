@@ -51,7 +51,7 @@ export function SignInForm({ className, ...props }: SignInFormProps) {
 			console.error("error", err.errors[0].longMessage);
 			toast({
 				variant: "destructive",
-				title: "Error",
+				title: "❌ Error",
 				description: err.errors[0].longMessage,
 			});
 		}

@@ -129,7 +129,7 @@ export default function EditProducts({ params }: { params: { id: string } }) {
 		toast({
 			variant: "destructive",
 			title: "Error",
-			description: "Something went wrong. Please go back and try again",
+			description: "❌ Something went wrong. Please go back and try again",
 		});
 		// alert(`ERROR! ${error.message}`);
 	};
@@ -176,14 +176,14 @@ export default function EditProducts({ params }: { params: { id: string } }) {
 				toast({
 					variant: "default",
 					title: "Success",
-					description: "Product Edited Successfully",
+					description: "✅ Product Edited Successfully",
 				});
 			} else {
 				setIsLoading(false);
 				toast({
 					variant: "destructive",
 					title: "Error",
-					description: "Product was not updated. Please try again",
+					description: "❌ Product was not updated. Please try again",
 				});
 			}
 		} catch (error) {
@@ -191,7 +191,7 @@ export default function EditProducts({ params }: { params: { id: string } }) {
 			toast({
 				variant: "destructive",
 				title: "Error",
-				description: "Something went wrong. Please go back and try again",
+				description: "❌ Something went wrong. Please go back and try again",
 			});
 		}
 	}

@@ -12,7 +12,7 @@ export default async function Navbar() {
 		<>
 			<header className="sticky top-0 bg-background border-b z-50">
 				<div className="container flex h-16 items-center gap-4">
-					<div className="hidden lg:block ">
+					<div className="hidden lg:block">
 						<PcNavbar role={role} />
 					</div>
 

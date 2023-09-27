@@ -84,7 +84,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 			console.error(JSON.stringify(err.errors[0].longMessage, null, 2));
 			toast({
 				variant: "destructive",
-				title: "Error",
+				title: "❌ Error",
 				description: err.errors[0].longMessage,
 			});
 		}
@@ -116,7 +116,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 			console.error(JSON.stringify(err.errors[0].longMessage, null, 2));
 			toast({
 				variant: "destructive",
-				title: "Error",
+				title: "❌ Error",
 				description: err.errors[0].longMessage,
 			});
 		}
