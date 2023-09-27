@@ -19,7 +19,7 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import { UserButton } from "@clerk/nextjs";
-import { buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import { User } from "@clerk/nextjs/server";
 
 interface NavbarProps {
@@ -63,7 +63,27 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 						<Separator />
 						<ScrollArea className="h-[calc(100vh-8rem)]">
 							{role === "SELLER" ? (
-								<></>
+								<div className="py-5">
+									<Button variant="link" className="w-full py-7">
+										<span className="items-center justify-between py-4 font-medium text-lg transition-all hover:underline">
+											<Link href="/add-product">Add New Product</Link>
+										</span>
+									</Button>
+
+									<Separator />
+									<Button variant="link" className="w-full py-7">
+										<span className="items-center justify-between py-4 font-medium text-lg transition-all hover:underline">
+											<Link href="/view-products">View Your Products</Link>
+										</span>
+									</Button>
+
+									<Separator />
+									<Button variant="link" className="w-full py-7">
+										<span className="items-center justify-between py-4 font-medium text-lg transition-all hover:underline">
+											<Link href="/">View Your Shop</Link>
+										</span>
+									</Button>
+								</div>
 							) : (
 								<div className="pr-20">
 									<Accordion type="multiple" className="w-full">
