@@ -60,20 +60,23 @@ export default function ProductsList({ products }) {
 
 	const handleDelete = async (productId) => {
 		console.log("DELETION STARTED FOR PRODUCT :::::::::::::::::::", productId);
+		try {
+			const { data } = await axios.delete(
+				"http://localhost:3000/api/delete-product",
+				{
+					headers: {
+						ProductId: productId,
+						ClerkId: sellerId,
+					},
+				}
+			);
 
-		const { data } = await axios.delete(
-			"http://localhost:3000/api/delete-product",
-			{
-				headers: {
-					ProductId: productId,
-					ClerkId: sellerId,
-				},
+			if (data.success === true) {
+				console.log("PRODUCT DELETED :::::::::::::::::::", data.message);
+				router.refresh();
 			}
-		);
-
-		if (data.success === true) {
-			console.log("PRODUCT DELETED :::::::::::::::::::", data.message);
-			router.refresh();
+		} catch (error) {
+			console.log("ERRORS :::::::::::::::::", error);
 		}
 	};
 

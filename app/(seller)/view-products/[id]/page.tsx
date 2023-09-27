@@ -93,15 +93,19 @@ export default function EditProducts({ params }: { params: { id: string } }) {
 	>([]);
 
 	React.useEffect(() => {
-		axios
-			.get("http://localhost:3000/api/get-product", {
-				headers: {
-					ProductId: productId,
-				},
-			})
-			.then((res) => {
-				setProduct(res.data.data);
-			});
+		try {
+			axios
+				.get("http://localhost:3000/api/get-product", {
+					headers: {
+						ProductId: productId,
+					},
+				})
+				.then((res) => {
+					setProduct(res.data.data);
+				});
+		} catch (error) {
+			console.log("ERRORS :::::::::::::::::", error);
+		}
 	}, []);
 
 	console.log("DATA::::::::::::::::::::::::::::::", product);

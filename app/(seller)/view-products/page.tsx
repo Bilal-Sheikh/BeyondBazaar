@@ -5,12 +5,19 @@ import { currentUser } from "@clerk/nextjs";
 
 async function getProducts() {
 	const user = await currentUser();
-	const { data } = await axios.get("http://localhost:3000/api/view-products", {
-		headers: {
-			ClerkId: user?.id,
-		},
-	});
-	return data;
+	try {
+		const { data } = await axios.get(
+			"http://localhost:3000/api/view-products",
+			{
+				headers: {
+					ClerkId: user?.id,
+				},
+			}
+		);
+		return data;
+	} catch (error) {
+		console.log("ERRORS :::::::::::::::::", error);
+	}
 }
 
 export default async function page() {
