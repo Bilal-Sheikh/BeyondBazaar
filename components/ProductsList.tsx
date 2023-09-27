@@ -50,8 +50,11 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function ProductsList({ products }) {
+	const router = useRouter();
 	// const seller = products.data.firstName + " " + products.data.lastName;
 	const sellerId = products.data.clerkId;
 
@@ -68,7 +71,10 @@ export default function ProductsList({ products }) {
 			}
 		);
 
-		console.log("PRODCUCT DELETE :::::::::::::::::::", data.message);
+		if (data.success === true) {
+			console.log("PRODUCT DELETED :::::::::::::::::::", data.message);
+			router.refresh();
+		}
 	};
 
 	return (
@@ -94,8 +100,13 @@ export default function ProductsList({ products }) {
 										<DropdownMenuLabel>Options</DropdownMenuLabel>
 										<DropdownMenuSeparator />
 										<DropdownMenuItem>
-											<Pencil className="mr-2 h-4 w-4" />
-											Edit
+											<Link
+												href={`/view-products/${product.id}`}
+												className="flex flex-auto justify-start items-start"
+											>
+												<Pencil className="mr-2 h-4 w-4" />
+												Edit
+											</Link>
 										</DropdownMenuItem>
 										<AlertDialog>
 											<AlertDialogTrigger className="text-red-600 flex flex-auto justify-center items-center px-2">

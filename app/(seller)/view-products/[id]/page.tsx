@@ -78,12 +78,13 @@ const formSchema = z.object({
 	category: z.string().nonempty({ message: "Category is required" }),
 });
 
-export default function AddProducts() {
+export default function EditProducts({ params }: { params: { id: string } }) {
+	const productId = params.id;
 	const [open, setOpen] = React.useState(false);
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const { toast } = useToast();
-
-	const [uploadComplete, setUploadComplete] = useState(false);
+	const [uploadComplete, setUploadComplete] = useState(true);
+	const [product, setProduct] = useState([]);
 	const [images, setImages] = useState<
 		{
 			fileUrl: string;
@@ -91,26 +92,19 @@ export default function AddProducts() {
 		}[]
 	>([]);
 
-	const img = (
-		<>
-			{/* {title} */}
-			<ul>
-				{images.map((image) => (
-					<li key={image.fileUrl} className="mt-2">
-						{/* <Link href={image.fileUrl} target="_blank">
-							{image.fileUrl}
-						</Link> */}
-						<Image
-							src={image.fileUrl}
-							alt="product_img"
-							width={700}
-							height={700}
-						/>
-					</li>
-				))}
-			</ul>
-		</>
-	);
+	React.useEffect(() => {
+		axios
+			.get("http://localhost:3000/api/get-product", {
+				headers: {
+					ProductId: productId,
+				},
+			})
+			.then((res) => {
+				setProduct(res.data.data);
+			});
+	}, []);
+
+	console.log("DATA::::::::::::::::::::::::::::::", product);
 
 	const handleClientUploadComplete = (res?: UploadFileResponse[]) => {
 		if (res) {
@@ -143,11 +137,11 @@ export default function AddProducts() {
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			name: "",
-			description: "",
-			price: "",
-			imageUrl: "",
-			stockQuantity: "",
+			name: product.name,
+			description: product.description,
+			price: product.price,
+			imageUrl: product.imageUrl,
+			stockQuantity: product.stockQuantity,
 			category: "",
 		},
 	});
@@ -169,7 +163,11 @@ export default function AddProducts() {
 		};
 
 		try {
-			const { data } = await axios.post("/api/add-product", product);
+			const { data } = await axios.post("/api/edit-product", product, {
+				headers: {
+					ProductId: productId,
+				},
+			});
 
 			console.log("RESPONSE AXIOS :::::::::::::::::", data);
 
@@ -178,14 +176,14 @@ export default function AddProducts() {
 				toast({
 					variant: "default",
 					title: "Success",
-					description: "Product Added Successfully",
+					description: "Product Edited Successfully",
 				});
 			} else {
 				setIsLoading(false);
 				toast({
 					variant: "destructive",
 					title: "Error",
-					description: "Product was not added. Please try again",
+					description: "Product was not updated. Please try again",
 				});
 			}
 		} catch (error) {
@@ -203,8 +201,10 @@ export default function AddProducts() {
 			<div className="my-10 flex justify-center items-center">
 				<Card className="w-5/6">
 					<CardHeader>
-						<CardTitle>Add New Product</CardTitle>
-						<CardDescription>Add your products in one-click.</CardDescription>
+						<CardTitle>Edit Product</CardTitle>
+						<CardDescription>
+							Change your products in one-click.
+						</CardDescription>
 					</CardHeader>
 					<CardContent>
 						<Form {...form}>
@@ -216,7 +216,11 @@ export default function AddProducts() {
 										<FormItem className="py-2">
 											<FormLabel>Product's name *</FormLabel>
 											<FormControl>
-												<Input placeholder="Name" {...field} />
+												<Input
+													placeholder="Name"
+													defaultValue={product.name}
+													{...field}
+												/>
 											</FormControl>
 											<FormMessage />
 										</FormItem>
@@ -231,6 +235,7 @@ export default function AddProducts() {
 											<FormControl>
 												<Textarea
 													placeholder="Type your description here."
+													defaultValue={product.description}
 													{...field}
 												/>
 											</FormControl>
@@ -250,6 +255,7 @@ export default function AddProducts() {
 														type="number"
 														min={1}
 														placeholder="$ Price"
+														defaultValue={product.price}
 														{...field}
 													/>
 												</FormControl>
@@ -269,6 +275,7 @@ export default function AddProducts() {
 														max={100}
 														type="number"
 														placeholder="Available Stocks"
+														defaultValue={product.stockQuantity}
 														{...field}
 													/>
 												</FormControl>
@@ -559,8 +566,21 @@ export default function AddProducts() {
 												<div className="lg:flex lg:flex-col lg:items-start lg:justify-start">
 													{uploadComplete ? (
 														<>
-															{/* If upload is complete, show imgList */}
-															{img}
+															{images.length === 0 ? (
+																<Image
+																	src={product.imageUrl}
+																	alt="product"
+																	width={700}
+																	height={700}
+																/>
+															) : (
+																<Image
+																	src={images[0].fileUrl}
+																	alt="product_img"
+																	width={700}
+																	height={700}
+																/>
+															)}
 															<Button
 																onClick={() => setUploadComplete(false)}
 																variant="destructive"
@@ -602,7 +622,7 @@ export default function AddProducts() {
 										{isLoading && (
 											<Loader2 className="mr-2 h-4 w-4 animate-spin" />
 										)}
-										Add Product
+										Edit Product
 									</Button>
 								</div>
 							</form>
