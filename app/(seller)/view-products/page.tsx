@@ -2,6 +2,7 @@ import * as React from "react";
 import ProductsList from "@/components/ProductsList";
 import axios from "axios";
 import { currentUser } from "@clerk/nextjs";
+import Loading from "./loading";
 
 async function getProducts() {
 	const user = await currentUser();
@@ -21,10 +22,14 @@ async function getProducts() {
 }
 
 export default async function page() {
+	await new Promise((resolve) => setTimeout(resolve, 2000));
+
 	const products = await getProducts();
 	// console.log("PRODUCTS :::::::::::::::::::::::::", products);
 
 	return (
+		// <Loading />
+
 		<div className="flex flex-wrap justify-center items-center p-14">
 			<ProductsList products={products} />
 		</div>

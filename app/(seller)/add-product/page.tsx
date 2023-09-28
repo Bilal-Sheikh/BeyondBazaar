@@ -541,12 +541,13 @@ export default function AddProducts() {
 													{uploadComplete ? (
 														<>
 															{/* If upload is complete, show imgList */}
-															{/* {img} */}
 															<Image
 																src={images[0].fileUrl}
 																alt="product_img"
-																width={700}
-																height={700}
+																objectFit="contain"
+																width={250}
+																height={150}
+																className="rounded-xl"
 															/>
 															<Button
 																onClick={() => setUploadComplete(false)}
