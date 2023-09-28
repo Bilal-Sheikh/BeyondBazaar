@@ -22,7 +22,7 @@ async function getProducts() {
 }
 
 export default async function page() {
-	await new Promise((resolve) => setTimeout(resolve, 2000));
+	// await new Promise((resolve) => setTimeout(resolve, 2000));
 
 	const products = await getProducts();
 	// console.log("PRODUCTS :::::::::::::::::::::::::", products);

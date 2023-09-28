@@ -69,6 +69,7 @@ import { UploadFileResponse } from "uploadthing/client";
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import { categories } from "@/lib/categories";
+import Loading from "./loading";
 
 const formSchema = z.object({
 	name: z.string().nonempty({ message: "Name is required" }),
@@ -180,6 +181,8 @@ export default function AddProducts() {
 	}
 
 	return (
+		// <Loading />
+
 		<>
 			<div className="my-10 flex justify-center items-center">
 				<Card className="w-5/6">
