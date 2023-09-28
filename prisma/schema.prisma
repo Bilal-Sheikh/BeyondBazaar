@@ -52,7 +52,17 @@ model User {
     updatedAt  DateTime @updatedAt
 
     postedProducts Product[]
+
+    //add Revenue
+    // revenue Int
 }
+
+// prod 1 = sold * price = total revenue for that product /user side
+// prod 2 = sold * price = total revenue for that product /user side
+// prod 3 = sold * price = total revenue for that product /user side
+// prod 4 = sold * price = total revenue for that product /user side
+
+// Totatl revenue = productRevenue /seller side
 
 model Product {
     id            Int    @id @default(autoincrement())
@@ -66,6 +76,10 @@ model Product {
 
     postedBy   User   @relation(fields: [postedById], references: [clerkId])
     postedById String
+
+    //number of times sold
+    // totalSales     Int
+    // productRevenue Int
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

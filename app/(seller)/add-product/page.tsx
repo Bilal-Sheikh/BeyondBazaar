@@ -1,5 +1,6 @@
 "use client";
 
+import { Skeleton } from "@/components/ui/skeleton";
 import { OurFileRouter } from "@/app/api/(seller)/uploadthing/core";
 import { useState } from "react";
 import Image from "next/image";
@@ -89,27 +90,6 @@ export default function AddProducts() {
 			fileKey: string;
 		}[]
 	>([]);
-
-	// const img = (
-	// 	<>
-	// 		{/* {title} */}
-	// 		<ul>
-	// 			{images.map((image) => (
-	// 				<li key={image.fileUrl} className="mt-2">
-	// 					{/* <Link href={image.fileUrl} target="_blank">
-	// 						{image.fileUrl}
-	// 					</Link> */}
-	// 					<Image
-	// 						src={image.fileUrl}
-	// 						alt="product_img"
-	// 						width={700}
-	// 						height={700}
-	// 					/>
-	// 				</li>
-	// 			))}
-	// 		</ul>
-	// 	</>
-	// );
 
 	const handleClientUploadComplete = (res?: UploadFileResponse[]) => {
 		if (res) {

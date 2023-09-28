@@ -8,6 +8,12 @@ const nextConfig = {
 			},
 		],
 	},
+	module: {
+		rules: [
+		  { test: /\.ts$/, loader: "ts-loader" },  
+		  { test: /\.node$/, use: "node-loader"}
+		]
+	  }
 };
 
 module.exports = nextConfig;

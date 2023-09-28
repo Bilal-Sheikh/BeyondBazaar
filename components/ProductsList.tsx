@@ -142,8 +142,8 @@ export default function ProductsList({ products }) {
 							</div>
 						</div>
 						<div className="flex flex-col space-y-1.5">
-							<AspectRatio ratio={3 / 2}>
-								<Image src={product.imageUrl} alt="product" fill />
+							<AspectRatio ratio={1 / 1}>
+								<Image src={product.imageUrl} alt="product" width={250} height={150} className="rounded-md h-auto w-auto"/>
 							</AspectRatio>
 						</div>
 					</CardHeader>
