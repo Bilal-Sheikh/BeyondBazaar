@@ -80,7 +80,7 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 									<Separator />
 									<Button variant="link" className="w-full py-7">
 										<span className="items-center justify-between py-4 font-medium text-lg transition-all hover:underline">
-											<Link href="/">View Your Shop</Link>
+											<Link href="/view-shop">View Your Shop</Link>
 										</span>
 									</Button>
 								</div>

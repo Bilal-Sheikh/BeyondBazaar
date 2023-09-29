@@ -573,16 +573,20 @@ export default function EditProducts({ params }: { params: { id: string } }) {
 															{images.length === 0 ? (
 																<Image
 																	src={product.imageUrl}
-																	alt="product"
-																	width={700}
-																	height={700}
+																	alt="product_img"
+																	objectFit="contain"
+																	width={250}
+																	height={150}
+																	className="rounded-xl"
 																/>
 															) : (
 																<Image
 																	src={images[0].fileUrl}
 																	alt="product_img"
-																	width={700}
-																	height={700}
+																	objectFit="contain"
+																	width={250}
+																	height={150}
+																	className="rounded-xl"
 																/>
 															)}
 															<Button
@@ -619,7 +623,7 @@ export default function EditProducts({ params }: { params: { id: string } }) {
 								/>
 								<div className="flex py-9 justify-center gap-6">
 									<Button variant="outline" className="w-52" asChild>
-										<Link href={"/"}>Cancel</Link>
+										<Link href={"/view-products"}>Cancel</Link>
 									</Button>
 
 									<Button disabled={isLoading} className="w-52" type="submit">

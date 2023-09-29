@@ -53,7 +53,13 @@ import {
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-export default function ProductsList({ productsEntries, sellerId } : {productsEntries: any, sellerId: string}) {
+export default function ProductsList({
+	productsEntries,
+	sellerId,
+}: {
+	productsEntries: any;
+	sellerId: string;
+}) {
 	const router = useRouter();
 	// const seller = products.data.firstName + " " + products.data.lastName;
 	// const sellerId = products.data.clerkId;
@@ -144,18 +150,18 @@ export default function ProductsList({ productsEntries, sellerId } : {productsEn
 						<div className="flex flex-col space-y-1.5">
 							<AspectRatio ratio={1 / 1}>
 								<Image
-									src={product.imageUrl}
 									alt="product"
-									width={250}
-									height={150}
-									className="rounded-md h-auto w-auto"
+									src={product.imageUrl}
+									className="rounded-xl"
+									fill
+									priority={true}
 								/>
 							</AspectRatio>
 						</div>
 					</CardHeader>
 					<CardContent>
 						<div className="grid w-full items-center gap-4">
-							<CardTitle className="line-clamp-4 text-lg font-semibold tracking-tight transition-colors first:mt-0">
+							<CardTitle className="line-clamp-2 text-lg font-semibold tracking-tight transition-colors first:mt-0">
 								{product.name}
 							</CardTitle>
 							<CardDescription className="line-clamp-4 text-sm text-muted-foreground first:mt-0">

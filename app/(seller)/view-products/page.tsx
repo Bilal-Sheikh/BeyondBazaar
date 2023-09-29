@@ -5,7 +5,7 @@ import { currentUser } from "@clerk/nextjs";
 import Loading from "./loading";
 import PaginationControls from "@/components/PaginationControls";
 
-const dynamic = 'force-dynamic'
+const dynamic = "force-dynamic";
 
 async function getProducts() {
 	const user = await currentUser();
@@ -50,9 +50,11 @@ export default async function page({
 	return (
 		// <Loading />
 		<div className="flex flex-col items-center">
-			<div className="flex flex-wrap justify-center items-center p-14">
-				<ProductsList productsEntries={productsEntries} sellerId={sellerId} />
-			</div>
+			<React.Suspense fallback={<Loading />}>
+				<div className="flex flex-wrap justify-center items-center p-14">
+					<ProductsList productsEntries={productsEntries} sellerId={sellerId} />
+				</div>
+			</React.Suspense>
 
 			<PaginationControls
 				hasPrevPage={start > 0}
