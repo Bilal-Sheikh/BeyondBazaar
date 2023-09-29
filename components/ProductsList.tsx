@@ -53,10 +53,10 @@ import {
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-export default function ProductsList({ products }) {
+export default function ProductsList({ productsEntries, sellerId } : {productsEntries: any, sellerId: string}) {
 	const router = useRouter();
 	// const seller = products.data.firstName + " " + products.data.lastName;
-	const sellerId = products.data.clerkId;
+	// const sellerId = products.data.clerkId;
 
 	const handleDelete = async (productId) => {
 		console.log("DELETION STARTED FOR PRODUCT :::::::::::::::::::", productId);
@@ -82,12 +82,12 @@ export default function ProductsList({ products }) {
 
 	return (
 		<>
-			{products.postedProducts.length === 0 && (
+			{productsEntries.length === 0 && (
 				<div className="my-40 lg:my-52 place-content-center text-center text-2xl font-bold">
 					No products found. Please add some products.
 				</div>
 			)}
-			{products.postedProducts.map((product) => (
+			{productsEntries.map((product) => (
 				<Card className="w-[300px] m-2" key={product.id}>
 					<CardHeader>
 						<div className="flex justify-between items-center">
