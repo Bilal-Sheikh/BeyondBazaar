@@ -52,12 +52,13 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { Product } from "@prisma/client";
 
 export default function ProductsList({
 	productsEntries,
 	sellerId,
 }: {
-	productsEntries: any;
+	productsEntries: Product;
 	sellerId: string;
 }) {
 	const router = useRouter();
