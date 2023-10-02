@@ -29,7 +29,7 @@ export async function GET() {
 		});
 		const postedProducts = data?.postedProducts || [];
 
-		console.log("(API) USER WITH PRODUCTS:::::::::::::::::::", postedProducts);
+		// console.log("(API) USER WITH PRODUCTS:::::::::::::::::::", postedProducts);
 
 		return NextResponse.json({
 			success: true,

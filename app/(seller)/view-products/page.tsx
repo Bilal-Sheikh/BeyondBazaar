@@ -4,6 +4,8 @@ import axios from "axios";
 import { currentUser } from "@clerk/nextjs";
 import Loading from "./loading";
 import PaginationControls from "@/components/PaginationControls";
+import { Button } from "@/components/ui/button";
+import { Searchbar } from "@/components/Searchbar";
 
 const dynamic = "force-dynamic";
 
@@ -30,6 +32,7 @@ export default async function page({
 	searchParams: { [key: string]: string | string[] | undefined };
 }) {
 	// await new Promise((resolve) => setTimeout(resolve, 2000));
+
 	const data = await getProducts();
 	const sellerId = data.data.clerkId;
 
@@ -49,9 +52,24 @@ export default async function page({
 
 	return (
 		// <Loading />
-		<div className="flex flex-col items-center">
+		<div className="flex flex-col justify-center items-center">
+			<div className="flex flex-wrap justify-center w-96 px-14 pt-5 md:flex md:flex-wrap md:justify-center md:items-center md:w-10/12 md:px-14 md:pt-5">
+				<div className="flex justify-start w-full gap-4 md:w-2/5">
+					<div>
+						<Button>Sort</Button>
+					</div>
+					<div>
+						<Button>Filter</Button>
+					</div>
+				</div>
+
+				<div className="w-full py-5 md:w-3/5">
+					<Searchbar products={products}/> 
+					</div>
+			</div>
+
 			<React.Suspense fallback={<Loading />}>
-				<div className="flex flex-wrap justify-center items-center p-14">
+				<div className="flex flex-wrap justify-center items-center px-14">
 					<ProductsList productsEntries={productsEntries} sellerId={sellerId} />
 				</div>
 			</React.Suspense>
