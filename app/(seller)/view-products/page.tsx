@@ -1,13 +1,11 @@
 import * as React from "react";
-import ProductsList from "@/components/ProductsList";
+import ProductsList from "@/components/seller/ProductsList";
 import axios from "axios";
 import { currentUser } from "@clerk/nextjs";
 import Loading from "./loading";
-import PaginationControls from "@/components/PaginationControls";
+import PaginationControls from "@/components/seller/PaginationControls";
 import { Button } from "@/components/ui/button";
 import { Searchbar } from "@/components/Searchbar";
-
-const dynamic = "force-dynamic";
 
 async function getProducts() {
 	const user = await currentUser();
@@ -42,9 +40,8 @@ export default async function page({
 	const page = searchParams["page"] ?? "1";
 	const per_page = searchParams["per_page"] ?? "8";
 
-	// mocked, skipped and limited in the real app
-	const start = (Number(page) - 1) * Number(per_page); // 0, 5, 10 ...
-	const end = start + Number(per_page); // 5, 10, 15 ...
+	const start = (Number(page) - 1) * Number(per_page);
+	const end = start + Number(per_page);
 
 	const products = data.postedProducts;
 	const totalProducts = products.length;

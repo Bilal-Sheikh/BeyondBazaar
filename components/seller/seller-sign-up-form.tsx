@@ -5,9 +5,9 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/icons";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
@@ -20,7 +20,7 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import SignInOAuthButtons from "./SignInOAuthButtons";
+import SignInOAuthButtons from "@/components/SignInOAuthButtons";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { headers } from "next/headers";

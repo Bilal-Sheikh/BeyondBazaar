@@ -2,7 +2,7 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { SignInForm } from "@/components/sign-in-form";
-import logoBlack from "../../public/logoBlack.png";
+import logoBlack from "@/public/logoBlack.png";
 import shopping from "../../public/shopping.jpg";
 import Image from "next/image";
 

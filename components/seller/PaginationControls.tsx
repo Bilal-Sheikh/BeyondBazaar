@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import {
 	ChevronLeft,
 	ChevronRight,
@@ -36,7 +36,7 @@ export default function PaginationControls({
 						variant={"outline"}
 						className="h-8 w-8 p-0"
 						onClick={() => {
-							router.push("/view-products/?page= 1");
+							router.push("/view-products/?page=1");
 						}}
 					>
 						<ChevronsLeft className="h-4 w-4" />

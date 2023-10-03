@@ -6,7 +6,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { SignUpForm } from "@/components/sign-up-form";
 import Image from "next/image";
-import logoBlack from "../../public/logoBlack.png";
+import logoBlack from "@/public/logoBlack.png";
 import shopping from "../../public/shopping.jpg";
 
 export const metadata: Metadata = {

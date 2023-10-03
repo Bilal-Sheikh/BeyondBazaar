@@ -46,24 +46,3 @@ export async function GET() {
 		});
 	}
 }
-
-// should use for userdashboard
-// export async function GET() {
-// 	try {
-// 		const data = await prisma.product.findMany();
-
-// 		console.log("(API) ALL PRODUCTS:::::::::::::::::::", data);
-
-// 		return NextResponse.json({
-// 			success: true,
-// 			message: "Successfully retrieved all products.",
-// 			data
-// 		});
-// 	} catch (error) {
-// 		console.log("(API) ERROR:::::::::::::::::::", error);
-// 		return NextResponse.json({
-// 			success: false,
-// 			message: "Error showing the product.",
-// 		});
-// 	}
-// }

@@ -6,7 +6,7 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet";
-import logoBlack from "../public/logoBlack.png";
+import logoBlack from "@/public/logoBlack.png";
 import Link from "next/link";
 import Image from "next/image";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -88,12 +88,15 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 								<div className="pr-20">
 									<Accordion type="multiple" className="w-full">
 										<AccordionItem value="item-1">
-											<AccordionTrigger>Clothing</AccordionTrigger>
+											<AccordionTrigger>All Products</AccordionTrigger>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/"}>Men's Top Wear</Link>
+													<Link href={"/products"}>All Products</Link>
 												</span>
 											</AccordionContent>
+										</AccordionItem>
+										<AccordionItem value="item-2">
+											<AccordionTrigger>Clothing</AccordionTrigger>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
 													<Link href={"/"}>Men's Bottom Wear</Link>
@@ -125,7 +128,7 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 												</span>
 											</AccordionContent>
 										</AccordionItem>
-										<AccordionItem value="item-2">
+										<AccordionItem value="item-3">
 											<AccordionTrigger>Accessories</AccordionTrigger>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
@@ -153,7 +156,7 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 												</span>
 											</AccordionContent>
 										</AccordionItem>
-										<AccordionItem value="item-3">
+										<AccordionItem value="item-4">
 											<AccordionTrigger>Electronics?</AccordionTrigger>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
@@ -176,7 +179,7 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 												</span>
 											</AccordionContent>
 										</AccordionItem>
-										<AccordionItem value="item-4">
+										<AccordionItem value="item-5">
 											<AccordionTrigger>Mobiles</AccordionTrigger>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
@@ -184,11 +187,11 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 												</span>
 											</AccordionContent>
 										</AccordionItem>
-										<AccordionItem value="item-5">
-											<AccordionTrigger>Wierd Stuff</AccordionTrigger>
+										<AccordionItem value="item-6">
+											<AccordionTrigger>Other</AccordionTrigger>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/"}>Wierd Stuff</Link>
+													<Link href={"/"}>Other</Link>
 												</span>
 											</AccordionContent>
 										</AccordionItem>

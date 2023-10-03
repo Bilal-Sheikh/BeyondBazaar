@@ -1,8 +1,7 @@
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { currentUser } from "@clerk/nextjs";
-import UserDashboard from "@/components/UserDashboard";
-import SellerDashboard from "@/components/SellerDashboard";
+import UserDashboard from "@/components/user/UserDashboard";
+import SellerDashboard from "@/components/seller/SellerDashboard";
 
 export default async function Home() {
 	const user = await currentUser();

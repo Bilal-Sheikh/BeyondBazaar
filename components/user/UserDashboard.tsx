@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "./Navbar";
+import Navbar from "../Navbar";
 import axios from "axios";
 import clothing from "@/public/clothing.jpg";
 import accessories from "@/public/accessories.jpg";
@@ -7,7 +7,7 @@ import electronics from "@/public/electronics.jpg";
 import mobiles from "@/public/mobiles.jpg";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { AspectRatio } from "./ui/aspect-ratio";
+import { AspectRatio } from "../ui/aspect-ratio";
 
 export default async function UserDashboard() {
 	// works
@@ -51,7 +51,7 @@ export default async function UserDashboard() {
 						Find the products you're looking for in a variety of categories.
 					</p>
 
-					<div className="relative grid grid-cols-2 lg:grid-cols-4 justify-center rounded-xl gap-4">
+					<div className="relative grid grid-cols-2 lg:grid-cols-4 justify-center rounded-xl gap-4 pt-5">
 						<div className="overflow-hidden rounded-xl">
 							<div className="relative h-full">
 								<Image
