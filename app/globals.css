@@ -57,3 +57,7 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+.custom-desc {
+	@apply line-clamp-6 whitespace-pre-wrap leading-7;
+}

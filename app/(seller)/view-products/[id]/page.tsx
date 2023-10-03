@@ -95,7 +95,7 @@ export default function EditProducts({ params }: { params: { id: string } }) {
 	React.useEffect(() => {
 		try {
 			axios
-				.get("http://localhost:3000/api/get-product", {
+				.get("http://localhost:3000/api/get-seller-product", {
 					headers: {
 						ProductId: productId,
 					},
