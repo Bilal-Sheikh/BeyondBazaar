@@ -51,7 +51,7 @@ export default async function products({
 			</div>
 
 			<React.Suspense fallback={<Loading />}>
-				<div className="flex flex-wrap justify-center items-center px-14">
+				<div className="flex flex-col justify-center items-center mx-4 gap-5 lg:grid lg:grid-cols-3 lg:px-14 lg:gap-10">
 					<ProductsList products={products} />
 				</div>
 			</React.Suspense>

@@ -66,11 +66,11 @@ export default function ProductsList({ products }: { products: Product }) {
 		<>
 			{products.length === 0 && (
 				<div className="my-40 lg:my-52 place-content-center text-center text-2xl font-bold">
-					No products found. Please try refreshing the page
+					No products found. Please come back later
 				</div>
 			)}
 			{products.map((product) => (
-				<Card className="w-[400px] m-6" key={product.id}>
+				<Card className="w-full" key={product.id}>
 					<CardHeader
 						className="cursor-pointer"
 						onClick={() => router.push(`/products/${product.id}`)}
@@ -79,13 +79,15 @@ export default function ProductsList({ products }: { products: Product }) {
 							<div>
 								<Badge className="">{product.category}</Badge>
 							</div>
-							<div>
+							<div className="hidden lg:flex">
 								<Button variant="outline" size="icon">
 									<Heart size={17} />
 								</Button>
 							</div>
 						</div>
-						<div className="flex flex-col space-y-1.5">
+
+						{/* PC */}
+						<div className="hidden lg:flex lg:flex-col lg:space-y-1.5">
 							<AspectRatio ratio={16 / 9}>
 								<Image
 									alt="product"
@@ -99,13 +101,29 @@ export default function ProductsList({ products }: { products: Product }) {
 						</div>
 					</CardHeader>
 					<CardContent>
-						<div className="grid w-full items-center gap-4">
-							<CardTitle
-								onClick={() => router.push(`/products/${product.id}`)}
-								className="cursor-pointer line-clamp-2 text-lg hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0"
-							>
-								{product.name}
-							</CardTitle>
+						{/* MOBILE */}
+						<div className="flex flex-auto w-full gap-4">
+							<div className="flex flex-auto space-y-1.5 lg:hidden w-1/4">
+								<AspectRatio ratio={1 / 1} >
+									<Image
+										alt="product"
+										src={product.imageUrl}
+										className="rounded-xl"
+										fill
+										objectFit="contain"
+										priority={true}
+									/>
+								</AspectRatio>
+							</div>
+
+							<div className="grid w-full h-20 top-0 gap-4">
+								<CardTitle
+									onClick={() => router.push(`/products/${product.id}`)}
+									className="cursor-pointer line-clamp-2 text-lg hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0"
+								>
+									{product.name}
+								</CardTitle>
+							</div>
 						</div>
 					</CardContent>
 					<CardFooter className="flex space-y-1 justify-between items-center">
@@ -116,7 +134,7 @@ export default function ProductsList({ products }: { products: Product }) {
 								$ {product.price}
 							</Label>
 						</div>
-						<div className="w-60">
+						<div className="w-30 lg:w-2/3">
 							<Button disabled={isLoading} className="w-full">
 								{isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
 								Add to Cart

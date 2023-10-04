@@ -13,7 +13,14 @@ import React from "react";
 import products from "../page";
 import Image from "next/image";
 import axios from "axios";
-import { ChevronsUpDown, Heart, Plus, X } from "lucide-react";
+import {
+	ChevronDown,
+	ChevronUp,
+	ChevronsUpDown,
+	Heart,
+	Plus,
+	X,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -73,9 +80,10 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 			{loading ? (
 				<Loading />
 			) : (
-				<div className="px-10 py-20">
-					<section className="grid grid-cols-2 gap-10">
-						<div className="relative">
+				<div className="px-10 py-5 lg:py-20">
+					<section className="flex-auto block lg:grid lg:grid-cols-2 lg:gap-10">
+						{/* PC */}
+						<div className="hidden lg:block lg:relative">
 							<div className="sticky top-24">
 								<AspectRatio ratio={1 / 1}>
 									<Image
@@ -87,6 +95,19 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 									/>
 								</AspectRatio>
 							</div>
+						</div>
+
+						{/* MOBILE */}
+						<div className="block lg:hidden">
+							<AspectRatio ratio={4 / 5}>
+								<Image
+									alt="productImg"
+									src={product?.imageUrl}
+									fill
+									objectFit="contain"
+									loading="lazy"
+								/>
+							</AspectRatio>
 						</div>
 
 						<div>
@@ -105,10 +126,6 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 
 							<Separator className="my-6" />
 
-							{/* <p className="line-clamp-6 whitespace-pre-wrap leading-7">
-								{product?.description}
-							</p> */}
-
 							<p
 								className={
 									open ? "whitespace-pre-wrap leading-7" : "custom-desc"
@@ -118,8 +135,20 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 								{product?.description}
 							</p>
 							{showReadMore && (
-								<Button onClick={() => setOpen(!open)} variant="link">
-									{open ? "Read less" : "Read more"}
+								<Button
+									onClick={() => setOpen(!open)}
+									variant="link"
+									className="text-blue-500"
+								>
+									{open ? (
+										<>
+											Read less <ChevronUp />
+										</>
+									) : (
+										<>
+											Read more <ChevronDown />
+										</>
+									)}
 								</Button>
 							)}
 							<Separator className="my-6" />
