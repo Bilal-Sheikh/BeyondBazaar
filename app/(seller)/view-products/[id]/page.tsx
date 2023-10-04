@@ -258,6 +258,7 @@ export default function EditProducts({ params }: { params: { id: string } }) {
 													<Input
 														type="number"
 														min={1}
+														max={999999}
 														placeholder="$ Price"
 														defaultValue={product.price}
 														{...field}

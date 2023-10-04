@@ -233,6 +233,7 @@ export default function AddProducts() {
 													<Input
 														type="number"
 														min={1}
+														max={999999}
 														placeholder="$ Price"
 														{...field}
 													/>

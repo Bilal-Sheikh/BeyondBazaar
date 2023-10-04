@@ -26,8 +26,12 @@ export default function PaginationControls({
 	const page = searchParams.get("page") ?? "1";
 	const per_page = searchParams.get("per_page") ?? "15";
 	const category = searchParams.get("category");
+	const price = searchParams.get("price");
+	const date = searchParams.get("date");
 
 	const categoryParam = category ? `&category=${category}` : "";
+	const priceParam = price ? `&price=${price}` : "";
+	const dateParam = date ? `&date=${date}` : "";
 
 	const totalPages = Math.ceil(totalProducts / Number(per_page));
 
@@ -39,7 +43,9 @@ export default function PaginationControls({
 						variant={"outline"}
 						className="h-8 w-8 p-0"
 						onClick={() => {
-							router.push(`/products/?page=1${categoryParam}`);
+							router.push(
+								`/products/?page=1${categoryParam}${priceParam}${dateParam}`
+							);
 						}}
 					>
 						<ChevronsLeft className="h-4 w-4" />
@@ -52,7 +58,7 @@ export default function PaginationControls({
 							router.push(
 								`/products/?page=${
 									Number(page) - 1
-								}&per_page=${per_page}${categoryParam}`
+								}&per_page=${per_page}${categoryParam}${priceParam}${dateParam}`
 							);
 						}}
 					>
@@ -74,7 +80,7 @@ export default function PaginationControls({
 							router.push(
 								`/products/?page=${
 									Number(page) + 1
-								}&per_page=${per_page}${categoryParam}`
+								}&per_page=${per_page}${categoryParam}${priceParam}${dateParam}`
 							);
 						}}
 					>
@@ -84,7 +90,9 @@ export default function PaginationControls({
 						variant={"outline"}
 						className="h-8 w-8 p-0"
 						onClick={() => {
-							router.push(`/products/?page=${totalPages}${categoryParam}`);
+							router.push(
+								`/products/?page=${totalPages}${categoryParam}${priceParam}${dateParam}`
+							);
 						}}
 					>
 						<ChevronsRight className="h-4 w-4" />

@@ -9,36 +9,52 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { prisma } from "@/lib/db";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
+import { useRouter } from "next/navigation";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 
 export default function SortFilter() {
-
-    
-	function handlePriceHigh() {
-		try {
-			const data = prisma.product.findMany({
-				orderBy: { price: "desc" },
-			});
-
-			return data;
-		} catch (error) {
-			console.log("ERRORS IN SORT :::::::::::::::::", error);
-		}
-	}
+	const router = useRouter();
 
 	return (
 		<div>
-			<Select>
-				<SelectTrigger className="w-[180px]">
-					<SelectValue placeholder="Sort" />
-				</SelectTrigger>
-				<SelectContent>
-					<SelectItem value="price_high" onClick={handlePriceHigh}>
+			<DropdownMenu>
+				<DropdownMenuTrigger
+					className={cn(buttonVariants({ variant: "outline" }))}
+				>
+					Sort
+				</DropdownMenuTrigger>
+				<DropdownMenuContent>
+					<DropdownMenuLabel>Sort By</DropdownMenuLabel>
+					<DropdownMenuSeparator />
+
+					<DropdownMenuItem
+						onSelect={() => router.push("/products?price=desc")}
+					>
 						Price ↑
-					</SelectItem>
-					<SelectItem value="price_low">Price ↓</SelectItem>
-				</SelectContent>
-			</Select>
+					</DropdownMenuItem>
+					<DropdownMenuItem onSelect={() => router.push("/products?price=asc")}>
+						Price ↓
+					</DropdownMenuItem>
+
+					<DropdownMenuSeparator />
+
+					<DropdownMenuItem onSelect={() => router.push("/products?date=desc")}>
+						Date ↑
+					</DropdownMenuItem>
+					<DropdownMenuItem onSelect={() => router.push("/products?date=asc")}>
+						Date ↓
+					</DropdownMenuItem>
+				</DropdownMenuContent>
+			</DropdownMenu>
 
 			<Button>Filter</Button>
 		</div>

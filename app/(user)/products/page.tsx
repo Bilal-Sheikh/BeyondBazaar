@@ -18,66 +18,64 @@ export default async function products({
 }: {
 	searchParams: { [key: string]: string | string[] | undefined };
 }) {
+	let products;
+	let totalProducts;
+
 	const page = searchParams["page"] ?? "1";
 	const per_page = searchParams["per_page"] ?? "15";
 	const category = searchParams["category"];
-	// const sort = searchParams["sort"];
+	const price = searchParams["price"];
+	const date = searchParams["date"];
+
+	const initialSkip = (Number(page) - 1) * Number(per_page);
+	const end = initialSkip + Number(per_page);
 
 	// console.log("SEARCH PARAMS CATEGORY:::::::::::::::::::::::::::::", category);
+	// console.log("SEARCH PARAMS PRICE :::::::::::::::::::::::::::::", price);
+	console.log("SEARCH PARAMS DATE :::::::::::::::::::::::::::::", date);
 
-	async function getProducts() {
-		if (searchParams.category !== undefined && searchParams.category !== null) {
-			try {
-				const data = await prisma.product.findMany({
-					where: {
-						category: category,
-					},
-					skip: initialSkip,
-					take: Number(per_page),
-					include: {
-						postedBy: true,
-					},
-					orderBy: {
-						createdAt: "desc",
-					},
-				});
+	async function getAllProducts() {
+		try {
+			const data = await prisma.product.findMany({
+				skip: initialSkip,
+				take: Number(per_page),
+				include: {
+					postedBy: true,
+				},
+				orderBy: {
+					createdAt: "desc",
+				},
+			});
 
-				return data;
-			} catch (error) {
-				console.log("ERRORS :::::::::::::::::", error);
-			}
-		} else {
-			try {
-				const data = await prisma.product.findMany({
-					skip: initialSkip,
-					take: Number(per_page),
-					include: {
-						postedBy: true,
-					},
-					orderBy: {
-						createdAt: "desc",
-					},
-				});
-
-				return data;
-			} catch (error) {
-				console.log("ERRORS :::::::::::::::::", error);
-			}
+			return data;
+		} catch (error) {
+			console.log("ERRORS :::::::::::::::::", error);
 		}
 	}
 
-	async function getProductCount() {
-		if (searchParams.category) {
-			try {
-				const totalProducts = await prisma.product.count({
-					where: { category: category },
-				});
-				return totalProducts;
-			} catch (error) {
-				console.log("ERRORS :::::::::::::::::", error);
-			}
-		}
+	async function getProductsByCategory() {
+		try {
+			const data = await prisma.product.findMany({
+				where: {
+					category: category,
+				},
+				skip: initialSkip,
+				take: Number(per_page),
+				include: {
+					postedBy: true,
+				},
+				orderBy: {
+					createdAt: "desc",
+				},
+			});
 
+			return data;
+		} catch (error) {
+			console.log("ERRORS :::::::::::::::::", error);
+		}
+	}
+
+	async function getAllProductCount() {
 		try {
 			const totalProducts = await prisma.product.count();
 			return totalProducts;
@@ -86,14 +84,67 @@ export default async function products({
 		}
 	}
 
-	const initialSkip = (Number(page) - 1) * Number(per_page);
-	const end = initialSkip + Number(per_page);
+	async function getProductCountByCategory() {
+		try {
+			const totalProducts = await prisma.product.count({
+				where: { category: category },
+			});
+			return totalProducts;
+		} catch (error) {
+			console.log("ERRORS :::::::::::::::::", error);
+		}
+	}
 
-	const products = await getProducts();
-	const totalProducts = await getProductCount();
+	async function getProductsByPrice() {
+		try {
+			const data = prisma.product.findMany({
+				skip: initialSkip,
+				take: Number(per_page),
+				include: {
+					postedBy: true,
+				},
+				orderBy: { price: price },
+			});
 
-	// const products = data.postedProducts;
-	// const productsEntries = products.slice(start, end);
+			return data;
+		} catch (error) {
+			console.log("ERRORS IN price :::::::::::::::::", error);
+		}
+	}
+
+	async function getProductsByDate() {
+		try {
+			const data = prisma.product.findMany({
+				skip: initialSkip,
+				take: Number(per_page),
+				include: {
+					postedBy: true,
+				},
+				orderBy: { createdAt: date },
+			});
+
+			return data;
+		} catch (error) {
+			console.log("ERRORS IN price :::::::::::::::::", error);
+		}
+	}
+
+	if (searchParams.date !== undefined && searchParams.date !== null) {
+		products = await getProductsByDate();
+		totalProducts = await getAllProductCount();
+	} else if (searchParams.price !== undefined && searchParams.price !== null) {
+		products = await getProductsByPrice();
+		totalProducts = await getAllProductCount();
+	} else if (
+		searchParams.category !== undefined &&
+		searchParams.category !== null
+	) {
+		products = await getProductsByCategory();
+		totalProducts = await getProductCountByCategory();
+	} else {
+		products = await getAllProducts();
+		totalProducts = await getAllProductCount();
+	}
 
 	// console.log("ALL PRODUCTS::::::::::::::::", products);
 	// console.log("PRODUCTS COUNT::::::::::::::::", totalProducts);
@@ -115,7 +166,7 @@ export default async function products({
 						<div className="flex justify-start w-full gap-10">
 							{/* <Button>Sort</Button>
 							<Button>Filter</Button> */}
-							{/* <SortFilter /> */}
+							<SortFilter />
 						</div>
 					</div>
 
