@@ -84,25 +84,37 @@ export default async function products({
 
 	return (
 		<div className="flex flex-col justify-center items-center">
-			<div className="flex flex-wrap justify-center w-96 px-14 py-5 md:flex md:flex-wrap md:justify-center md:items-center md:w-10/12 md:px-14 md:pt-5">
-				<div className="flex justify-start w-full gap-10">
-					<Button>Sort</Button>
-					<Button>Filter</Button>
+			{products.length === 0 ? (
+				<div className="flex justify-center items-center h-screen">
+					<div className="text-center">
+						<h1 className="text-2xl font-semibold tracking-tight lg:text-5xl">
+							No product found. Please try again later
+						</h1>
+					</div>
 				</div>
-			</div>
+			) : (
+				<div>
+					<div className="flex flex-wrap justify-center w-96 px-14 py-5 md:flex md:flex-wrap md:justify-center md:items-center md:w-10/12 md:px-14 md:pt-5">
+						<div className="flex justify-start w-full gap-10">
+							<Button>Sort</Button>
+							<Button>Filter</Button>
+						</div>
+					</div>
 
-			<React.Suspense fallback={<Loading />}>
-				<div className="flex flex-col justify-center items-center mx-4 gap-5 lg:grid lg:grid-cols-3 lg:px-14 lg:gap-10">
-					<ProductsList products={products} />
+					<React.Suspense fallback={<Loading />}>
+						<div className="flex flex-col justify-center items-center mx-4 gap-5 lg:grid lg:grid-cols-3 lg:px-14 lg:gap-10">
+							<ProductsList products={products} />
+						</div>
+					</React.Suspense>
+
+					<PaginationControls
+						hasPrevPage={initialSkip > 0}
+						hasNextPage={end < totalProducts}
+						totalProducts={totalProducts}
+						productCategory={category}
+					/>
 				</div>
-			</React.Suspense>
-
-			<PaginationControls
-				hasPrevPage={initialSkip > 0}
-				hasNextPage={end < totalProducts}
-				totalProducts={totalProducts}
-				productCategory={category}
-			/>
+			)}
 		</div>
 	);
 }

@@ -64,11 +64,6 @@ export default function ProductsList({ products }: { products: Product }) {
 
 	return (
 		<>
-			{products.length === 0 && (
-				<div className="my-40 lg:my-52 place-content-center text-center text-2xl font-bold">
-					No products found. Please come back later
-				</div>
-			)}
 			{products.map((product) => (
 				<Card className="w-full" key={product.id}>
 					<CardHeader
@@ -104,7 +99,7 @@ export default function ProductsList({ products }: { products: Product }) {
 						{/* MOBILE */}
 						<div className="flex flex-auto w-full gap-4">
 							<div className="flex flex-auto space-y-1.5 lg:hidden w-1/4">
-								<AspectRatio ratio={1 / 1} >
+								<AspectRatio ratio={1 / 1}>
 									<Image
 										alt="product"
 										src={product.imageUrl}
