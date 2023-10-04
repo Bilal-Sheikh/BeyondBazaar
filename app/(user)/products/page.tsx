@@ -4,6 +4,14 @@ import React from "react";
 import Loading from "../loading";
 import ProductsList from "@/components/user/ProductsList";
 import PaginationControls from "@/components/user/PaginationControls";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
+import SortFilter from "@/components/SortFilter";
 
 export default async function products({
 	searchParams,
@@ -13,9 +21,12 @@ export default async function products({
 	const page = searchParams["page"] ?? "1";
 	const per_page = searchParams["per_page"] ?? "15";
 	const category = searchParams["category"];
+	// const sort = searchParams["sort"];
+
+	// console.log("SEARCH PARAMS CATEGORY:::::::::::::::::::::::::::::", category);
 
 	async function getProducts() {
-		if (searchParams.category) {
+		if (searchParams.category !== undefined && searchParams.category !== null) {
 			try {
 				const data = await prisma.product.findMany({
 					where: {
@@ -26,26 +37,32 @@ export default async function products({
 					include: {
 						postedBy: true,
 					},
+					orderBy: {
+						createdAt: "desc",
+					},
 				});
 
 				return data;
 			} catch (error) {
 				console.log("ERRORS :::::::::::::::::", error);
 			}
-		}
+		} else {
+			try {
+				const data = await prisma.product.findMany({
+					skip: initialSkip,
+					take: Number(per_page),
+					include: {
+						postedBy: true,
+					},
+					orderBy: {
+						createdAt: "desc",
+					},
+				});
 
-		try {
-			const data = await prisma.product.findMany({
-				skip: initialSkip,
-				take: Number(per_page),
-				include: {
-					postedBy: true,
-				},
-			});
-
-			return data;
-		} catch (error) {
-			console.log("ERRORS :::::::::::::::::", error);
+				return data;
+			} catch (error) {
+				console.log("ERRORS :::::::::::::::::", error);
+			}
 		}
 	}
 
@@ -96,8 +113,9 @@ export default async function products({
 				<div>
 					<div className="flex flex-wrap justify-center w-96 px-14 py-5 md:flex md:flex-wrap md:justify-center md:items-center md:w-10/12 md:px-14 md:pt-5">
 						<div className="flex justify-start w-full gap-10">
-							<Button>Sort</Button>
-							<Button>Filter</Button>
+							{/* <Button>Sort</Button>
+							<Button>Filter</Button> */}
+							{/* <SortFilter /> */}
 						</div>
 					</div>
 
@@ -111,7 +129,6 @@ export default async function products({
 						hasPrevPage={initialSkip > 0}
 						hasNextPage={end < totalProducts}
 						totalProducts={totalProducts}
-						productCategory={category}
 					/>
 				</div>
 			)}

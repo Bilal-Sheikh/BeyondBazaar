@@ -66,13 +66,15 @@ export default function ProductsList({ products }: { products: Product }) {
 		<>
 			{products.map((product) => (
 				<Card className="w-full" key={product.id}>
-					<CardHeader
-						className="cursor-pointer"
-						onClick={() => router.push(`/products/${product.id}`)}
-					>
+					<CardHeader>
 						<div className="flex justify-between items-center">
 							<div>
-								<Badge className="">{product.category}</Badge>
+								<Badge
+									className="cursor-pointer"
+									onClick={() => router.push(`/products/?category=${product.category}`)}
+								>
+									{product.category}
+								</Badge>
 							</div>
 							<div className="hidden lg:flex">
 								<Button variant="outline" size="icon">
@@ -82,7 +84,10 @@ export default function ProductsList({ products }: { products: Product }) {
 						</div>
 
 						{/* PC */}
-						<div className="hidden lg:flex lg:flex-col lg:space-y-1.5">
+						<div
+							className="hidden lg:flex lg:flex-col lg:space-y-1.5 cursor-pointer"
+							onClick={() => router.push(`/products/${product.id}`)}
+						>
 							<AspectRatio ratio={16 / 9}>
 								<Image
 									alt="product"
