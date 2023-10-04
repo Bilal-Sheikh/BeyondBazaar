@@ -12,8 +12,28 @@ export default async function products({
 }) {
 	const page = searchParams["page"] ?? "1";
 	const per_page = searchParams["per_page"] ?? "15";
+	const category = searchParams["category"];
 
 	async function getProducts() {
+		if (searchParams.category) {
+			try {
+				const data = await prisma.product.findMany({
+					where: {
+						category: category,
+					},
+					skip: initialSkip,
+					take: Number(per_page),
+					include: {
+						postedBy: true,
+					},
+				});
+
+				return data;
+			} catch (error) {
+				console.log("ERRORS :::::::::::::::::", error);
+			}
+		}
+
 		try {
 			const data = await prisma.product.findMany({
 				skip: initialSkip,
@@ -29,17 +49,38 @@ export default async function products({
 		}
 	}
 
+	async function getProductCount() {
+		if (searchParams.category) {
+			try {
+				const totalProducts = await prisma.product.count({
+					where: { category: category },
+				});
+				return totalProducts;
+			} catch (error) {
+				console.log("ERRORS :::::::::::::::::", error);
+			}
+		}
+
+		try {
+			const totalProducts = await prisma.product.count();
+			return totalProducts;
+		} catch (error) {
+			console.log("ERRORS :::::::::::::::::", error);
+		}
+	}
+
 	const initialSkip = (Number(page) - 1) * Number(per_page);
+	const end = initialSkip + Number(per_page);
 
 	const products = await getProducts();
-	const totalProducts = await prisma.product.count();
-	const end = initialSkip + Number(per_page);
+	const totalProducts = await getProductCount();
 
 	// const products = data.postedProducts;
 	// const productsEntries = products.slice(start, end);
 
-	console.log("ALL PRODUCTS::::::::::::::::", products);
-	console.log("OVER::::::::::::::::::::::::");
+	// console.log("ALL PRODUCTS::::::::::::::::", products);
+	// console.log("PRODUCTS COUNT::::::::::::::::", totalProducts);
+	// console.log("OVER::::::::::::::::::::::::");
 
 	return (
 		<div className="flex flex-col justify-center items-center">
@@ -60,6 +101,7 @@ export default async function products({
 				hasPrevPage={initialSkip > 0}
 				hasNextPage={end < totalProducts}
 				totalProducts={totalProducts}
+				productCategory={category}
 			/>
 		</div>
 	);

@@ -80,125 +80,137 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 			{loading ? (
 				<Loading />
 			) : (
-				<div className="px-10 py-5 lg:py-20">
-					<section className="flex-auto block lg:grid lg:grid-cols-2 lg:gap-10">
-						{/* PC */}
-						<div className="hidden lg:block lg:relative">
-							<div className="sticky top-24">
-								<AspectRatio ratio={1 / 1}>
-									<Image
-										alt="productImg"
-										src={product?.imageUrl}
-										fill
-										objectFit="contain"
-										loading="lazy"
-									/>
-								</AspectRatio>
+				<div>
+					{!product ? (
+						<div className="flex justify-center items-center h-screen">
+							<div className="text-center">
+								<h1 className="text-2xl font-semibold tracking-tight lg:text-5xl">
+									Product not found
+								</h1>
 							</div>
 						</div>
-
-						{/* MOBILE */}
-						<div className="block lg:hidden">
-							<AspectRatio ratio={4 / 5}>
-								<Image
-									alt="productImg"
-									src={product?.imageUrl}
-									fill
-									objectFit="contain"
-									loading="lazy"
-								/>
-							</AspectRatio>
-						</div>
-
-						<div>
-							<h1 className="scroll-m-20 text-2xl font-semibold tracking-tight lg:text-5xl">
-								{product?.name}
-							</h1>
-
-							<div className="flex flex-auto justify-between items-center mt-8">
-								<h3 className="scroll-m-20 text-2xl font-semibold tracking-tight underline underline-offset-4">
-									{"$ "} {product?.price}
-								</h3>
-								<h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-									Available Stock: {product?.stockQuantity}
-								</h4>
-							</div>
-
-							<Separator className="my-6" />
-
-							<p
-								className={
-									open ? "whitespace-pre-wrap leading-7" : "custom-desc"
-								}
-								ref={ref}
-							>
-								{product?.description}
-							</p>
-							{showReadMore && (
-								<Button
-									onClick={() => setOpen(!open)}
-									variant="link"
-									className="text-blue-500"
-								>
-									{open ? (
-										<>
-											Read less <ChevronUp />
-										</>
-									) : (
-										<>
-											Read more <ChevronDown />
-										</>
-									)}
-								</Button>
-							)}
-							<Separator className="my-6" />
-
-							<div className="flex flex-auto justify-center items-center w-full gap-4">
-								<div>
-									<Button variant="outline" size="icon">
-										<Heart size={17} />
-									</Button>
-								</div>
-								<div className="w-full">
-									<Button className="w-full">Buy Now</Button>
-								</div>
-								<div className="w-full">
-									<Button className="w-full">Add to Cart</Button>
-								</div>
-							</div>
-						</div>
-					</section>
-
-					<section className="mt-20">
-						<blockquote className="mt-6 border-l-2 pl-6 italic">
-							Product By:
-							<HoverCard>
-								<HoverCardTrigger asChild>
-									<Button variant="link" className="italic text-base">
-										{seller}
-									</Button>
-								</HoverCardTrigger>
-								<HoverCardContent className="w-80">
-									<div className="flex justify-start space-x-4">
-										<Avatar>
-											<AvatarImage
-												src={product?.postedBy?.attributes?.image_url}
+					) : (
+						<div className="px-10 py-5 lg:py-20">
+							<section className="flex-auto block lg:grid lg:grid-cols-2 lg:gap-10">
+								{/* PC */}
+								<div className="hidden lg:block lg:relative">
+									<div className="sticky top-24">
+										<AspectRatio ratio={1 / 1}>
+											<Image
+												alt="productImg"
+												src={product?.imageUrl}
+												fill
+												objectFit="contain"
+												loading="lazy"
 											/>
-											<AvatarFallback>VC</AvatarFallback>
-										</Avatar>
-										<div className="space-y-1">
-											<h4 className="text-sm font-semibold"> {seller}</h4>
-											<div className="flex items-center pt-2">
-												<span className="text-xs text-muted-foreground">
-													Joined: {formattedDate}
-												</span>
-											</div>
+										</AspectRatio>
+									</div>
+								</div>
+
+								{/* MOBILE */}
+								<div className="block lg:hidden">
+									<AspectRatio ratio={4 / 5}>
+										<Image
+											alt="productImg"
+											src={product?.imageUrl}
+											fill
+											objectFit="contain"
+											loading="lazy"
+										/>
+									</AspectRatio>
+								</div>
+
+								<div>
+									<h1 className="scroll-m-20 text-2xl font-semibold tracking-tight lg:text-5xl">
+										{product?.name}
+									</h1>
+
+									<div className="flex flex-auto justify-between items-center mt-8">
+										<h3 className="scroll-m-20 text-2xl font-semibold tracking-tight underline underline-offset-4">
+											{"$ "} {product?.price}
+										</h3>
+										<h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+											Available Stock: {product?.stockQuantity}
+										</h4>
+									</div>
+
+									<Separator className="my-6" />
+
+									<p
+										className={
+											open ? "whitespace-pre-wrap leading-7" : "custom-desc"
+										}
+										ref={ref}
+									>
+										{product?.description}
+									</p>
+									{showReadMore && (
+										<Button
+											onClick={() => setOpen(!open)}
+											variant="link"
+											className="text-blue-500"
+										>
+											{open ? (
+												<>
+													Read less <ChevronUp />
+												</>
+											) : (
+												<>
+													Read more <ChevronDown />
+												</>
+											)}
+										</Button>
+									)}
+									<Separator className="my-6" />
+
+									<div className="flex flex-auto justify-center items-center w-full gap-4">
+										<div>
+											<Button variant="outline" size="icon">
+												<Heart size={17} />
+											</Button>
+										</div>
+										<div className="w-full">
+											<Button className="w-full">Buy Now</Button>
+										</div>
+										<div className="w-full">
+											<Button className="w-full">Add to Cart</Button>
 										</div>
 									</div>
-								</HoverCardContent>
-							</HoverCard>
-						</blockquote>
-					</section>
+								</div>
+							</section>
+
+							<section className="mt-20">
+								<blockquote className="mt-6 border-l-2 pl-6 italic">
+									Product By:
+									<HoverCard>
+										<HoverCardTrigger asChild>
+											<Button variant="link" className="italic text-base">
+												{seller}
+											</Button>
+										</HoverCardTrigger>
+										<HoverCardContent className="w-80">
+											<div className="flex justify-start space-x-4">
+												<Avatar>
+													<AvatarImage
+														src={product?.postedBy?.attributes?.image_url}
+													/>
+													<AvatarFallback>VC</AvatarFallback>
+												</Avatar>
+												<div className="space-y-1">
+													<h4 className="text-sm font-semibold"> {seller}</h4>
+													<div className="flex items-center pt-2">
+														<span className="text-xs text-muted-foreground">
+															Joined: {formattedDate}
+														</span>
+													</div>
+												</div>
+											</div>
+										</HoverCardContent>
+									</HoverCard>
+								</blockquote>
+							</section>
+						</div>
+					)}
 				</div>
 			)}
 		</>

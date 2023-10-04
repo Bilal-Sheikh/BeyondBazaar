@@ -13,18 +13,21 @@ interface PaginationControlsProps {
 	hasPrevPage: boolean;
 	hasNextPage: boolean;
 	totalProducts: number;
+	productCategory: string;
 }
 
 export default function PaginationControls({
 	hasNextPage,
 	hasPrevPage,
 	totalProducts,
+	productCategory,
 }: PaginationControlsProps) {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
 	const page = searchParams.get("page") ?? "1";
 	const per_page = searchParams.get("per_page") ?? "15";
+	const category = searchParams.get("category");
 
 	const totalPages = Math.ceil(totalProducts / Number(per_page));
 
@@ -36,7 +39,7 @@ export default function PaginationControls({
 						variant={"outline"}
 						className="h-8 w-8 p-0"
 						onClick={() => {
-							router.push("/products/?page=1");
+							router.push(`/products/?page=1&category=${category}`);
 						}}
 					>
 						<ChevronsLeft className="h-4 w-4" />
@@ -47,7 +50,7 @@ export default function PaginationControls({
 						className="h-8 w-8 p-0"
 						onClick={() => {
 							router.push(
-								`/products/?page=${Number(page) - 1}&per_page=${per_page}`
+								`/products/?page=${Number(page) - 1}&per_page=${per_page}&category=${category}`
 							);
 						}}
 					>
@@ -67,7 +70,7 @@ export default function PaginationControls({
 						className="h-8 w-8 p-0"
 						onClick={() => {
 							router.push(
-								`/products/?page=${Number(page) + 1}&per_page=${per_page}`
+								`/products/?page=${Number(page) + 1}&per_page=${per_page}&category=${category}`
 							);
 						}}
 					>
@@ -77,7 +80,7 @@ export default function PaginationControls({
 						variant={"outline"}
 						className="h-8 w-8 p-0"
 						onClick={() => {
-							router.push(`/products/?page=${totalPages}`);
+							router.push(`/products/?page=${totalPages}&category=${category}`);
 						}}
 					>
 						<ChevronsRight className="h-4 w-4" />

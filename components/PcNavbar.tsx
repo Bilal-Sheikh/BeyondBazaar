@@ -21,37 +21,37 @@ import { buttonVariants } from "./ui/button";
 const clothing: { title: string; href: string; description: string }[] = [
 	{
 		title: "Men's Top Wear",
-		href: "/",
+		href: "/products?category=MENS_TOP_WEAR",
 		description: "For Men",
 	},
 	{
 		title: "Men's Bottom Wear",
-		href: "/",
+		href: "/products?category=MENS_BOTTOM_WEAR",
 		description: "For Men",
 	},
 	{
 		title: "Women's Top Wear",
-		href: "/",
+		href: "/products?category=WOMENS_TOP_WEAR",
 		description: "For Women.",
 	},
 	{
 		title: "Women's Bottom Wear",
-		href: "/",
+		href: "/products?category=WOMENS_BOTTOM_WEAR",
 		description: "For Women.",
 	},
 	{
 		title: "Men Footwear",
-		href: "/",
+		href: "/products?category=MENS_FOOTWEAR",
 		description: "For Mens Footwear.",
 	},
 	{
 		title: "Women Footwear",
-		href: "/",
+		href: "/products?category=WOMENS_FOOTWEAR",
 		description: "For Womens Footwear",
 	},
 	{
 		title: "Kids",
-		href: "/",
+		href: "/products?category=KIDS",
 		description: "For Kids.",
 	},
 ];
@@ -59,27 +59,27 @@ const clothing: { title: string; href: string; description: string }[] = [
 const accessories: { title: string; href: string; description: string }[] = [
 	{
 		title: "Wallets",
-		href: "/",
+		href: "/products?category=WALLETS",
 		description: "Best Quality Wallets",
 	},
 	{
 		title: "Watches",
-		href: "/",
+		href: "/products?category=WATCHES",
 		description: "Premium Watches",
 	},
 	{
 		title: "Belts",
-		href: "/",
+		href: "/products?category=BELTS",
 		description: "For Men",
 	},
 	{
 		title: "Bags",
-		href: "/",
+		href: "/products?category=BAGS",
 		description: "For Women",
 	},
 	{
 		title: "Perfumes",
-		href: "/",
+		href: "/products?category=PERFUMES",
 		description: "Buy best Perfumes for Men & Women",
 	},
 ];
@@ -87,22 +87,22 @@ const accessories: { title: string; href: string; description: string }[] = [
 const electronics: { title: string; href: string; description: string }[] = [
 	{
 		title: "Gaming",
-		href: "/",
+		href: "/products?category=GAMING",
 		description: "Gaming Peripherals",
 	},
 	{
 		title: "Powerbank",
-		href: "/",
+		href: "/products?category=POWERBANK",
 		description: "Mobile Powerbank",
 	},
 	{
 		title: "Headphones",
-		href: "/",
+		href: "/products?category=HEADPHONES",
 		description: "Audio devices for all",
 	},
 	{
 		title: "Mobile Accessories",
-		href: "/",
+		href: "/products?category=MOBILE_ACCESSORIES",
 		description: "Mobile Accessories",
 	},
 ];
