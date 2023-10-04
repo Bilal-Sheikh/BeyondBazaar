@@ -25,7 +25,13 @@ import { Button } from "./ui/button";
 import { Category, Product } from "@prisma/client";
 import { useRouter } from "next/navigation";
 
-export function Searchbar({ products }: { products: Array<Product> }) {
+export function Searchbar({
+	products,
+	path,
+}: {
+	products: Array<Product>;
+	path: string;
+}) {
 	const [open, setOpen] = React.useState(false);
 	const router = useRouter();
 
@@ -63,7 +69,7 @@ export function Searchbar({ products }: { products: Array<Product> }) {
 		<div>
 			<Button
 				variant={"outline"}
-				className="text-xs w-full justify-between text-gray-400 sm:text-sm"
+				className="text-base w-full justify-between text-gray-400 sm:text-sm"
 				onClick={() => setOpen(true)}
 			>
 				<div>
@@ -89,7 +95,7 @@ export function Searchbar({ products }: { products: Array<Product> }) {
 							{category.products.map((product) => (
 								<CommandItem
 									className="cursor-pointer"
-									onSelect={() => router.push(`/view-products/${product.id}`)}
+									onSelect={() => router.push(`${path}/${product.id}`)}
 								>
 									<span className="line-clamp-1">{product.name}</span>
 								</CommandItem>

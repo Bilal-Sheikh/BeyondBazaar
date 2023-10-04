@@ -62,8 +62,6 @@ export default function ProductsList({
 	sellerId: string;
 }) {
 	const router = useRouter();
-	// const seller = products.data.firstName + " " + products.data.lastName;
-	// const sellerId = products.data.clerkId;
 
 	const handleDelete = async (productId) => {
 		console.log("DELETION STARTED FOR PRODUCT :::::::::::::::::::", productId);
@@ -88,12 +86,7 @@ export default function ProductsList({
 	};
 
 	return (
-		<>
-			{productsEntries.length === 0 && (
-				<div className="my-40 lg:my-52 place-content-center text-center text-2xl font-bold">
-					No products found. Please add some products.
-				</div>
-			)}
+		<div className="flex flex-wrap justify-center items-center px-14">
 			{productsEntries.map((product) => (
 				<Card className="w-[300px] m-2" key={product.id}>
 					<CardHeader>
@@ -192,6 +185,6 @@ export default function ProductsList({
 					</CardFooter> */}
 				</Card>
 			))}
-		</>
+		</div>
 	);
 }

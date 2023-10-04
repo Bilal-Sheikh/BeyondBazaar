@@ -59,11 +59,9 @@ import { Product } from "@prisma/client";
 export default function ProductsList({ products }: { products: Product }) {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = React.useState(false);
-	// const seller = products.data.firstName + " " + products.data.lastName;
-	// const sellerId = products.data.clerkId;
 
 	return (
-		<>
+		<div>
 			{products.map((product) => (
 				<Card className="w-full" key={product.id}>
 					<CardHeader>
@@ -71,7 +69,9 @@ export default function ProductsList({ products }: { products: Product }) {
 							<div>
 								<Badge
 									className="cursor-pointer"
-									onClick={() => router.push(`/products/?category=${product.category}`)}
+									onClick={() =>
+										router.push(`/products/?category=${product.category}`)
+									}
 								>
 									{product.category}
 								</Badge>
@@ -143,6 +143,6 @@ export default function ProductsList({ products }: { products: Product }) {
 					</CardFooter>
 				</Card>
 			))}
-		</>
+		</div>
 	);
 }

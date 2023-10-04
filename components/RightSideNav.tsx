@@ -19,29 +19,27 @@ import {
 	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Searchbar } from "./Searchbar";
+import { prisma } from "@/lib/db";
 
 interface NavbarProps {
 	user: User | null;
 	role: string;
 }
 
-export default function RightSideNav({ user, role }: NavbarProps) {
+export default async function RightSideNav({ user, role }: NavbarProps) {
+	let products;
+
+	try {
+		products = await prisma.product.findMany();
+	} catch (error) {
+		console.log("ERRORS :::::::::::::::::", error);
+	}
+
 	return (
 		<>
 			<div className="flex flex-1 items-center justify-end gap-3">
-				{role === "SELLER" ? (
-					<></>
-				) : (
-					<Button
-						variant={"outline"}
-						className="text-xs w-full justify-start text-gray-400 sm:w-2/5 sm:text-sm"
-					>
-						<div className="p-1">
-							<Search size={17} />
-						</div>
-						Search products...
-					</Button>
-				)}
+				{role === "SELLER" ? <></> : <Searchbar products={products} path={`/products`} />}
 
 				<div>
 					<ModeToggle />

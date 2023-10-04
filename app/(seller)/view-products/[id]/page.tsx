@@ -140,13 +140,13 @@ export default function EditProducts({ params }: { params: { id: string } }) {
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
-		defaultValues: {
+		values: {
 			name: product.name,
 			description: product.description,
 			price: product.price,
 			imageUrl: product.imageUrl,
 			stockQuantity: product.stockQuantity,
-			category: "",
+			category: product.category,
 		},
 	});
 
@@ -222,7 +222,7 @@ export default function EditProducts({ params }: { params: { id: string } }) {
 											<FormControl>
 												<Input
 													placeholder="Name"
-													defaultValue={product.name}
+													// defaultValue={product.name}
 													{...field}
 												/>
 											</FormControl>
