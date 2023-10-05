@@ -66,7 +66,7 @@ export function Searchbar({
 	}, []);
 
 	return (
-		<div>
+		<div className="w-full">
 			<Button
 				variant={"outline"}
 				className="text-base w-full justify-between text-gray-400 sm:text-sm"
@@ -77,7 +77,7 @@ export function Searchbar({
 						<Search size={17} /> Search products...
 					</div>
 				</div>
-				<p className="text-sm text-muted-foreground hidden md:block">
+				<p className="text-sm text-muted-foreground hidden xl:block">
 					Press{" "}
 					<kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
 						<span className="text-xs">⌘</span>K
@@ -86,7 +86,7 @@ export function Searchbar({
 			</Button>
 
 			<CommandDialog open={open} onOpenChange={setOpen}>
-				<CommandInput placeholder="Search products..." />
+				<CommandInput placeholder="Search products..."/>
 				<CommandList>
 					<CommandEmpty>No products found.</CommandEmpty>
 
