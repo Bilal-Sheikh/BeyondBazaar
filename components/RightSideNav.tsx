@@ -41,7 +41,7 @@ export default async function RightSideNav({ user, role }: NavbarProps) {
 			<div className="flex flex-1 items-center justify-end gap-3">
 				{role === "SELLER" ? <></> : 
 				<>
-				{/* <Searchbar products={products} path={`/products`} /> */}
+				<Searchbar products={products} path={`/products`} />
 				</>
 				}
 

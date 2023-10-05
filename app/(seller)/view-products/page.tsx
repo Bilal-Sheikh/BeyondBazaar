@@ -56,14 +56,10 @@ export default async function page({
 					</div>
 				</div>
 			) : (
-				<div>
+				<div className="w-full">
 					<div className="flex flex-wrap justify-center w-96 px-14 pt-5 md:flex md:flex-wrap md:justify-center md:items-center md:w-full md:px-40 md:pt-5">
-						{/* <div className="flex justify-start w-full gap-4 md:w-2/5 md:px-14">
-							<Button>Sort</Button>
-							<Button>Filter</Button>
-						</div> */}
 
-						<div className="w-full py-5 md:w-3/5 md:px-14">
+						<div className="w-full py-5 md:px-14">
 							<Searchbar products={products} path={"/view-products"} />
 						</div>
 					</div>
