@@ -32,8 +32,8 @@ export function Searchbar({
 	products: Array<Product>;
 	path: string;
 }) {
-	const [open, setOpen] = React.useState(false);
 	const router = useRouter();
+	const [open, setOpen] = React.useState(false);
 
 	const categorizedProducts = products.reduce((acc, product) => {
 		const category = product.category;
@@ -88,13 +88,13 @@ export function Searchbar({
 			<CommandDialog open={open} onOpenChange={setOpen}>
 				<CommandInput placeholder="Search products..." />
 				<CommandList>
-					<CommandEmpty>No productsfound.</CommandEmpty>
+					<CommandEmpty>No products found.</CommandEmpty>
 
 					{categorizedProducts.map((category) => (
 						<CommandGroup heading={category.category} key={category.category}>
 							{category.products.map((product) => (
 								<CommandItem
-									className="cursor-pointer"
+									className="cursor-pointer"	
 									onSelect={() => router.push(`${path}/${product.id}`)}
 								>
 									<span className="line-clamp-1">{product.name}</span>

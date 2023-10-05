@@ -3,7 +3,7 @@ import { prisma } from "@/lib/db";
 import React from "react";
 import Loading from "../loading";
 import ProductsList from "@/components/user/ProductsList";
-import PaginationControls from "@/components/user/PaginationControls";
+import PaginationControls from "@/components/PaginationControls";
 import {
 	Select,
 	SelectContent,
@@ -11,7 +11,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import SortFilter from "@/components/SortFilter";
+import Sort from "@/components/Sort";
 
 export default async function products({
 	searchParams,
@@ -23,132 +23,184 @@ export default async function products({
 
 	const page = searchParams["page"] ?? "1";
 	const per_page = searchParams["per_page"] ?? "15";
-	const category = searchParams["category"];
-	const price = searchParams["price"];
-	const date = searchParams["date"];
+	const category = searchParams["category"] || "";
+	let sort = searchParams["sort"] || "createdAt";
+	// const price = searchParams["price"];
+	// const date = searchParams["date"];
+
+	// console.log("SEARCH PARAMS CATEGORY:::::::::::::::::::::::::::::", category);
+	// console.log("SEARCH PARAMS PRICE :::::::::::::::::::::::::::::", price);
+	// console.log("SEARCH PARAMS DATE :::::::::::::::::::::::::::::", date);
+	console.log("SEARCH PARAMS SORT:::::::::::::::::::::::::::::", sort);
+
+	sort ? (sort = sort.split(".")) : (sort = [sort]);
+	console.log("SORT:::::::::::::::::::::::::::::::", sort);
+
+	const where = {};
+	if (category) where.category = category;
+
+	let orderBy = {};
+	console.log("ORDER BY :::::::::::::::::::::::::::::::", orderBy);
+	if (sort[1]) {
+		orderBy[sort[0]] = sort[1];
+	} else {
+		orderBy[sort[0]] = "desc";
+	}
+	console.log("SORT BY AFTER :::::::::::::::::::::::::::::::", orderBy);
 
 	const initialSkip = (Number(page) - 1) * Number(per_page);
 	const end = initialSkip + Number(per_page);
 
-	// console.log("SEARCH PARAMS CATEGORY:::::::::::::::::::::::::::::", category);
-	// console.log("SEARCH PARAMS PRICE :::::::::::::::::::::::::::::", price);
-	console.log("SEARCH PARAMS DATE :::::::::::::::::::::::::::::", date);
-
 	async function getAllProducts() {
 		try {
 			const data = await prisma.product.findMany({
+				where: where,
 				skip: initialSkip,
 				take: Number(per_page),
-				include: {
-					postedBy: true,
-				},
-				orderBy: {
-					createdAt: "desc",
-				},
+				include: { postedBy: true },
+				orderBy: orderBy,
 			});
 
 			return data;
 		} catch (error) {
-			console.log("ERRORS :::::::::::::::::", error);
+			console.log(
+				"ERRORS in getAllProducts() :::::::::::::::::::::::::::::::::::::::",
+				error
+			);
 		}
 	}
 
-	async function getProductsByCategory() {
+	async function getProductsCount() {
 		try {
-			const data = await prisma.product.findMany({
-				where: {
-					category: category,
-				},
-				skip: initialSkip,
-				take: Number(per_page),
-				include: {
-					postedBy: true,
-				},
-				orderBy: {
-					createdAt: "desc",
-				},
-			});
+			const data = await prisma.product.count({ where: where });
 
 			return data;
 		} catch (error) {
-			console.log("ERRORS :::::::::::::::::", error);
+			console.log(
+				"ERRORS in getProductsCount() :::::::::::::::::::::::::::::::::::::::",
+				error
+			);
 		}
 	}
 
-	async function getAllProductCount() {
-		try {
-			const totalProducts = await prisma.product.count();
-			return totalProducts;
-		} catch (error) {
-			console.log("ERRORS :::::::::::::::::", error);
-		}
-	}
-
-	async function getProductCountByCategory() {
-		try {
-			const totalProducts = await prisma.product.count({
-				where: { category: category },
-			});
-			return totalProducts;
-		} catch (error) {
-			console.log("ERRORS :::::::::::::::::", error);
-		}
-	}
-
-	async function getProductsByPrice() {
-		try {
-			const data = prisma.product.findMany({
-				skip: initialSkip,
-				take: Number(per_page),
-				include: {
-					postedBy: true,
-				},
-				orderBy: { price: price },
-			});
-
-			return data;
-		} catch (error) {
-			console.log("ERRORS IN price :::::::::::::::::", error);
-		}
-	}
-
-	async function getProductsByDate() {
-		try {
-			const data = prisma.product.findMany({
-				skip: initialSkip,
-				take: Number(per_page),
-				include: {
-					postedBy: true,
-				},
-				orderBy: { createdAt: date },
-			});
-
-			return data;
-		} catch (error) {
-			console.log("ERRORS IN price :::::::::::::::::", error);
-		}
-	}
-
-	if (searchParams.date !== undefined && searchParams.date !== null) {
-		products = await getProductsByDate();
-		totalProducts = await getAllProductCount();
-	} else if (searchParams.price !== undefined && searchParams.price !== null) {
-		products = await getProductsByPrice();
-		totalProducts = await getAllProductCount();
-	} else if (
-		searchParams.category !== undefined &&
-		searchParams.category !== null
-	) {
-		products = await getProductsByCategory();
-		totalProducts = await getProductCountByCategory();
-	} else {
-		products = await getAllProducts();
-		totalProducts = await getAllProductCount();
-	}
+	products = await getAllProducts();
+	totalProducts = await getProductsCount();
 
 	// console.log("ALL PRODUCTS::::::::::::::::", products);
 	// console.log("PRODUCTS COUNT::::::::::::::::", totalProducts);
 	// console.log("OVER::::::::::::::::::::::::");
+
+	// async function getAllProducts() {
+	// 	try {
+	// 		const data = await prisma.product.findMany({
+	// 			skip: initialSkip,
+	// 			take: Number(per_page),
+	// 			include: {
+	// 				postedBy: true,
+	// 			},
+	// 			orderBy: {
+	// 				createdAt: "desc",
+	// 			},
+	// 		});
+
+	// 		return data;
+	// 	} catch (error) {
+	// 		console.log("ERRORS :::::::::::::::::", error);
+	// 	}
+	// }
+
+	// async function getProductsByCategory() {
+	// 	try {
+	// 		const data = await prisma.product.findMany({
+	// 			where: {
+	// 				category: category,
+	// 			},
+	// 			skip: initialSkip,
+	// 			take: Number(per_page),
+	// 			include: {
+	// 				postedBy: true,
+	// 			},
+	// 			orderBy: {
+	// 				createdAt: "desc",
+	// 			},
+	// 		});
+
+	// 		return data;
+	// 	} catch (error) {
+	// 		console.log("ERRORS :::::::::::::::::", error);
+	// 	}
+	// }
+
+	// async function getAllProductCount() {
+	// 	try {
+	// 		const totalProducts = await prisma.product.count();
+	// 		return totalProducts;
+	// 	} catch (error) {
+	// 		console.log("ERRORS :::::::::::::::::", error);
+	// 	}
+	// }
+
+	// async function getProductCountByCategory() {
+	// 	try {
+	// 		const totalProducts = await prisma.product.count({
+	// 			where: { category: category },
+	// 		});
+	// 		return totalProducts;
+	// 	} catch (error) {
+	// 		console.log("ERRORS :::::::::::::::::", error);
+	// 	}
+	// }
+
+	// async function getProductsByPrice() {
+	// 	try {
+	// 		const data = prisma.product.findMany({
+	// 			skip: initialSkip,
+	// 			take: Number(per_page),
+	// 			include: {
+	// 				postedBy: true,
+	// 			},
+	// 			orderBy: { price: price },
+	// 		});
+
+	// 		return data;
+	// 	} catch (error) {
+	// 		console.log("ERRORS IN price :::::::::::::::::", error);
+	// 	}
+	// }
+
+	// async function getProductsByDate() {
+	// 	try {
+	// 		const data = prisma.product.findMany({
+	// 			skip: initialSkip,
+	// 			take: Number(per_page),
+	// 			include: {
+	// 				postedBy: true,
+	// 			},
+	// 			orderBy: { createdAt: date },
+	// 		});
+
+	// 		return data;
+	// 	} catch (error) {
+	// 		console.log("ERRORS IN price :::::::::::::::::", error);
+	// 	}
+	// }
+
+	// if (searchParams.date !== undefined && searchParams.date !== null) {
+	// 	products = await getProductsByDate();
+	// 	totalProducts = await getAllProductCount();
+	// } else if (searchParams.price !== undefined && searchParams.price !== null) {
+	// 	products = await getProductsByPrice();
+	// 	totalProducts = await getAllProductCount();
+	// } else if (
+	// 	searchParams.category !== undefined &&
+	// 	searchParams.category !== null
+	// ) {
+	// 	products = await getProductsByCategory();
+	// 	totalProducts = await getProductCountByCategory();
+	// } else {
+	// 	products = await getAllProducts();
+	// 	totalProducts = await getAllProductCount();
+	// }
 
 	return (
 		<div className="flex flex-col justify-center items-center">
@@ -162,21 +214,18 @@ export default async function products({
 				</div>
 			) : (
 				<div>
-					<div className="flex flex-wrap justify-center w-96 px-14 py-5 md:flex md:flex-wrap md:justify-center md:items-center md:w-10/12 md:px-14 md:pt-5">
+					<div className="flex flex-wrap justify-center w-96 px-14 py-5 md:items-center md:w-10/12 md:px-20 md:pt-5">
 						<div className="flex justify-start w-full gap-10">
-							{/* <Button>Sort</Button>
-							<Button>Filter</Button> */}
-							<SortFilter />
+							<Sort />
 						</div>
 					</div>
 
 					<React.Suspense fallback={<Loading />}>
-						<div className="flex flex-col justify-center items-center mx-4 gap-5 lg:grid lg:grid-cols-3 lg:px-14 lg:gap-10">
-							<ProductsList products={products} />
-						</div>
+						<ProductsList products={products} />
 					</React.Suspense>
 
 					<PaginationControls
+						path="/products"
 						hasPrevPage={initialSkip > 0}
 						hasNextPage={end < totalProducts}
 						totalProducts={totalProducts}

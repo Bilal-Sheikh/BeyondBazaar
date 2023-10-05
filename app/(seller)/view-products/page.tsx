@@ -3,7 +3,7 @@ import ProductsList from "@/components/seller/ProductsList";
 import axios from "axios";
 import { currentUser } from "@clerk/nextjs";
 import Loading from "./loading";
-import PaginationControls from "@/components/seller/PaginationControls";
+import PaginationControls from "@/components/PaginationControls";
 import { Button } from "@/components/ui/button";
 import { Searchbar } from "@/components/Searchbar";
 
@@ -29,7 +29,6 @@ export default async function page({
 }: {
 	searchParams: { [key: string]: string | string[] | undefined };
 }) {
-
 	const data = await getProducts();
 	const sellerId = data.data.clerkId;
 
@@ -37,7 +36,7 @@ export default async function page({
 	// console.log("SELLER ID :::::::::::::::::::::::::", sellerId);
 
 	const page = searchParams["page"] ?? "1";
-	const per_page = searchParams["per_page"] ?? "8";
+	const per_page = searchParams["per_page"] ?? "15";
 
 	const start = (Number(page) - 1) * Number(per_page);
 	const end = start + Number(per_page);
@@ -65,7 +64,7 @@ export default async function page({
 						</div> */}
 
 						<div className="w-full py-5 md:w-3/5 md:px-14">
-							<Searchbar products={products} path={"/view-products"}/>
+							<Searchbar products={products} path={"/view-products"} />
 						</div>
 					</div>
 
@@ -77,6 +76,7 @@ export default async function page({
 					</React.Suspense>
 
 					<PaginationControls
+						path="/view-products"
 						hasPrevPage={start > 0}
 						hasNextPage={end < totalProducts}
 						totalProducts={totalProducts}

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select";
 import { prisma } from "@/lib/db";
 import { Button, buttonVariants } from "./ui/button";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -20,43 +20,60 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import { ArrowDownUp } from "lucide-react";
 
-export default function SortFilter() {
+export default function Sort() {
 	const router = useRouter();
+	const searchParams = useSearchParams();
+	const category = searchParams.get("category");
+
+	const categoryParam = category ? `&category=${category}` : "";
 
 	return (
 		<div>
 			<DropdownMenu>
 				<DropdownMenuTrigger
-					className={cn(buttonVariants({ variant: "outline" }))}
+					className={cn(buttonVariants({ variant: "outline" }), "gap-4")}
 				>
-					Sort
+					Sort <ArrowDownUp size={17} />
 				</DropdownMenuTrigger>
 				<DropdownMenuContent>
 					<DropdownMenuLabel>Sort By</DropdownMenuLabel>
 					<DropdownMenuSeparator />
 
 					<DropdownMenuItem
-						onSelect={() => router.push("/products?price=desc")}
+						onSelect={() =>
+							router.push(`/products?sort=price.desc${categoryParam}`)
+						}
 					>
 						Price ↑
 					</DropdownMenuItem>
-					<DropdownMenuItem onSelect={() => router.push("/products?price=asc")}>
+					<DropdownMenuItem
+						onSelect={() =>
+							router.push(`/products?sort=price.asc${categoryParam}`)
+						}
+					>
 						Price ↓
 					</DropdownMenuItem>
 
 					<DropdownMenuSeparator />
 
-					<DropdownMenuItem onSelect={() => router.push("/products?date=desc")}>
+					<DropdownMenuItem
+						onSelect={() =>
+							router.push(`/products?sort=createdAt.desc${categoryParam}`)
+						}
+					>
 						Date ↑
 					</DropdownMenuItem>
-					<DropdownMenuItem onSelect={() => router.push("/products?date=asc")}>
+					<DropdownMenuItem
+						onSelect={() =>
+							router.push(`/products?sort=createdAt.asc${categoryParam}`)
+						}
+					>
 						Date ↓
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
-
-			<Button>Filter</Button>
 		</div>
 	);
 }

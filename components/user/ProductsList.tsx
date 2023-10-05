@@ -61,7 +61,7 @@ export default function ProductsList({ products }: { products: Product }) {
 	const [isLoading, setIsLoading] = React.useState(false);
 
 	return (
-		<div>
+		<div className="flex flex-col justify-center items-center mx-4 gap-5 lg:grid lg:grid-cols-3 lg:px-14 lg:gap-10">
 			{products.map((product) => (
 				<Card className="w-full" key={product.id}>
 					<CardHeader>
