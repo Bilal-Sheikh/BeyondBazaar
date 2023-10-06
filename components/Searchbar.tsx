@@ -51,7 +51,7 @@ export function Searchbar({
 		return acc;
 	}, []);
 
-	console.log("PRODCUTS BY CATEGORIES::::::::::::::", categorizedProducts);
+	// console.log("PRODCUTS BY CATEGORIES::::::::::::::", categorizedProducts);
 
 	React.useEffect(() => {
 		const down = (e: KeyboardEvent) => {

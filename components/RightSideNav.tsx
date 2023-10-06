@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Searchbar } from "./Searchbar";
 import { prisma } from "@/lib/db";
+import { Cart } from "./user/Cart";
 
 interface NavbarProps {
 	user: User | null;
@@ -59,18 +60,14 @@ export default async function RightSideNav({ user, role }: NavbarProps) {
 									</>
 								) : (
 									<>
-										<Button variant="outline" size="icon">
-											<ShoppingCart size={17} />
-										</Button>
+										<Cart />
 										<UserButton afterSignOutUrl="/" />
 									</>
 								)}
 							</div>
 						) : (
 							<div className="flex items-center justify-center gap-3">
-								<Button variant="outline" size="icon">
-									<ShoppingCart size={17} />
-								</Button>
+								<Cart />
 								<Link
 									href={"/sign-in"}
 									className={buttonVariants({

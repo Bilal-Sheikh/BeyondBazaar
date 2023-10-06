@@ -18,6 +18,7 @@ import {
 	ChevronUp,
 	ChevronsUpDown,
 	Heart,
+	Loader2,
 	Plus,
 	X,
 } from "lucide-react";
@@ -29,14 +30,23 @@ import {
 	CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import Loading from "./loading";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
+import { set } from "zod";
 
 export default function ViewProduct({ params }: { params: { id: string } }) {
 	const productId = params.id;
 	const [product, setProduct] = React.useState([]);
-	const [loading, setLoading] = React.useState(true);
+	const [exist, setExist] = React.useState(false);
+	const [isFetched, setIsFetched] = React.useState(true);
+	const [isLoading, setIsLoading] = React.useState(false);
 	const [open, setOpen] = React.useState(false);
 	const [showReadMore, setShowReadMore] = React.useState(false);
 	const ref = React.useRef(null);
+	const { isSignedIn, user } = useUser();
+	const router = useRouter();
+	const { toast } = useToast();
 
 	React.useEffect(() => {
 		try {
@@ -48,8 +58,27 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 				})
 				.then((res) => {
 					setProduct(res.data.product);
-					setLoading(false);
+					setIsFetched(false);
 				});
+
+			if (isSignedIn) {
+				try {
+					axios
+						.get("http://localhost:3000/api/check-cart", {
+							headers: {
+								ClerkId: user.id,
+								ProductId: productId,
+							},
+						})
+						.then((res) => {
+							if (res.data.exists === true) {
+								setExist(true);
+							}
+						});
+				} catch (error) {
+					console.log("ERROR in http://localhost:3000/api/check-cart");
+				}
+			}
 		} catch (error) {
 			console.log("ERRORS ::::::::::::::::::::::::::::::::", error);
 		}
@@ -75,9 +104,49 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 	const options = { year: "numeric", month: "long" };
 	const formattedDate = dateObject.toLocaleDateString("en-US", options);
 
+	function handleAddToCart() {
+		if (!isSignedIn) {
+			toast({
+				variant: "default",
+				title: "Sign In",
+				description: " ❗ Please Sign In first",
+			});
+			router.push("/sign-in");
+		} else {
+			setIsLoading(true);
+			try {
+				axios
+					.post(
+						"/api/add-to-cart",
+						{},
+						{
+							headers: {
+								ClerkId: user.id,
+								ProductId: productId,
+							},
+						}
+					)
+					.then((res) => {
+						console.log("RES DATA :::::::::::::::::::::::", res.data);
+						setIsLoading(false);
+						toast({
+							variant: "default",
+							title: "Success",
+							description: " ✅ Added to Cart",
+						});
+					});
+			} catch (error) {
+				console.log(
+					"ERRORS in http://localhost:3000/api/add-to-cart::::::::::::::::::::::::::::::::",
+					error
+				);
+			}
+		}
+	}
+
 	return (
 		<>
-			{loading ? (
+			{isFetched ? (
 				<Loading />
 			) : (
 				<div>
@@ -173,7 +242,22 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 											<Button className="w-full">Buy Now</Button>
 										</div>
 										<div className="w-full">
-											<Button className="w-full">Add to Cart</Button>
+											{exist ? (
+												<Button variant={"outline"} className="w-full">
+													Already in Cart
+												</Button>
+											) : (
+												<Button
+													disabled={isLoading}
+													className="w-full"
+													onClick={handleAddToCart}
+												>
+													{isLoading && (
+														<Loader2 className="mr-2 h-4 w-4 animate-spin" />
+													)}
+													Add to Cart
+												</Button>
+											)}
 										</div>
 									</div>
 								</div>

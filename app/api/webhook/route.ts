@@ -80,24 +80,31 @@ export async function POST(req: Request) {
 		String(eventType) === "user.created" ||
 		String(eventType) === "user.updated"
 	) {
-		console.log("ADDING IN DATABASE::::::::::::::::");
-		await prisma.user.upsert({
-			where: { clerkId: id },
-			create: {
-				clerkId: id,
-				firstName: first_name,
-				lastName: last_name,
-				email: email,
-				role: role,
-				attributes,
-			},
-			update: {
-				firstName: first_name,
-				lastName: last_name,
-				role: role,
-				attributes,
-			},
-		});
+		try {
+			console.log("ADDING IN DATABASE::::::::::::::::");
+			await prisma.user.upsert({
+				where: { clerkId: id },
+				create: {
+					clerkId: id,
+					firstName: first_name,
+					lastName: last_name,
+					email: email,
+					role: role,
+					attributes,
+				},
+				update: {
+					firstName: first_name,
+					lastName: last_name,
+					role: role,
+					attributes,
+				},
+			});
+		} catch (error) {
+			console.log(
+				"ERROR IN app/api/webhook/route.ts::::::::::::::::::::::::::::::::::::::",
+				error
+			);
+		}
 	}
 
 	return new Response("", { status: 201 });

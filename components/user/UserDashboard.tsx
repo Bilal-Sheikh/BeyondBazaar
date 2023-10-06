@@ -76,7 +76,7 @@ export default async function UserDashboard() {
 			error
 		);
 	}
-	console.log("VALUE PICKS :::::::::::::::::::::::::::::::::::", valuePicks);
+	// console.log("VALUE PICKS :::::::::::::::::::::::::::::::::::", valuePicks);
 
 	return (
 		<div>
