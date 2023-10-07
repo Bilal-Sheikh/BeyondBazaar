@@ -227,41 +227,39 @@ export default async function UserDashboard() {
 											</AspectRatio>
 										</Link>
 									</div>
-								</CardHeader>
-								<CardContent>
-									{/* MOBILE */}
-									<div className="flex flex-auto w-full gap-4">
-										<div className="flex flex-auto space-y-1.5 lg:hidden w-1/4">
-											<AspectRatio ratio={1 / 1}>
-												<Image
-													alt="product"
-													src={product.imageUrl}
-													className="rounded-xl"
-													fill
-													objectFit="contain"
-													priority={true}
-												/>
-											</AspectRatio>
-										</div>
 
-										<div className="grid w-full h-20 top-0 gap-4">
+									{/* MOBILE */}
+									<div className="grid grid-cols-2 gap-x-2">
+										<div className="lg:hidden">
 											<Link href={`/products/${product.id}`}>
-												<CardTitle className="cursor-pointer line-clamp-2 text-lg hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0 justify-start text-start">
-													{product.name}
-												</CardTitle>
+												<AspectRatio ratio={1 / 1}>
+													<Image
+														alt="product"
+														src={product.imageUrl}
+														className="rounded-xl"
+														fill
+														objectFit="contain"
+														priority={true}
+													/>
+												</AspectRatio>
 											</Link>
 										</div>
+										<div className="relative grid grid-rows-2 justify-start items-start w-full">
+											<div>
+												<Link href={`/products/${product.id}`}>
+													<CardTitle className="cursor-pointer line-clamp-2 text-lg hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0 justify-start text-start">
+														<p>{product.name}</p>
+													</CardTitle>
+												</Link>
+											</div>
+											<div className="flex flex-auto justify-start items-start bottom-0 absolute">
+												<p className="scroll-m-20 border-b text-lg font-semibold tracking-tight transition-colors first:mt-0">
+													Price:{"  "}$ {product.price}
+												</p>
+											</div>
+										</div>
 									</div>
-								</CardContent>
-								<CardFooter className="flex space-y-1 justify-between items-center">
-									<div>
-										<Label>Price: </Label>
-										<br />
-										<Label className="scroll-m-20 border-b pb-2 text-lg font-semibold tracking-tight transition-colors first:mt-0">
-											$ {product.price}
-										</Label>
-									</div>
-								</CardFooter>
+								</CardHeader>
 							</Card>
 						))}
 					</div>
