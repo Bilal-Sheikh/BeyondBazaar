@@ -110,6 +110,7 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 				variant: "default",
 				title: "Sign In",
 				description: " ❗ Please Sign In first",
+				duration: 3000,
 			});
 			router.push("/sign-in");
 		} else {
@@ -134,6 +135,7 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 							variant: "default",
 							title: "Success",
 							description: " ✅ Added to Cart",
+							duration: 3000,
 						});
 					});
 			} catch (error) {

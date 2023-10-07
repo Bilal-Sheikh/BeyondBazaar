@@ -69,12 +69,13 @@ export function Searchbar({
 		<div className="w-full">
 			<Button
 				variant={"outline"}
-				className="text-base w-full justify-between text-gray-400 sm:text-sm"
+				className="text-base w-full justify-between text-gray-400"
 				onClick={() => setOpen(true)}
 			>
 				<div>
 					<div className="flex items-center text-base md:text-sm">
-						<Search size={17} /> Search products...
+						<Search size={17} />
+						<p className="ml-2 md:ml-3">Search</p>
 					</div>
 				</div>
 				<p className="text-sm text-muted-foreground hidden xl:block">
@@ -86,7 +87,7 @@ export function Searchbar({
 			</Button>
 
 			<CommandDialog open={open} onOpenChange={setOpen}>
-				<CommandInput placeholder="Search products..."/>
+				<CommandInput placeholder="Search products..." />
 				<CommandList>
 					<CommandEmpty>No products found.</CommandEmpty>
 
@@ -94,7 +95,7 @@ export function Searchbar({
 						<CommandGroup heading={category.category} key={category.category}>
 							{category.products.map((product) => (
 								<CommandItem
-									className="cursor-pointer"	
+									className="cursor-pointer"
 									onSelect={() => router.push(`${path}/${product.id}`)}
 								>
 									<span className="line-clamp-1">{product.name}</span>

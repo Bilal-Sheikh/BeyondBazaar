@@ -1,6 +1,7 @@
 import React from "react";
 import {
 	Sheet,
+	SheetClose,
 	SheetContent,
 	SheetHeader,
 	SheetTitle,
@@ -38,21 +39,6 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 					<SheetHeader>
 						<SheetTitle>
 							<div className="flex items-center justify-start">
-								{/* <div>
-									{user ? (
-										<UserButton afterSignOutUrl="/" />
-									) : (
-										<Link
-											href={"/sign-in"}
-											className={buttonVariants({
-												variant: "outline",
-											})}
-										>
-											{" "}
-											Sign In
-										</Link>
-									)}
-								</div> */}
 								<div>
 									<Link href={"/"}>
 										<Image src={logoBlack} alt="Logo" width={130} />
@@ -91,7 +77,9 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionTrigger>All Products</AccordionTrigger>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products"}>All Products</Link>
+													<SheetClose asChild>
+														<Link href={"/products"}>All Products</Link>
+													</SheetClose>
 												</span>
 											</AccordionContent>
 										</AccordionItem>
@@ -99,49 +87,65 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionTrigger>Clothing</AccordionTrigger>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=MENS_TOP_WEAR"}>
-														Men's Top Wear
-													</Link>
+													<SheetClose asChild>
+														<Link href={"/products?category=MENS_TOP_WEAR"}>
+															Men's Top Wear
+														</Link>
+													</SheetClose>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=MENS_BOTTOM_WEAR"}>
-														Men's Bottom Wear
-													</Link>
+													<SheetClose asChild>
+														<Link href={"/products?category=MENS_BOTTOM_WEAR"}>
+															Men's Bottom Wear
+														</Link>
+													</SheetClose>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=WOMENS_TOP_WEAR"}>
-														Women's Top Wear
-													</Link>
+													<SheetClose asChild>
+														<Link href={"/products?category=WOMENS_TOP_WEAR"}>
+															Women's Top Wear
+														</Link>
+													</SheetClose>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=WOMENS_BOTTOM_WEAR"}>
-														Women's Bottom Wear
-													</Link>
+													<SheetClose asChild>
+														<Link
+															href={"/products?category=WOMENS_BOTTOM_WEAR"}
+														>
+															Women's Bottom Wear
+														</Link>
+													</SheetClose>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=MENS_FOOTWEAR"}>
-														Men's Footwear
-													</Link>
+													<SheetClose asChild>
+														<Link href={"/products?category=MENS_FOOTWEAR"}>
+															Men's Footwear
+														</Link>
+													</SheetClose>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=WOMENS_FOOTWEAR"}>
-														Women's Footwear
-													</Link>
+													<SheetClose asChild>
+														<Link href={"/products?category=WOMENS_FOOTWEAR"}>
+															Women's Footwear
+														</Link>
+													</SheetClose>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=KIDS"}>Kids</Link>
+													<SheetClose asChild>
+														<Link href={"/products?category=KIDS"}>Kids</Link>
+													</SheetClose>
 												</span>
 											</AccordionContent>
 										</AccordionItem>
@@ -149,33 +153,43 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionTrigger>Accessories</AccordionTrigger>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=WALLETS"}>
-														Wallets
-													</Link>
+													<SheetClose asChild>
+														<Link href={"/products?category=WALLETS"}>
+															Wallets
+														</Link>
+													</SheetClose>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=WATCHES"}>
-														Watches
-													</Link>
+													<SheetClose asChild>
+														<Link href={"/products?category=WATCHES"}>
+															Watches
+														</Link>
+													</SheetClose>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=BELTS"}>Belts</Link>
+													<SheetClose asChild>
+														<Link href={"/products?category=BELTS"}>Belts</Link>
+													</SheetClose>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=BAGS"}>Bags</Link>
+													<SheetClose asChild>
+														<Link href={"/products?category=BAGS"}>Bags</Link>
+													</SheetClose>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=PERFUMES"}>
-														Perfumes
-													</Link>
+													<SheetClose asChild>
+														<Link href={"/products?category=PERFUMES"}>
+															Perfumes
+														</Link>
+													</SheetClose>
 												</span>
 											</AccordionContent>
 										</AccordionItem>
@@ -183,28 +197,40 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionTrigger>Electronics</AccordionTrigger>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=GAMING"}>Gaming</Link>
+													<SheetClose asChild>
+														<Link href={"/products?category=GAMING"}>
+															Gaming
+														</Link>
+													</SheetClose>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=POWERBANK"}>
-														Powerbank
-													</Link>
+													<SheetClose asChild>
+														<Link href={"/products?category=POWERBANK"}>
+															Powerbank
+														</Link>
+													</SheetClose>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=HEADPHONES"}>
-														Headphones
-													</Link>
+													<SheetClose asChild>
+														<Link href={"/products?category=HEADPHONES"}>
+															Headphones
+														</Link>
+													</SheetClose>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=MOBILE_ACCESSORIES"}>
-														Mobile Accessories
-													</Link>
+													<SheetClose asChild>
+														<Link
+															href={"/products?category=MOBILE_ACCESSORIES"}
+														>
+															Mobile Accessories
+														</Link>
+													</SheetClose>
 												</span>
 											</AccordionContent>
 										</AccordionItem>
@@ -212,9 +238,11 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionTrigger>Mobiles</AccordionTrigger>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=MOBILES"}>
-														Mobiles
-													</Link>
+													<SheetClose asChild>
+														<Link href={"/products?category=MOBILES"}>
+															Mobiles
+														</Link>
+													</SheetClose>
 												</span>
 											</AccordionContent>
 										</AccordionItem>
@@ -222,7 +250,11 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionTrigger>Others</AccordionTrigger>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=OTHERS"}>Others</Link>
+													<SheetClose asChild>
+														<Link href={"/products?category=OTHERS"}>
+															Others
+														</Link>
+													</SheetClose>
 												</span>
 											</AccordionContent>
 										</AccordionItem>

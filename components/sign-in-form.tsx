@@ -53,6 +53,7 @@ export function SignInForm({ className, ...props }: SignInFormProps) {
 				variant: "destructive",
 				title: "❌ Error",
 				description: err.errors[0].longMessage,
+				duration: 3000,
 			});
 		}
 	};

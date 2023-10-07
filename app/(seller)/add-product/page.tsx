@@ -116,6 +116,7 @@ export default function AddProducts() {
 			variant: "destructive",
 			title: "Error",
 			description: "❌ Something went wrong. Please go back and try again",
+			duration: 3000,
 		});
 		// alert(`ERROR! ${error.message}`);
 	};
@@ -161,6 +162,7 @@ export default function AddProducts() {
 					variant: "default",
 					title: "Success",
 					description: "✅ Product Added Successfully",
+					duration: 3000,
 				});
 			} else {
 				setIsLoading(false);
@@ -168,6 +170,7 @@ export default function AddProducts() {
 					variant: "destructive",
 					title: "Error",
 					description: "❌ Product was not added. Please try again",
+					duration: 3000,
 				});
 			}
 		} catch (error) {
@@ -176,6 +179,7 @@ export default function AddProducts() {
 				variant: "destructive",
 				title: "Error",
 				description: "❌ Something went wrong. Please go back and try again",
+				duration: 3000,
 			});
 		}
 	}

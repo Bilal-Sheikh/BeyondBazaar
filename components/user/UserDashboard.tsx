@@ -208,12 +208,12 @@ export default async function UserDashboard() {
 						quality without breaking the bank
 					</p>
 
-					<div className="relative grid grid-cols-1 lg:grid-cols-4 justify-center rounded-xl gap-4 pt-5">
+					<div className="grid grid-cols-1 lg:grid-cols-4 justify-center rounded-xl gap-4 pt-5">
 						{valuePicks?.map((product) => (
 							<Card className="w-full" key={product.id}>
-								<CardHeader>
+								<CardHeader className="p-4 h-full">
 									{/* PC */}
-									<div className="hidden lg:flex lg:flex-col lg:space-y-1.5 cursor-pointer">
+									<div className="hidden lg:flex lg:flex-col cursor-pointer">
 										<Link href={`/products/${product.id}`}>
 											<AspectRatio ratio={16 / 9}>
 												<Image
@@ -228,8 +228,8 @@ export default async function UserDashboard() {
 										</Link>
 									</div>
 
-									{/* MOBILE */}
-									<div className="grid grid-cols-2 gap-x-2">
+									<div className="grid grid-cols-2 gap-x-2 lg:flex lg:flex-auto">
+										{/* MOBILE */}
 										<div className="lg:hidden">
 											<Link href={`/products/${product.id}`}>
 												<AspectRatio ratio={1 / 1}>
@@ -245,7 +245,7 @@ export default async function UserDashboard() {
 											</Link>
 										</div>
 										<div className="relative grid grid-rows-2 justify-start items-start w-full">
-											<div>
+											<div className="lg:flex">
 												<Link href={`/products/${product.id}`}>
 													<CardTitle className="cursor-pointer line-clamp-2 text-lg hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0 justify-start text-start">
 														<p>{product.name}</p>

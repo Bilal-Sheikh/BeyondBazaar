@@ -87,6 +87,7 @@ export function SellerSignUpForm({ className, ...props }: SignUpFormProps) {
 				variant: "destructive",
 				title: "❌ Error",
 				description: err.errors[0].longMessage,
+				duration: 3000,
 			});
 		}
 	}
@@ -135,6 +136,7 @@ export function SellerSignUpForm({ className, ...props }: SignUpFormProps) {
 				variant: "destructive",
 				title: "❌ Error",
 				description: err.errors[0].longMessage,
+				duration: 3000,
 			});
 		}
 	};

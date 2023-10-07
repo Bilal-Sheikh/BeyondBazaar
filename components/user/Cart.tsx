@@ -81,6 +81,7 @@ export function Cart() {
 				variant: "destructive",
 				title: "Stock Limit Reached",
 				description: `❗ Stock Limit Reached. Cant order more than ${item.product.stockQuantity} items`,
+				duration: 3000,
 			});
 			return;
 		}
@@ -97,6 +98,7 @@ export function Cart() {
 				variant: "destructive",
 				title: "Can't be less than 0",
 				description: `❗ Quantity can't be less than 0. If you want to delete the item please click the Delete Icon`,
+				duration: 3000,
 			});
 			return;
 		}

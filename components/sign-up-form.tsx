@@ -86,6 +86,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 				variant: "destructive",
 				title: "❌ Error",
 				description: err.errors[0].longMessage,
+				duration: 3000,
 			});
 		}
 	}
@@ -109,7 +110,6 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 			if (completeSignUp.status === "complete") {
 				await setActive({ session: completeSignUp.createdSessionId });
 				router.push("/");
-				setIsLoading(false);
 			}
 		} catch (err: any) {
 			setIsLoading(false);
@@ -118,6 +118,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 				variant: "destructive",
 				title: "❌ Error",
 				description: err.errors[0].longMessage,
+				duration: 3000,
 			});
 		}
 	};
@@ -201,7 +202,14 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 												</FormItem>
 											)}
 										/>
-										<Button className="w-full" type="submit">
+										<Button
+											className="w-full"
+											type="submit"
+											disabled={isLoading}
+										>
+											{isLoading && (
+												<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+											)}
 											Submit
 										</Button>
 									</form>
@@ -218,7 +226,6 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 									</div>
 								</div>
 								<SignInOAuthButtons />
-
 
 								<Link
 									href="/seller-sign-up"
