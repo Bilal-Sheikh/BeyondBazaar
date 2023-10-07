@@ -37,13 +37,8 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 				<SheetContent side={"left"}>
 					<SheetHeader>
 						<SheetTitle>
-							<div className="flex items-center justify-around">
-								<div>
-									<Link href={"/"}>
-										<Image src={logoBlack} alt="Logo" width={130} />
-									</Link>
-								</div>
-								<div>
+							<div className="flex items-center justify-start">
+								{/* <div>
 									{user ? (
 										<UserButton afterSignOutUrl="/" />
 									) : (
@@ -57,6 +52,11 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											Sign In
 										</Link>
 									)}
+								</div> */}
+								<div>
+									<Link href={"/"}>
+										<Image src={logoBlack} alt="Logo" width={130} />
+									</Link>
 								</div>
 							</div>
 						</SheetTitle>
@@ -93,38 +93,50 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 												<span className="text-gray-500 hover:text-gray-300">
 													<Link href={"/products"}>All Products</Link>
 												</span>
-											</AccordionContent>	
+											</AccordionContent>
 										</AccordionItem>
 										<AccordionItem value="item-2">
 											<AccordionTrigger>Clothing</AccordionTrigger>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=MENS_TOP_WEAR"}>Men's Top Wear</Link>
+													<Link href={"/products?category=MENS_TOP_WEAR"}>
+														Men's Top Wear
+													</Link>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=MENS_BOTTOM_WEAR"}>Men's Bottom Wear</Link>
+													<Link href={"/products?category=MENS_BOTTOM_WEAR"}>
+														Men's Bottom Wear
+													</Link>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=WOMENS_TOP_WEAR"}>Women's Top Wear</Link>
+													<Link href={"/products?category=WOMENS_TOP_WEAR"}>
+														Women's Top Wear
+													</Link>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=WOMENS_BOTTOM_WEAR"}>Women's Bottom Wear</Link>
+													<Link href={"/products?category=WOMENS_BOTTOM_WEAR"}>
+														Women's Bottom Wear
+													</Link>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=MENS_FOOTWEAR"}>Men's Footwear</Link>
+													<Link href={"/products?category=MENS_FOOTWEAR"}>
+														Men's Footwear
+													</Link>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=WOMENS_FOOTWEAR"}>Women's Footwear</Link>
+													<Link href={"/products?category=WOMENS_FOOTWEAR"}>
+														Women's Footwear
+													</Link>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
@@ -137,12 +149,16 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionTrigger>Accessories</AccordionTrigger>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=WALLETS"}>Wallets</Link>
+													<Link href={"/products?category=WALLETS"}>
+														Wallets
+													</Link>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=WATCHES"}>Watches</Link>
+													<Link href={"/products?category=WATCHES"}>
+														Watches
+													</Link>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
@@ -157,7 +173,9 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=PERFUMES"}>Perfumes</Link>
+													<Link href={"/products?category=PERFUMES"}>
+														Perfumes
+													</Link>
 												</span>
 											</AccordionContent>
 										</AccordionItem>
@@ -170,17 +188,23 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=POWERBANK"}>Powerbank</Link>
+													<Link href={"/products?category=POWERBANK"}>
+														Powerbank
+													</Link>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=HEADPHONES"}>Headphones</Link>
+													<Link href={"/products?category=HEADPHONES"}>
+														Headphones
+													</Link>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=MOBILE_ACCESSORIES"}>Mobile Accessories</Link>
+													<Link href={"/products?category=MOBILE_ACCESSORIES"}>
+														Mobile Accessories
+													</Link>
 												</span>
 											</AccordionContent>
 										</AccordionItem>
@@ -188,7 +212,9 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionTrigger>Mobiles</AccordionTrigger>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
-													<Link href={"/products?category=MOBILES"}>Mobiles</Link>
+													<Link href={"/products?category=MOBILES"}>
+														Mobiles
+													</Link>
 												</span>
 											</AccordionContent>
 										</AccordionItem>

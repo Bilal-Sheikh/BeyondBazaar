@@ -73,7 +73,7 @@ export function Searchbar({
 				onClick={() => setOpen(true)}
 			>
 				<div>
-					<div className="flex items-center">
+					<div className="flex items-center text-base md:text-sm">
 						<Search size={17} /> Search products...
 					</div>
 				</div>

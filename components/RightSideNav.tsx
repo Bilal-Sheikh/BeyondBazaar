@@ -22,6 +22,7 @@ import {
 import { Searchbar } from "./Searchbar";
 import { prisma } from "@/lib/db";
 import { Cart } from "./user/Cart";
+import { cn } from "@/lib/utils";
 
 interface NavbarProps {
 	user: User | null;
@@ -38,43 +39,41 @@ export default async function RightSideNav({ user, role }: NavbarProps) {
 	}
 
 	return (
-		<>
-			<div className="flex flex-auto items-center justify-center gap-2">
-				<div className="flex flex-auto justify-center w-full">
-					{role === "SELLER" ? (
-						<></>
+		<div className="gap-1 md:gap-4 flex flex-auto items-center justify-center">
+			<div className="flex flex-auto justify-center w-full">
+				{role === "SELLER" ? (
+					<></>
+				) : (
+					<>
+						<Searchbar products={products} path={`/products`} />
+					</>
+				)}
+			</div>
+
+			<div className="gap-1 md:gap-3 flex flex-auto justify-end items-center">
+				<ModeToggle />
+				{role === "SELLER" ? <></> : <Cart />}
+
+				<div>
+					{user ? (
+						<div className="flex items-center justify-center gap-3">
+							<UserButton afterSignOutUrl="/" />
+						</div>
 					) : (
-						<>
-							<Searchbar products={products} path={`/products`} />
-						</>
+						<div className="flex items-center justify-center gap-3">
+							<Link
+								href={"/sign-in"}
+								className={buttonVariants({
+									variant: "default",
+								})}
+							>
+								{" "}
+								SignIn
+							</Link>
+						</div>
 					)}
 				</div>
-
-				<div className="flex flex-auto justify-end gap-2">
-					<ModeToggle />
-					{role === "SELLER" ? <></> : <Cart />}
-
-					<div className="max-sm:hidden max-md:hidden max-lg:hidden lg:block">
-						{user ? (
-							<div className="flex items-center justify-center gap-3">
-								<UserButton afterSignOutUrl="/" />
-							</div>
-						) : (
-							<div className="flex items-center justify-center gap-3">
-								<Link
-									href={"/sign-in"}
-									className={buttonVariants({
-										variant: "default",
-									})}
-								>
-									{" "}
-									SignIn
-								</Link>
-							</div>
-						)}
-					</div>
-				</div>
 			</div>
-		</>
+		</div>
 	);
 }
