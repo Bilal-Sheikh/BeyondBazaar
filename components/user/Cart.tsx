@@ -15,7 +15,14 @@ import {
 } from "@/components/ui/sheet";
 import { prisma } from "@/lib/db";
 import { currentUser, useUser } from "@clerk/nextjs";
-import { Minus, Plus, ShoppingCart } from "lucide-react";
+import {
+	Delete,
+	Loader2,
+	Minus,
+	Plus,
+	ShoppingCart,
+	Trash,
+} from "lucide-react";
 import Image from "next/image";
 import {
 	Card,
@@ -29,10 +36,19 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import React from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useToast } from "../ui/use-toast";
+import { Separator } from "../ui/separator";
 
 export function Cart() {
 	const { isSignedIn, user } = useUser();
 	const [cartItems, setCartItems] = React.useState([]);
+	const [updateState, setUpdateState] = React.useState(0);
+	const [isLoading, setIsLoading] = React.useState(false);
+	const { toast } = useToast();
+	
+
+	console.log("(COOKIE) CART ITEMS  ::::::::::::::::::::::::::", Cookies.get("cartItems"));
 
 	React.useEffect(() => {
 		if (isSignedIn) {
@@ -53,40 +69,109 @@ export function Cart() {
 				);
 			}
 		}
-	}, [user]);
+	}, [user, updateState]);
 
 	console.log("CART ITEMS::::::::::::::::::::::::::::::::::", cartItems);
 
-	const handleMinusClick = () => {
-		if (quantity > 0) {
-			updateCartQuantity(item.id, quantity - 1);
-			setQuantity(quantity - 1);
+	const handlePlusClick = (item) => {
+		const cartId = item.id;
+		const productId = item.productId;
+		const newQuantity = item.quantity + 1;
+
+		if (newQuantity > item.product.stockQuantity) {
+			toast({
+				variant: "destructive",
+				title: "Stock Limit Reached",
+				description: `❗ Stock Limit Reached. Cant order more than ${item.product.stockQuantity} items`,
+			});
+			return;
+		}
+
+		updateCartQuantity(cartId, productId, newQuantity);
+	};
+	const handleMinusClick = (item) => {
+		const cartId = item.id;
+		const productId = item.productId;
+		const newQuantity = item.quantity - 1;
+
+		if (newQuantity <= 0) {
+			toast({
+				variant: "destructive",
+				title: "Can't be less than 0",
+				description: `❗ Quantity can't be less than 0. If you want to delete the item please click the Delete Icon`,
+			});
+			return;
+		}
+
+		updateCartQuantity(cartId, productId, newQuantity);
+	};
+	const handleDeleteClick = (item) => {
+		const cartId = item.id;
+		const productId = item.productId;
+
+		try {
+			setIsLoading(true);
+
+			axios
+				.delete("/api/update-cart", {
+					headers: {
+						ClerkId: user.id,
+						ProductId: productId,
+						CartId: cartId,
+					},
+				})
+				.then((res) => {
+					setUpdateState((state) => state + 1);
+					setIsLoading(false);
+				});
+		} catch (error) {
+			console.log(
+				"ERROR IN AXIOS /api/update-cart:::::::::::::::::::::::::",
+				error
+			);
 		}
 	};
-	const handlePlusClick = () => {
-		updateCartQuantity(item.id, quantity + 1);
-		setQuantity(quantity + 1);
-	};
 
-	const updateCartQuantity = async (productId, newQuantity) => {
+	const updateCartQuantity = async (cartId, productId, newQuantity) => {
 		try {
-			await axios.post("/update-cart", {
-				productId,
-				quantity: newQuantity,
-			});
-			// Assuming that the server responds with a success message or status code.
+			setIsLoading(true);
+
+			axios
+				.post(
+					"/api/update-cart",
+					{},
+					{
+						headers: {
+							ClerkId: user.id,
+							CartId: cartId,
+							ProductId: productId,
+							Quantity: newQuantity,
+						},
+					}
+				)
+				.then((res) => {
+					setUpdateState((state) => state + 1);
+					setIsLoading(false);
+				});
 		} catch (error) {
-			console.error("Error updating cart quantity:", error);
-			// Handle error
+			console.log(
+				"ERROR in AXIOS /api/cart-quantity:::::::::::::::::::::::::::::::::::",
+				error
+			);
 		}
 	};
 
 	return (
 		<Sheet>
 			<SheetTrigger asChild>
-				<Button variant="outline" size="icon">
-					<ShoppingCart size={17} />
-				</Button>
+				<div className="relative">
+					<Button variant="outline" size="icon">
+						<ShoppingCart size={17} />
+						<div className="absolute right-0 top-0 -mr-2 -mt-2 h-4 w-4 rounded bg-blue-700 text-[11px] font-medium text-white">
+							{cartItems.length}
+						</div>
+					</Button>
+				</div>
 			</SheetTrigger>
 			<SheetContent className="sm:max-w-xl">
 				{!isSignedIn ? (
@@ -102,15 +187,18 @@ export function Cart() {
 				) : (
 					<>
 						<SheetHeader>
-							<SheetTitle>Cart</SheetTitle>
+							<SheetTitle>Cart: {cartItems.length} Products</SheetTitle>
 							<SheetDescription>
 								Make changes in your cart here. Proceed to checkout when you're
 								done.
 							</SheetDescription>
 						</SheetHeader>
+
+						<Separator className="my-5" />
+
 						<div className="grid gap-4 py-4">
 							{cartItems.map((item) => (
-								<Card>
+								<Card key={item.id}>
 									<CardHeader>
 										<div className="flex flex-1 gap-2">
 											<Image
@@ -130,29 +218,51 @@ export function Cart() {
 									</CardHeader>
 									<CardContent className="flex flex-1 justify-between">
 										<div>
+											<p className="text-sm md:text-sm font-extralight">
+												Item Price: $
+												{item.product.price.toLocaleString("en-US")} x{" "}
+												{item.quantity}
+											</p>
 											<p className="text-sm md:text-lg font-medium">
-												Price: ${item.product.price.toLocaleString("en-US")}
+												Total Price: $ {item.product.price * item.quantity}
 											</p>
 										</div>
 										<div className="flex flex-1 justify-end items-center gap-2">
 											<Button
+												disabled={isLoading}
 												variant={"outline"}
 												size={"icon"}
-												onClick={handleMinusClick}
+												onClick={() => handleMinusClick(item)}
 											>
 												<Minus size={10} />
 											</Button>
 
-											<Label className="justify-center items-center">
-												{item.quantity}
+											<Label
+												className="justify-center items-center"
+												key={item.id}
+											>
+												{isLoading ? (
+													<Loader2 className="mr-2 h-4 w-4 animate-spin" />
+												) : (
+													<>{item.quantity}</>
+												)}
 											</Label>
 
 											<Button
+												disabled={isLoading}
 												variant={"outline"}
 												size={"icon"}
-												onClick={handlePlusClick}
+												onClick={() => handlePlusClick(item)}
 											>
 												<Plus size={10} />
+											</Button>
+											<Button
+												disabled={isLoading}
+												variant={"outline"}
+												size={"icon"}
+												onClick={() => handleDeleteClick(item)}
+											>
+												<Trash size={17} />
 											</Button>
 										</div>
 									</CardContent>

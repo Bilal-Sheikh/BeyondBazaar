@@ -129,6 +129,7 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 					.then((res) => {
 						console.log("RES DATA :::::::::::::::::::::::", res.data);
 						setIsLoading(false);
+						setExist(true);
 						toast({
 							variant: "default",
 							title: "Success",
@@ -143,7 +144,7 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 			}
 		}
 	}
-
+	
 	return (
 		<>
 			{isFetched ? (
