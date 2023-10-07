@@ -40,8 +40,6 @@ export async function POST() {
 				},
 			},
 		});
-		cookies().set("cartItems", cart.length);
-		console.log("(API) ADDED TO COOKIES :::::::::::::::::::::::", cart.length);
 
 		return NextResponse.json({
 			success: true,

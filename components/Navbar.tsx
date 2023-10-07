@@ -10,7 +10,7 @@ export default async function Navbar() {
 
 	return (
 		<header className="sticky top-0 bg-background border-b z-50">
-			<div className="flex flex-auto px-10 h-16 justify-center items-center w-full gap-4">
+			<div className="px-3 md:px-10 flex flex-auto h-16 justify-center items-center w-full gap-4">
 				<div className="max-sm:hidden max-md:hidden max-lg:hidden lg:block">
 					<PcNavbar role={role} />
 				</div>

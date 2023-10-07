@@ -39,6 +39,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 import { Separator } from "../ui/separator";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export function Cart() {
 	const { isSignedIn, user } = useUser();
@@ -162,11 +163,17 @@ export function Cart() {
 		<Sheet>
 			<SheetTrigger asChild>
 				<div className="relative">
-					<Button variant="outline" size="icon">
+					<Button
+						variant="outline"
+						size="icon"
+						onClick={() => setUpdateState((state) => state + 1)}
+					>
 						<ShoppingCart size={17} />
-						<div className="absolute right-0 top-0 -mr-2 -mt-2 h-4 w-4 rounded bg-blue-700 text-[11px] font-medium text-white">
-							{cartItems.length}
-						</div>
+						{user && (
+							<div className="absolute right-0 top-0 -mr-2 -mt-2 h-4 w-4 rounded bg-blue-700 text-[11px] font-medium text-white">
+								{cartItems.length}
+							</div>
+						)}
 					</Button>
 				</div>
 			</SheetTrigger>
@@ -193,82 +200,90 @@ export function Cart() {
 
 						<Separator className="my-5" />
 
-						<div className="grid gap-4 py-4">
-							{cartItems.map((item) => (
-								<Card key={item.id}>
-									<CardHeader>
-										<div className="flex flex-1 gap-2">
-											<Image
-												alt={item.product.name}
-												src={item.product.imageUrl}
-												width={100}
-												height={100}
-												objectFit="contain"
-											/>
+						<ScrollArea className="h-4/6 md:h-[550px] w-full md:pr-4">
+							<div className="grid gap-4">
+								{cartItems.map((item) => (
+									<Card key={item.id}>
+										<CardHeader>
+											<div className="md:flex md:flex-1 md:gap-2">
+												<Image
+													alt={item.product.name}
+													src={item.product.imageUrl}
+													width={100}
+													height={100}
+													objectFit="contain"
+												/>
 
-											<CardTitle>
-												<p className="line-clamp-1 text-sm md:text-xl">
-													{item.product.name}
-												</p>
-											</CardTitle>
-										</div>
-									</CardHeader>
-									<CardContent className="flex flex-1 justify-between">
-										<div>
-											<p className="text-sm md:text-sm font-extralight">
-												Item Price: $
-												{item.product.price.toLocaleString("en-US")} x{" "}
-												{item.quantity}
-											</p>
-											<p className="text-sm md:text-lg font-medium">
-												Total Price: $ {item.product.price * item.quantity}
-											</p>
-										</div>
-										<div className="flex flex-1 justify-end items-center gap-2">
-											<Button
-												disabled={isLoading}
-												variant={"outline"}
-												size={"icon"}
-												onClick={() => handleMinusClick(item)}
-											>
-												<Minus size={10} />
-											</Button>
+												<CardTitle className="w-full">
+													<p className="pt-2 md:pt-0 line-clamp-1 text-sm md:text-xl">
+														{item.product.name}
+													</p>
 
-											<Label
-												className="justify-center items-center"
-												key={item.id}
-											>
-												{isLoading ? (
-													<Loader2 className="mr-2 h-4 w-4 animate-spin" />
-												) : (
-													<>{item.quantity}</>
-												)}
-											</Label>
+													<div className="grid grid-rows-2 md:flex md:flex-1 md:justify-between md:pt-5">
+														<div className="py-1">
+															<p className="text-sm md:text-sm font-extralight">
+																Item Price: $
+																{item.product.price.toLocaleString("en-US")} x{" "}
+																{item.quantity}
+															</p>
+															<p className="text-sm md:text-lg font-medium">
+																Total Price: ${" "}
+																{item.product.price * item.quantity}
+															</p>
+														</div>
+														<div className="justify-start flex md:flex-1 md:justify-end items-center gap-2">
+															<Button
+																disabled={isLoading}
+																variant={"outline"}
+																size={"icon"}
+																onClick={() => handleMinusClick(item)}
+															>
+																<Minus size={10} />
+															</Button>
 
-											<Button
-												disabled={isLoading}
-												variant={"outline"}
-												size={"icon"}
-												onClick={() => handlePlusClick(item)}
-											>
-												<Plus size={10} />
-											</Button>
-											<Button
-												disabled={isLoading}
-												variant={"outline"}
-												size={"icon"}
-												onClick={() => handleDeleteClick(item)}
-											>
-												<Trash size={17} />
-											</Button>
-										</div>
-									</CardContent>
-								</Card>
-							))}
-						</div>
+															<Label
+																className="justify-center items-center"
+																key={item.id}
+															>
+																{isLoading ? (
+																	<Loader2 className="mr-2 h-4 w-4 animate-spin" />
+																) : (
+																	<>{item.quantity}</>
+																)}
+															</Label>
+
+															<Button
+																disabled={isLoading}
+																variant={"outline"}
+																size={"icon"}
+																onClick={() => handlePlusClick(item)}
+															>
+																<Plus size={10} />
+															</Button>
+															<Button
+																disabled={isLoading}
+																variant={"outline"}
+																size={"icon"}
+																onClick={() => handleDeleteClick(item)}
+															>
+																<Trash size={17} />
+															</Button>
+														</div>
+													</div>
+												</CardTitle>
+											</div>
+										</CardHeader>
+									</Card>
+								))}
+							</div>
+						</ScrollArea>
+
+						<Separator className="my-3" />
 						<SheetFooter>
 							<SheetClose asChild>
-								<Button type="submit">Save changes</Button>
+								<Button type="submit" className="w-full">
+									Proceed to Checkout
+								</Button>
 							</SheetClose>
 						</SheetFooter>
 					</>

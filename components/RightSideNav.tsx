@@ -44,30 +44,23 @@ export default async function RightSideNav({ user, role }: NavbarProps) {
 					{role === "SELLER" ? (
 						<></>
 					) : (
-						<Searchbar products={products} path={`/products`} />
+						<>
+							<Searchbar products={products} path={`/products`} />
+						</>
 					)}
 				</div>
 
 				<div className="flex flex-auto justify-end gap-2">
 					<ModeToggle />
+					{role === "SELLER" ? <></> : <Cart />}
 
 					<div className="max-sm:hidden max-md:hidden max-lg:hidden lg:block">
 						{user ? (
 							<div className="flex items-center justify-center gap-3">
-								{role === "SELLER" ? (
-									<>
-										<UserButton afterSignOutUrl="/" />
-									</>
-								) : (
-									<>
-										<Cart />
-										<UserButton afterSignOutUrl="/" />
-									</>
-								)}
+								<UserButton afterSignOutUrl="/" />
 							</div>
 						) : (
 							<div className="flex items-center justify-center gap-3">
-								<Cart />
 								<Link
 									href={"/sign-in"}
 									className={buttonVariants({
