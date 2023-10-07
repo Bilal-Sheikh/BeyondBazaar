@@ -46,9 +46,6 @@ export function Cart() {
 	const [updateState, setUpdateState] = React.useState(0);
 	const [isLoading, setIsLoading] = React.useState(false);
 	const { toast } = useToast();
-	
-
-	console.log("(COOKIE) CART ITEMS  ::::::::::::::::::::::::::", Cookies.get("cartItems"));
 
 	React.useEffect(() => {
 		if (isSignedIn) {
