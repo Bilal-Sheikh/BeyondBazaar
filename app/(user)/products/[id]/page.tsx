@@ -84,6 +84,7 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 		}
 	}, []);
 
+	//Read More ref
 	React.useEffect(() => {
 		if (ref.current) {
 			console.log(

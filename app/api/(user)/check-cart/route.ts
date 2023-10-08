@@ -16,7 +16,6 @@ export async function GET() {
 	}
 
 	console.log("(API) USER ID :::::::::::::::::::::::", clerkId);
-
 	// return NextResponse.json({ success: "REACHED API VIEW PRODUCTS" });
 
 	try {

@@ -31,22 +31,22 @@ export default async function products({
 	// console.log("SEARCH PARAMS CATEGORY:::::::::::::::::::::::::::::", category);
 	// console.log("SEARCH PARAMS PRICE :::::::::::::::::::::::::::::", price);
 	// console.log("SEARCH PARAMS DATE :::::::::::::::::::::::::::::", date);
-	console.log("SEARCH PARAMS SORT:::::::::::::::::::::::::::::", sort);
+	// console.log("SEARCH PARAMS SORT:::::::::::::::::::::::::::::", sort);
 
 	sort ? (sort = sort.split(".")) : (sort = [sort]);
-	console.log("SORT:::::::::::::::::::::::::::::::", sort);
+	// console.log("SORT:::::::::::::::::::::::::::::::", sort);
 
 	const where = {};
 	if (category) where.category = category;
 
 	let orderBy = {};
-	console.log("ORDER BY :::::::::::::::::::::::::::::::", orderBy);
+	// console.log("ORDER BY :::::::::::::::::::::::::::::::", orderBy);
 	if (sort[1]) {
 		orderBy[sort[0]] = sort[1];
 	} else {
 		orderBy[sort[0]] = "desc";
 	}
-	console.log("SORT BY AFTER :::::::::::::::::::::::::::::::", orderBy);
+	// console.log("SORT BY AFTER :::::::::::::::::::::::::::::::", orderBy);
 
 	const initialSkip = (Number(page) - 1) * Number(per_page);
 	const end = initialSkip + Number(per_page);
@@ -82,7 +82,7 @@ export default async function products({
 			);
 		}
 	}
-
+// 
 	products = await getAllProducts();
 	totalProducts = await getProductsCount();
 

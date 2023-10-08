@@ -18,7 +18,6 @@ export async function POST() {
 	}
 
 	console.log("(API) USER ID :::::::::::::::::::::::", clerkId);
-
 	// return NextResponse.json({ success: "REACHED API CART QUANTITY" });
 
 	try {
@@ -28,14 +27,14 @@ export async function POST() {
 		});
 
 		console.log(
-			"(API) INCREASED QUANTITY IN CART FOR PRODUCT :::::::::::::::::::::::",
+			"(API) CHANGED QUANTITY IN CART FOR PRODUCT :::::::::::::::::::::::",
 			cartId,
 			productId
 		);
 
 		return NextResponse.json({
 			success: true,
-			message: "(API) Successfully INCREASED QUANTITY",
+			message: "(API) Successfully CHANGED QUANTITY",
 		});
 	} catch (error) {
 		console.log(

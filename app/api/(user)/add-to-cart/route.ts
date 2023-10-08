@@ -30,17 +30,6 @@ export async function POST() {
 		});
 		console.log("(API) ADDED TO CART :::::::::::::::::::::::", productId);
 
-		const { cart } = await prisma.user.findUnique({
-			where: { clerkId: clerkId },
-			include: {
-				cart: {
-					include: {
-						product: true,
-					},
-				},
-			},
-		});
-
 		return NextResponse.json({
 			success: true,
 			message: "(API) Successfully ADDED to cart",
