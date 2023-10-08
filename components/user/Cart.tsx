@@ -220,10 +220,11 @@ export function Cart() {
 												/>
 
 												<CardTitle className="w-full">
-													<p className="pt-2 md:pt-0 line-clamp-1 text-sm md:text-xl">
-														{item.product.name}
-													</p>
-
+													<Link href={`/products/${item.product.id}`}>
+														<p className="hover:text-blue-500 cursor-pointer pt-2 md:pt-0 line-clamp-1 text-sm md:text-xl tracking-tight transition-colors">
+															{item.product.name}
+														</p>
+													</Link>
 													<div className="grid grid-rows-2 md:flex md:flex-1 md:justify-between md:pt-5">
 														<div className="py-1">
 															<p className="text-sm md:text-sm font-extralight">
@@ -286,7 +287,7 @@ export function Cart() {
 						<Separator className="my-3" />
 						<SheetFooter>
 							<SheetClose asChild>
-								<Link href={"/checkout"} className="w-full">
+								<Link href={"/checkout"} prefetch={false} className="w-full">
 									<Button type="submit" className="w-full">
 										Proceed to Checkout
 									</Button>
