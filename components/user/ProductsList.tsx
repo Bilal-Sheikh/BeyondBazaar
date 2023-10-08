@@ -1,5 +1,3 @@
-"use client";
-
 import axios from "axios";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import * as React from "react";
@@ -52,7 +50,6 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Product } from "@prisma/client";
 import { useToast } from "../ui/use-toast";
@@ -60,8 +57,6 @@ import AddToCartButton from "./AddToCartButton";
 import Loading from "@/app/(user)/loading";
 
 export default function ProductsList({ products }: { products: Product }) {
-	const router = useRouter();
-
 	return (
 		<div className="flex flex-col justify-center items-center mx-4 gap-5 lg:grid lg:grid-cols-3 lg:px-14 lg:gap-10">
 			{products.map((product) => (
@@ -69,14 +64,14 @@ export default function ProductsList({ products }: { products: Product }) {
 					<CardHeader>
 						<div className="flex justify-between items-center">
 							<div>
-								<Badge
-									className="cursor-pointer"
-									onClick={() =>
-										router.push(`/products/?category=${product.category}`)
-									}
-								>
-									{product.category}
-								</Badge>
+								<Link href={`/products/?category=${product.category}`}>
+									<Badge
+										className="cursor-pointer"
+									
+									>
+										{product.category}
+									</Badge>
+								</Link>
 							</div>
 							<div className="hidden lg:flex">
 								<Button variant="outline" size="icon">
@@ -86,21 +81,22 @@ export default function ProductsList({ products }: { products: Product }) {
 						</div>
 
 						{/* PC */}
-						<div
-							className="hidden lg:flex lg:flex-col lg:space-y-1.5 cursor-pointer"
-							onClick={() => router.push(`/products/${product.id}`)}
-						>
-							<AspectRatio ratio={16 / 9}>
-								<Image
-									alt="product"
-									src={product.imageUrl}
-									className="rounded-xl"
-									fill
-									objectFit="contain"
-									priority={true}
-								/>
-							</AspectRatio>
-						</div>
+						<Link href={`/products/${product.id}`}>
+							<div
+								className="hidden lg:flex lg:flex-col lg:space-y-1.5 cursor-pointer"
+							>
+								<AspectRatio ratio={16 / 9}>
+									<Image
+										alt="product"
+										src={product.imageUrl}
+										className="rounded-xl"
+										fill
+										objectFit="contain"
+										priority={true}
+									/>
+								</AspectRatio>
+							</div>
+						</Link>
 					</CardHeader>
 					<CardContent>
 						{/* MOBILE */}
@@ -119,12 +115,13 @@ export default function ProductsList({ products }: { products: Product }) {
 							</div>
 
 							<div className="grid w-full h-20 top-0 gap-4">
-								<CardTitle
-									onClick={() => router.push(`/products/${product.id}`)}
-									className="cursor-pointer line-clamp-2 text-lg hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0"
-								>
-									{product.name}
-								</CardTitle>
+								<Link href={`/products/${product.id}`}>
+									<CardTitle
+										className="cursor-pointer line-clamp-2 text-lg hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0"
+									>
+										{product.name}
+									</CardTitle>
+								</Link>
 							</div>
 						</div>
 					</CardContent>
@@ -138,9 +135,7 @@ export default function ProductsList({ products }: { products: Product }) {
 						</div>
 
 						<div className="w-30 lg:w-2/3" key={product.id}>
-							<React.Suspense fallback={<Loading />}>
-								<AddToCartButton key={product.id} productId={product.id} />
-							</React.Suspense>
+							<AddToCartButton key={product.id} productId={product.id} />
 						</div>
 					</CardFooter>
 				</Card>

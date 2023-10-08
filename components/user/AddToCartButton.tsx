@@ -11,6 +11,7 @@ import { useUser } from "@clerk/nextjs";
 export default function AddToCartButton({ productId }) {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
+	const [isFetching, setIsFetching] = useState(false);
 	const [exist, setExist] = useState(false);
 	const { toast } = useToast();
 	const { isSignedIn, user } = useUser();
@@ -60,6 +61,7 @@ export default function AddToCartButton({ productId }) {
 
 	useEffect(() => {
 		if (isSignedIn) {
+			setIsFetching(true);
 			try {
 				axios
 					.get("http://localhost:3000/api/check-cart", {
@@ -72,6 +74,7 @@ export default function AddToCartButton({ productId }) {
 						if (res.data.exists === true) {
 							setExist(true);
 						}
+						setIsFetching(false);
 					});
 			} catch (error) {
 				console.log(
@@ -83,19 +86,27 @@ export default function AddToCartButton({ productId }) {
 
 	return (
 		<>
-			{exist ? (
-				<Button variant={"outline"} className="w-full">
-					Already in Cart
-				</Button>
+			{isFetching ? (
+				<div className="flex items-center justify-center">
+					<Loader2 className="mr-2 animate-spin" />
+				</div>
 			) : (
-				<Button
-					disabled={isLoading}
-					className="w-full"
-					onClick={() => handleAddToCart(productId)}
-				>
-					{isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-					Add to Cart
-				</Button>
+				<>
+					{exist ? (
+						<Button variant={"outline"} className="w-full">
+							Already in Cart
+						</Button>
+					) : (
+						<Button
+							disabled={isLoading}
+							className="w-full"
+							onClick={() => handleAddToCart(productId)}
+						>
+							{isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+							Add to Cart
+						</Button>
+					)}
+				</>
 			)}
 		</>
 	);

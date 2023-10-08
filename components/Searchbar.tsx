@@ -1,16 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-	Calculator,
-	Calendar,
-	CreditCard,
-	Search,
-	Settings,
-	Smile,
-	User,
-} from "lucide-react";
-
+import { Search } from "lucide-react";
 import {
 	CommandDialog,
 	CommandEmpty,
@@ -22,7 +13,7 @@ import {
 	CommandShortcut,
 } from "@/components/ui/command";
 import { Button } from "./ui/button";
-import { Category, Product } from "@prisma/client";
+import { Product } from "@prisma/client";
 import { useRouter } from "next/navigation";
 
 export function Searchbar({

@@ -40,12 +40,11 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cookies } from "next/headers";
 
 async function getData(clerkId) {
-
 	try {
 		const res = await fetch("http://localhost:3000/api/get-cart", {
 			headers: { ClerkId: clerkId },
 			next: { revalidate: 0 },
-			cache : 'no-store'
+			cache: "no-store",
 		});
 		return res.json();
 	} catch (error) {
