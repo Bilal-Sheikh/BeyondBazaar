@@ -29,7 +29,7 @@ export async function GET() {
 				},
 			},
 		});
-        console.log("(API) CART::::::::::::::::::::::", cart);
+        // console.log("(API) CART::::::::::::::::::::::", cart);
         
 		return NextResponse.json({
 			success: true,

@@ -57,56 +57,10 @@ import Link from "next/link";
 import { Product } from "@prisma/client";
 import { useToast } from "../ui/use-toast";
 import AddToCartButton from "./AddToCartButton";
+import Loading from "@/app/(user)/loading";
 
 export default function ProductsList({ products }: { products: Product }) {
 	const router = useRouter();
-	// const [isLoading, setIsLoading] = React.useState(false);
-	// const [exist, setExist] = React.useState(false);
-	// const { toast } = useToast();
-	// const { isSignedIn, user } = useUser();
-
-	// function handleAddToCart(productId) {
-	// 	if (!isSignedIn) {
-	// 		toast({
-	// 			variant: "default",
-	// 			title: "Sign In",
-	// 			description: " ❗ Please Sign In first",
-	// 			duration: 3000,
-	// 		});
-	// 		router.push("/sign-in");
-	// 	} else {
-	// 		setIsLoading(true);
-	// 		try {
-	// 			axios
-	// 				.post(
-	// 					"/api/add-to-cart",
-	// 					{},
-	// 					{
-	// 						headers: {
-	// 							ClerkId: user.id,
-	// 							ProductId: productId,
-	// 						},
-	// 					}
-	// 				)
-	// 				.then((res) => {
-	// 					console.log("RES DATA :::::::::::::::::::::::", res.data);
-	// 					setIsLoading(false);
-	// 					setExist(true);
-	// 					toast({
-	// 						variant: "default",
-	// 						title: "Success",
-	// 						description: " ✅ Added to Cart",
-	// 						duration: 3000,
-	// 					});
-	// 				});
-	// 		} catch (error) {
-	// 			console.log(
-	// 				"ERRORS in http://localhost:3000/api/add-to-cart::::::::::::::::::::::::::::::::",
-	// 				error
-	// 			);
-	// 		}
-	// 	}
-	// }
 
 	return (
 		<div className="flex flex-col justify-center items-center mx-4 gap-5 lg:grid lg:grid-cols-3 lg:px-14 lg:gap-10">
@@ -184,25 +138,9 @@ export default function ProductsList({ products }: { products: Product }) {
 						</div>
 
 						<div className="w-30 lg:w-2/3" key={product.id}>
-							
-							<AddToCartButton key={product.id} productId={product.id} />
-							{/* {exist ? (
-								<Button variant={"outline"} className="w-full">
-									Already in Cart
-								</Button>
-							) : (
-								<Button
-									disabled={isLoading}
-									className="w-full"
-									onClick={() => handleAddToCart(product.id)}
-									key={product.id}
-								>
-									{isLoading && (
-										<Loader2 className="mr-2 h-4 w-4 animate-spin" />
-									)}
-									Add to Cart
-								</Button>
-							)} */}
+							<React.Suspense fallback={<Loading />}>
+								<AddToCartButton key={product.id} productId={product.id} />
+							</React.Suspense>
 						</div>
 					</CardFooter>
 				</Card>

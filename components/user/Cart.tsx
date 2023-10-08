@@ -47,6 +47,7 @@ export function Cart() {
 	const [updateState, setUpdateState] = React.useState(0);
 	const [isLoading, setIsLoading] = React.useState(false);
 	const { toast } = useToast();
+	const router = useRouter();
 
 	React.useEffect(() => {
 		if (isSignedIn) {
@@ -123,6 +124,7 @@ export function Cart() {
 				.then((res) => {
 					setUpdateState((state) => state + 1);
 					setIsLoading(false);
+					router.refresh();
 				});
 		} catch (error) {
 			console.log(
@@ -152,6 +154,7 @@ export function Cart() {
 				.then((res) => {
 					setUpdateState((state) => state + 1);
 					setIsLoading(false);
+					router.refresh();
 				});
 		} catch (error) {
 			console.log(
@@ -283,9 +286,11 @@ export function Cart() {
 						<Separator className="my-3" />
 						<SheetFooter>
 							<SheetClose asChild>
-								<Button type="submit" className="w-full">
-									Proceed to Checkout
-								</Button>
+								<Link href={"/checkout"} className="w-full">
+									<Button type="submit" className="w-full">
+										Proceed to Checkout
+									</Button>
+								</Link>
 							</SheetClose>
 						</SheetFooter>
 					</>

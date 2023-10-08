@@ -82,7 +82,7 @@ export default async function products({
 			);
 		}
 	}
-// 
+	
 	products = await getAllProducts();
 	totalProducts = await getProductsCount();
 
