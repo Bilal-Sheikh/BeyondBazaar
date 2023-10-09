@@ -9,6 +9,7 @@ export default function Success() {
 	const searchParams = useSearchParams();
 	const paymentId = searchParams.get("payment-id");
 	const orderId = searchParams.get("order-id");
+	const quantity = searchParams.get("quantity");
 	const router = useRouter();
 	const { user, isSignedIn } = useUser();
 
@@ -20,7 +21,8 @@ export default function Success() {
 					{},
 					{
 						headers: {
-							ClerkId: user.id,
+							UserClerkId: user.id,
+							Quantity: quantity,
 						},
 					}
 				);
@@ -35,10 +37,17 @@ export default function Success() {
 	}, []);
 
 	return (
-		<div>
-			Success <br />
-			PAYMENT ID :{JSON.stringify(paymentId)} <br />
-			ORDER ID :{JSON.stringify(orderId)}
+		<div className="py-10 px-5 w-full h-full lg:h-screen">
+			<div className="flex flex-auto justify-between items-center border-b pb-3">
+				<h2 className="mt-10 scroll-m-20 text-3xl font-bold tracking-tight transition-colors first:mt-0">
+					Payment <p className=" text-green-700">Successfull</p>
+				</h2>
+			</div>
+
+			<div className="flex flex-col lg:flex-row justify-center items-center pt-10 gap-5 lg:gap-20">
+				<p>Your Payment Id : {paymentId}</p>
+				<p>Your Order Id : {orderId}</p>
+			</div>
 		</div>
 	);
 }

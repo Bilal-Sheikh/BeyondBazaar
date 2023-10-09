@@ -50,14 +50,15 @@ model User {
 
     postedProducts Product[]
 
-    cart       CartItem[]
-    attributes Json
+    cart     CartItem[]
+    payments Payment[]
 
     //add Revenue
     // revenue Int
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    attributes Json
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
 }
 
 // prod 1 = sold * price = total revenue for that product /user side
@@ -99,6 +100,19 @@ model CartItem {
     productId Int
     product   Product  @relation(fields: [productId], references: [id])
     quantity  Int
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Payment {
+    id                  Int    @id @default(autoincrement())
+    razorpay_order_id   String
+    razorpay_payment_id String
+    razorpay_signature  String
+
+    userId String
+    user   User   @relation(fields: [userId], references: [clerkId])
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }

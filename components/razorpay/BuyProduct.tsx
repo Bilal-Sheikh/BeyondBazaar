@@ -7,7 +7,12 @@ import axios from "axios";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
 
-export default function BuyProduct({ clerkId, grandTotal }) {
+export default function BuyProduct({
+	clerkId,
+	grandTotal,
+	totalQuantity,
+	sellersId,
+}) {
 	const [isLoading, setIsLoading] = React.useState(false);
 	const router = useRouter();
 
@@ -39,7 +44,7 @@ export default function BuyProduct({ clerkId, grandTotal }) {
 			order_id: data.order.id,
 			description: "Test payment for Beyond Bazzar",
 			handler: async function (response) {
-				console.log("RAZORPAY HANDLER RESPONSE::::::::::::::", response);
+				// console.log("RAZORPAY HANDLER RESPONSE::::::::::::::", response);
 
 				const { data } = await axios.post(
 					"/api/razorpay/payment-verify",
@@ -51,31 +56,23 @@ export default function BuyProduct({ clerkId, grandTotal }) {
 					{ headers: { ClerkId: clerkId } }
 				);
 
-				console.log("PAYMENT VERIFY RES::::::::::::::::::::", data);
+				// console.log("PAYMENT VERIFY RES::::::::::::::::::::", data);
 
 				if (data?.success === true) {
-					console.log("REDIRECTING::::::::::::::");
-					// alert(response.razorpay_payment_id);
-					// alert(response.razorpay_order_id);
-					// alert(response.razorpay_signature);
+					// console.log("REDIRECTING::::::::::::::");
 					router.push(
-						`/payment-status/success?payment-id=${response.razorpay_payment_id}&order-id=${response.razorpay_order_id}`
+						`/payment-status/success?
+						payment-id=${response.razorpay_payment_id}
+						&order-id=${response.razorpay_order_id}
+						&quantity=${totalQuantity}`
 					);
+					
 				} else {
 					alert("Payment failed. Please try again. Contact support for help");
 					router.push("/payment-status/failure");
 				}
 			},
 		};
-
-		// try {
-		// 	const paymentObject = new window.Razorpay(options);
-		// 	paymentObject.open();
-		// } catch (error) {
-		// 	console.log("ERROR in paymentObject::::::::::::::::::::", error);
-		// 	alert("Payment failed. Please try again. Contact support for help");
-		// }
-
 		const paymentObject = new window.Razorpay(options);
 		paymentObject.open();
 
