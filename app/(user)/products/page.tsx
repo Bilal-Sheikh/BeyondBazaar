@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { prisma } from "@/lib/db";
 import React from "react";
-import Loading from "../loading";
+import Loading from "./loading";
 import ProductsList from "@/components/user/ProductsList";
 import PaginationControls from "@/components/PaginationControls";
 import {

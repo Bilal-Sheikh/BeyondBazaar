@@ -23,6 +23,8 @@ import { Searchbar } from "./Searchbar";
 import { prisma } from "@/lib/db";
 import { Cart } from "./user/Cart";
 import { cn } from "@/lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import avatar from "@/public/avatar 1.jpg";
 
 interface NavbarProps {
 	user: User | null;
@@ -31,6 +33,7 @@ interface NavbarProps {
 
 export default async function RightSideNav({ user, role }: NavbarProps) {
 	let products;
+	const name = user?.firstName + " " + user?.lastName;
 
 	try {
 		products = await prisma.product.findMany();
@@ -57,7 +60,28 @@ export default async function RightSideNav({ user, role }: NavbarProps) {
 				<div>
 					{user ? (
 						<div className="flex items-center justify-center gap-3">
-							<UserButton afterSignOutUrl="/" />
+							{role === "SELLER" ? (
+								<UserButton afterSignOutUrl="/" />
+							) : (
+								<Link href={"/account"}>
+									{user.hasImage ? (
+										<>
+											<Avatar>
+												<AvatarImage src={user.imageUrl} alt={name} />
+											</Avatar>
+										</>
+									) : (
+										<>
+											<Avatar>
+												<AvatarImage
+													src="https://utfs.io/f/d7b932cc-0069-498c-8690-272a4ec51e23-tk3qy2.jpg"
+													alt={name}
+												/>
+											</Avatar>
+										</>
+									)}
+								</Link>
+							)}
 						</div>
 					) : (
 						<div className="flex items-center justify-center gap-3">

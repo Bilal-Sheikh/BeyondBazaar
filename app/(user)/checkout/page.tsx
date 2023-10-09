@@ -47,6 +47,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cookies } from "next/headers";
 import { Separator } from "@/components/ui/separator";
 import Loading from "./loading";
+import PaymentButton from "@/components/user/PaymentButton";
 
 async function getData(clerkId) {
 	try {
@@ -217,7 +218,8 @@ export default async function Checkout() {
 											Cancel Order
 										</Button>
 									</Link>
-									<Button className="w-full">Place Order</Button>
+
+									<PaymentButton />
 								</div>
 							</CardFooter>
 						</Card>

@@ -54,7 +54,7 @@ import Link from "next/link";
 import { Product } from "@prisma/client";
 import { useToast } from "../ui/use-toast";
 import AddToCartButton from "./AddToCartButton";
-import Loading from "@/app/(user)/loading";
+import Loading from "@/app/(user)/products/loading";
 
 export default function ProductsList({ products }: { products: Product }) {
 	return (

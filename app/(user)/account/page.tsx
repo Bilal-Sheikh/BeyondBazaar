@@ -32,6 +32,7 @@ import {
 	Trash,
 	User,
 	History,
+	LogOut,
 } from "lucide-react";
 import Image from "next/image";
 import {
@@ -51,13 +52,22 @@ import { cookies } from "next/headers";
 import { Separator } from "@/components/ui/separator";
 import UserProfilePage from "@/components/user/UserProfilePage";
 import Loading from "./loading";
+import { SignOutButton } from "@clerk/nextjs";
 
 export default function Account() {
 	return (
 		<div className="py-10 px-5 w-full h-full lg:h-screen">
-			<h2 className="mt-10 scroll-m-20 border-b pb-3 text-3xl font-bold tracking-tight transition-colors first:mt-0">
-				Account
-			</h2>
+			<div className="flex flex-auto justify-between items-center border-b pb-3">
+				<h2 className="mt-10 scroll-m-20 text-3xl font-bold tracking-tight transition-colors first:mt-0">
+					Account
+				</h2>
+
+				<SignOutButton>
+					<Button variant="destructive">
+						<LogOut size={17} /> Log Out
+					</Button>
+				</SignOutButton>
+			</div>
 
 			<div className="flex flex-col lg:flex-row justify-center items-center pt-10 gap-5 lg:gap-20">
 				<Card className="w-80 h-60 cursor-pointer hover:bg-zinc-900">
