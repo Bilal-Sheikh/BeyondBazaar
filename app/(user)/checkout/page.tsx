@@ -48,12 +48,12 @@ import { cookies } from "next/headers";
 import { Separator } from "@/components/ui/separator";
 import Loading from "./loading";
 import PaymentButton from "@/components/user/PaymentButton";
+import BuyProduct from "@/components/razorpay/BuyProduct";
 
 async function getData(clerkId) {
 	try {
 		const res = await fetch("http://localhost:3000/api/get-cart", {
 			headers: { ClerkId: clerkId },
-			next: { revalidate: 0 },
 			cache: "no-store",
 		});
 		return res.json();
@@ -69,7 +69,18 @@ export default async function Checkout() {
 	const user = await currentUser();
 
 	const { cart } = await getData(user.id);
-	console.log("CHECKOUTT ITEMS :::::::::::::::::::::::::::::::::", cart);
+	// console.log("CHECKOUTT ITEMS :::::::::::::::::::::::::::::::::", cart);
+
+	const grandTotal =
+		cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0) +
+		30 -
+		(cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0) +
+			30) *
+			0.1;
+	console.log(
+		"GRAND TOTAL ::::::::::::::::::::::::::::::::::::::::::",
+		grandTotal
+	);
 
 	return (
 		// <Loading />
@@ -194,21 +205,7 @@ export default async function Checkout() {
 									{cart.length === 0 ? (
 										<p>$0</p>
 									) : (
-										<p className="text-xl font-bold">
-											$
-											{cart.reduce(
-												(acc, item) => acc + item.product.price * item.quantity,
-												0
-											) +
-												30 -
-												(cart.reduce(
-													(acc, item) =>
-														acc + item.product.price * item.quantity,
-													0
-												) +
-													30) *
-													0.1}
-										</p>
+										<p className="text-xl font-bold">{grandTotal}</p>
 									)}
 								</div>
 
@@ -219,7 +216,7 @@ export default async function Checkout() {
 										</Button>
 									</Link>
 
-									<PaymentButton />
+									<BuyProduct clerkId={user?.id} grandTotal={grandTotal} />
 								</div>
 							</CardFooter>
 						</Card>

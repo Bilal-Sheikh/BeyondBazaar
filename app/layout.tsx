@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/toaster";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export default function RootLayout({
 					<Toaster />
 				</body>
 			</html>
+			<Script src="https://checkout.razorpay.com/v1/checkout.js" />
 		</ClerkProvider>
 	);
 }
