@@ -67,7 +67,6 @@ export default async function RightSideNav({ user, role }: NavbarProps) {
 									variant: "default",
 								})}
 							>
-								{" "}
 								SignIn
 							</Link>
 						</div>
