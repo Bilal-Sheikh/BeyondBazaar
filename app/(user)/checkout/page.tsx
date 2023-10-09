@@ -1,3 +1,9 @@
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { prisma } from "@/lib/db";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
@@ -17,6 +23,7 @@ import {
 } from "@/components/ui/sheet";
 import {
 	Delete,
+	Info,
 	Loader2,
 	Minus,
 	Plus,
@@ -146,19 +153,34 @@ export default async function Checkout() {
 										)}
 									</p>
 								</div>
-								{/* <Separator /> */}
 								<div className="flex flex-1 justify-between items-center w-full">
 									<p>Shipping:</p>
 
 									{cart.length === 0 ? <p>$0</p> : <p>$30</p>}
 								</div>
-								{/* <Separator /> */}
 
 								{cart.length === 0 ? (
 									<></>
 								) : (
 									<div className="flex flex-1 justify-between items-center w-full">
-										<p>Discount:</p>
+										<div className="flex flex-auto justify-start items-center">
+											Discount
+											<TooltipProvider>
+												<Tooltip>
+													<TooltipTrigger asChild>
+														<Info
+															className="ml-2"
+															width={15}
+															height={15}
+															size={15}
+														/>
+													</TooltipTrigger>
+													<TooltipContent>
+														<p>On the house ;)</p>
+													</TooltipContent>
+												</Tooltip>
+											</TooltipProvider>
+										</div>
 										<p>10%</p>
 									</div>
 								)}

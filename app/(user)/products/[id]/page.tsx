@@ -17,9 +17,11 @@ import {
 	ChevronDown,
 	ChevronUp,
 	ChevronsUpDown,
+	CreditCard,
 	Heart,
 	Loader2,
 	Plus,
+	ShoppingCart,
 	X,
 } from "lucide-react";
 
@@ -34,6 +36,7 @@ import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { set } from "zod";
+import Link from "next/link";
 
 export default function ViewProduct({ params }: { params: { id: string } }) {
 	const productId = params.id;
@@ -147,7 +150,7 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 			}
 		}
 	}
-	
+
 	return (
 		<>
 			{isFetched ? (
@@ -243,7 +246,14 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 											</Button>
 										</div>
 										<div className="w-full">
-											<Button className="w-full">Buy Now</Button>
+											<Link
+												href={`/checkout/${productId}/buy-now`}
+												className="w-full"
+											>
+												<Button size="icon" className="w-full gap-3">
+													<CreditCard size={17} /> Buy Now
+												</Button>
+											</Link>
 										</div>
 										<div className="w-full">
 											{exist ? (
@@ -253,12 +263,13 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 											) : (
 												<Button
 													disabled={isLoading}
-													className="w-full"
+													className="w-full gap-3"
 													onClick={handleAddToCart}
 												>
 													{isLoading && (
 														<Loader2 className="mr-2 h-4 w-4 animate-spin" />
 													)}
+													<ShoppingCart size={17} />
 													Add to Cart
 												</Button>
 											)}
