@@ -39,6 +39,7 @@ import { useRouter } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cookies } from "next/headers";
 import { Separator } from "@/components/ui/separator";
+import Loading from "./loading";
 
 async function getData(clerkId) {
 	try {
@@ -63,13 +64,15 @@ export default async function Checkout() {
 	console.log("CHECKOUTT ITEMS :::::::::::::::::::::::::::::::::", cart);
 
 	return (
+		// <Loading />
+
 		<div className="pt-10 px-5 w-full h-full">
 			<h2 className="mt-10 scroll-m-20 border-b pb-3 text-3xl font-bold tracking-tight transition-colors first:mt-0">
 				Checkout
 			</h2>
 
-			<div className="flex flex-1 pt-5 gap-4">
-				<div className="w-2/3">
+			<div className="grid grid-rows-2 lg:flex lg:flex-1 lg:pt-5 lg:gap-4">
+				<div className="w-full lg:w-2/3">
 					{cart.length === 0 ? (
 						<div className="py-32">
 							<p className="text-center text-4xl font-bold tracking-tight	transition-colors">
@@ -98,7 +101,7 @@ export default async function Checkout() {
 														</p>
 													</Link>
 
-													<div className="grid grid-rows-2 md:flex md:flex-1 md:justify-between md:pt-5">
+													<div className="grid grid-rows-1 md:flex md:flex-1 md:justify-between md:pt-5">
 														<div className="py-1">
 															<p className="text-sm md:text-sm font-extralight">
 																Item Price: $
@@ -121,7 +124,7 @@ export default async function Checkout() {
 					)}
 				</div>
 
-				<div className="w-1/3">
+				<div className="w-full lg:w-1/3">
 					<div className="py-3">
 						<Card>
 							<CardHeader>
