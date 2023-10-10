@@ -17,7 +17,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 			message: "(API) Clerk id not found in headers",
 		});
 	}
-	// console.log("(API) USER ID :::::::::::::::::::::::", clerkId);
+	// console.log("(API) USER ID IN payment-verify ::::::::::::::::::", clerkId);
 	// return NextResponse.json({ success: "REACHED API payment-verify" });
 
 	const body = razorpay_order_id + "|" + razorpay_payment_id;
@@ -31,13 +31,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 	const isAuthentic = expectedSignature === razorpay_signature;
 
 	if (isAuthentic) {
-		// console.log(Payment);
-		// await dbConnect();
-		// await Payment.create({
-		// 	razorpay_order_id,
-		// 	razorpay_payment_id,
-		// 	razorpay_signature,
-		// });
+		console.log("(API) Payment verification successful ADDING TO DB::::::::");
 
 		await prisma.payment
 			.create({

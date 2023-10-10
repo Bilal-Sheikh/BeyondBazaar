@@ -1,12 +1,26 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import axios from "axios";
+import { useUser } from "@clerk/nextjs";
 
 export default function Failure() {
+	const searchParams = useSearchParams();
+	const paymentId = searchParams.get("payment-id");
+	const orderId = searchParams.get("order-id");
+	const quantity = searchParams.get("quantity");
+	const router = useRouter();
+
 	return (
 		<div className="py-10 px-5 w-full h-full lg:h-screen">
-			<div className="flex flex-auto justify-between items-center pb-3">
-				<p className="text-center text-4xl font-bold tracking-tight	transition-colors">
-					Payment <p className=" text-red-700">Failed</p>
-				</p>
+			<div className="flex flex-auto justify-start items-center border-b pb-3">
+				<div className="mt-10 scroll-m-20 text-3xl font-bold tracking-tight transition-colors first:mt-0">
+					Payment
+				</div>
+				<div className="text-red-700 ml-2 scroll-m-20 text-3xl font-bold tracking-tight transition-colors">
+					Failed
+				</div>
 			</div>
 
 			<div className="flex flex-col lg:flex-row justify-center items-center pt-10 gap-5 lg:gap-20">

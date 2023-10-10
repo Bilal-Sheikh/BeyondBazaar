@@ -66,10 +66,14 @@ export default function BuyProduct({
 						&order-id=${response.razorpay_order_id}
 						&quantity=${totalQuantity}`
 					);
-					
 				} else {
 					alert("Payment failed. Please try again. Contact support for help");
-					router.push("/payment-status/failure");
+					router.push(
+						`/payment-status/failure?
+						payment-id=${response.razorpay_payment_id}
+						&order-id=${response.razorpay_order_id}
+						&quantity=${totalQuantity}`
+					);
 				}
 			},
 		};
