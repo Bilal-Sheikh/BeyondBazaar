@@ -79,11 +79,11 @@ export default async function Checkout() {
 			0.1;
 	console.log("GRAND TOTAL ::::::::::::::::::::::::::::::::::::", grandTotal);
 
-	const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
-	console.log("TOTAL QUANTITY ::::::::::::::::::::::::::::::::", totalQuantity);
+	const productsId = cart.map((product) => product.productId);
+	console.log("PRODUCTS ID:::::::::::::::::::::::::::::", productsId);
 
-	const sellersId = cart.map((item) => item.product.postedById);
-	console.log("SELLERS ID::::::::::::::::::::::::::::::::::::::::", sellersId);
+	const productQuantities = cart.map((product) => product.quantity);
+	console.log("PRODUCT QUANTITIES:::::::::::::::::", productQuantities);
 
 	return (
 		// <Loading />
@@ -222,8 +222,6 @@ export default async function Checkout() {
 									<BuyProduct
 										clerkId={user?.id}
 										grandTotal={grandTotal}
-										totalQuantity={totalQuantity}
-										sellersId={sellersId}
 									/>
 								</div>
 							</CardFooter>

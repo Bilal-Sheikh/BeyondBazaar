@@ -7,12 +7,7 @@ import axios from "axios";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
 
-export default function BuyProduct({
-	clerkId,
-	grandTotal,
-	totalQuantity,
-	sellersId,
-}) {
+export default function BuyProduct({ clerkId, grandTotal }) {
 	const [isLoading, setIsLoading] = React.useState(false);
 	const router = useRouter();
 
@@ -63,16 +58,14 @@ export default function BuyProduct({
 					router.push(
 						`/payment-status/success?
 						payment-id=${response.razorpay_payment_id}
-						&order-id=${response.razorpay_order_id}
-						&quantity=${totalQuantity}`
+						&order-id=${response.razorpay_order_id}`
 					);
 				} else {
 					alert("Payment failed. Please try again. Contact support for help");
 					router.push(
 						`/payment-status/failure?
 						payment-id=${response.razorpay_payment_id}
-						&order-id=${response.razorpay_order_id}
-						&quantity=${totalQuantity}`
+						&order-id=${response.razorpay_order_id}`
 					);
 				}
 			},

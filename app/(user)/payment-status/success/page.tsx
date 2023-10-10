@@ -9,24 +9,16 @@ export default function Success() {
 	const searchParams = useSearchParams();
 	const paymentId = searchParams.get("payment-id");
 	const orderId = searchParams.get("order-id");
-	const quantity = searchParams.get("quantity");
-	const router = useRouter();
 	const { user, isSignedIn } = useUser();
 
 	useEffect(() => {
 		if (isSignedIn && paymentId && orderId) {
 			try {
-				axios.post(
-					"/api/checkout",
-					{},
-					{
-						headers: {
-							UserClerkId: user.id,
-							Quantity: quantity,
-						},
-					}
-				);
-				console.log("CHECKOUT SUCCESSFULL::::::::::::::::::::::::::::::::::::");
+				axios
+					.post("/api/checkout", {}, { headers: { UserClerkId: user.id } })
+					.then((res) => {
+						console.log("CHECKOUT SUCCESSFULL::::::::::::::::::::::::::::");
+					});
 			} catch (error) {
 				console.log(
 					"ERROR IN AXIOS /api/checkout::::::::::::::::::::::::::::::::::::::::",
