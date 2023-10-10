@@ -44,10 +44,13 @@ export async function POST() {
 			await prisma.product
 				.updateMany({
 					where: { id: productsId[i] },
-					data: { sales: { increment: Number(productQuantities[i]) } },
+					data: {
+						sales: { increment: Number(productQuantities[i]) },
+						stockQuantity: { decrement: Number(productQuantities[i]) },
+					},
 				})
 				.then(() =>
-					console.log("(API) UPDATED SALES:::::::::::::::::::::::::::::")
+					console.log("(API) UPDATED SALES AND STOCK QUANTITY:::::::::::::::")
 				)
 				.catch((error) => {
 					console.log(

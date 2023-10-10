@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 import { useUser } from "@clerk/nextjs";
 
-export default function AddToCartButton({ productId }) {
+export default function AddToCartButton({ productId, stock }) {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
 	const [isFetching, setIsFetching] = useState(false);
@@ -98,7 +98,7 @@ export default function AddToCartButton({ productId }) {
 						</Button>
 					) : (
 						<Button
-							disabled={isLoading}
+							disabled={isLoading || stock <= 0}
 							className="w-full"
 							onClick={() => handleAddToCart(productId)}
 						>

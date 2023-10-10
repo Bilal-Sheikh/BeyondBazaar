@@ -205,9 +205,15 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 										<h3 className="scroll-m-20 text-2xl font-semibold tracking-tight underline underline-offset-4">
 											{"$ "} {product?.price}
 										</h3>
-										<h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-											Available Stock: {product?.stockQuantity}
-										</h4>
+										{product?.stockQuantity <= 0 ? (
+											<h4 className="scroll-m-20 text-xl text-red-700 font-semibold tracking-tight">
+												Out of Stock! :(
+											</h4>
+										) : (
+											<h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+												Available Stock: {product?.stockQuantity}
+											</h4>
+										)}
 									</div>
 
 									<Separator className="my-6" />
@@ -246,14 +252,19 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 											</Button>
 										</div>
 										<div className="w-full">
-											<Link
-												href={`/checkout/${productId}/buy-now`}
+											<Button
+												size="icon"
 												className="w-full"
+												disabled={product.stockQuantity <= 0}
 											>
-												<Button size="icon" className="w-full gap-3">
-													<CreditCard size={17} /> Buy Now
-												</Button>
-											</Link>
+												<Link
+													href={`/checkout/${productId}/buy-now`}
+													className="flex flex-1 justify-center items-center w-full h-full gap-3"
+												>
+													<CreditCard size={17} />
+													Buy Now
+												</Link>
+											</Button>
 										</div>
 										<div className="w-full">
 											{exist ? (
@@ -262,7 +273,7 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 												</Button>
 											) : (
 												<Button
-													disabled={isLoading}
+													disabled={isLoading || product.stockQuantity <= 0}
 													className="w-full gap-3"
 													onClick={handleAddToCart}
 												>

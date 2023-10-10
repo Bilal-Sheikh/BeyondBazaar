@@ -65,12 +65,7 @@ export default function ProductsList({ products }: { products: Product }) {
 						<div className="flex justify-between items-center">
 							<div>
 								<Link href={`/products/?category=${product.category}`}>
-									<Badge
-										className="cursor-pointer"
-									
-									>
-										{product.category}
-									</Badge>
+									<Badge className="cursor-pointer">{product.category}</Badge>
 								</Link>
 							</div>
 							<div className="hidden lg:flex">
@@ -82,9 +77,7 @@ export default function ProductsList({ products }: { products: Product }) {
 
 						{/* PC */}
 						<Link href={`/products/${product.id}`}>
-							<div
-								className="hidden lg:flex lg:flex-col lg:space-y-1.5 cursor-pointer"
-							>
+							<div className="hidden lg:flex lg:flex-col lg:space-y-1.5 cursor-pointer">
 								<AspectRatio ratio={16 / 9}>
 									<Image
 										alt="product"
@@ -114,11 +107,9 @@ export default function ProductsList({ products }: { products: Product }) {
 								</AspectRatio>
 							</div>
 
-							<div className="grid w-full h-20 top-0 gap-4">
+							<div className="grid w-full h-16 top-0 gap-4">
 								<Link href={`/products/${product.id}`}>
-									<CardTitle
-										className="cursor-pointer line-clamp-2 text-lg hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0"
-									>
+									<CardTitle className="cursor-pointer line-clamp-2 text-lg hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0">
 										{product.name}
 									</CardTitle>
 								</Link>
@@ -135,7 +126,17 @@ export default function ProductsList({ products }: { products: Product }) {
 						</div>
 
 						<div className="w-30 lg:w-2/3" key={product.id}>
-							<AddToCartButton key={product.id} productId={product.id} />
+							{product.stockQuantity <= 0 ? (
+								<Button disabled className="w-full" variant={"destructive"}>
+									Out of Stock
+								</Button>
+							) : (
+								<AddToCartButton
+									key={product.id}
+									productId={product.id}
+									stock={product.stockQuantity}
+								/>
+							)}
 						</div>
 					</CardFooter>
 				</Card>

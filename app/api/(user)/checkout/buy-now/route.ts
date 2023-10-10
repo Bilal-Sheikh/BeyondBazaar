@@ -22,7 +22,10 @@ export async function POST() {
 		console.log("(API) DOING BUY NOW QUERY:::::::::::::::::::::::::::::::");
 		await prisma.product.update({
 			where: { id: Number(productId) },
-			data: { sales: { increment: 1 } },
+			data: {
+				sales: { increment: 1 },
+				stockQuantity: { decrement: 1 },
+			},
 		});
 
 		return NextResponse.json({
