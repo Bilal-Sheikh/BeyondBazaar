@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs";
 import { prisma } from "@/lib/db";
 import { headers } from "next/headers";
+import { error } from "console";
 
 export async function POST() {
 	const headersList = headers();
@@ -24,21 +25,37 @@ export async function POST() {
 			where: { clerkId: userClerkId },
 			include: {
 				cart: {
-					include: {
-						product: true,
+					select: {
+						userId: true,
+						productId: true,
+						quantity: true,
 					},
 				},
 			},
 		});
 		console.log("(API) GOT CART DETAILS:::::::::::::::::::::::::::::", cart);
 
-		// console.log("ERROR IN PRISMA app/api/(user)/checkout/route.ts", error);
-
 		const productsId = cart.map((product) => product.productId);
 		console.log("(API) PRODUCTS ID:::::::::::::::::::::::::::::", productsId);
 
 		const productQuantities = cart.map((product) => product.quantity);
 		console.log("(API) PRODUCT QUANTITIES:::::::::::::::::", productQuantities);
+
+		await prisma.purchaseHistory
+			.createMany({
+				data: cart.map((item) => ({
+					userId: item.userId,
+					productId: item.productId,
+					quantity: item.quantity,
+				})),
+			})
+			.then(() => console.log("(API) CREATED PURCHASE HISTORY:::::::::::::::"))
+			.catch((error) => {
+				console.log(
+					"(API) ERROR IN PRISMA app/api/(user)/checkout/route.ts || prisma.purchaseHistory.createMany",
+					error
+				);
+			});
 
 		for (let i = 0; i < productsId.length; i++) {
 			await prisma.product
@@ -54,7 +71,7 @@ export async function POST() {
 				)
 				.catch((error) => {
 					console.log(
-						"ERROR IN PRISMA app/api/(user)/checkout/route.ts",
+						"ERROR IN PRISMA app/api/(user)/checkout/route.ts || prisma.product.updateMany ",
 						error
 					);
 				});
@@ -68,7 +85,10 @@ export async function POST() {
 				console.log("(API) DELETED CART ITEMS:::::::::::::::::::::::::::::")
 			)
 			.catch((error) => {
-				console.log("ERROR IN PRISMA app/api/(user)/checkout/route.ts", error);
+				console.log(
+					"ERROR IN PRISMA app/api/(user)/checkout/route.ts || prisma.cartItem.deleteMany",
+					error
+				);
 			});
 
 		return NextResponse.json({

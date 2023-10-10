@@ -63,7 +63,7 @@ export default function Account() {
 				</h2>
 
 				<SignOutButton>
-					<Button variant="destructive">
+					<Button variant="destructive" className="gap-3">
 						<LogOut size={17} /> Log Out
 					</Button>
 				</SignOutButton>

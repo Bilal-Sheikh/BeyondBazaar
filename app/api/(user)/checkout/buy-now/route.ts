@@ -20,13 +20,39 @@ export async function POST() {
 
 	try {
 		console.log("(API) DOING BUY NOW QUERY:::::::::::::::::::::::::::::::");
-		await prisma.product.update({
-			where: { id: Number(productId) },
-			data: {
-				sales: { increment: 1 },
-				stockQuantity: { decrement: 1 },
-			},
-		});
+		await prisma.product
+			.update({
+				where: { id: Number(productId) },
+				data: {
+					sales: { increment: 1 },
+					stockQuantity: { decrement: 1 },
+				},
+			})
+			.then(() =>
+				console.log("(API) UPDATED PRODUCT:::::::::::::::::::::::::::::::")
+			)
+			.catch((error) => {
+				console.log(
+					"ERROR IN PRISMA app/api/(user)/checkout/buy-now/route.ts || prisma.product.updateMany ",
+					error
+				);
+			});
+
+		await prisma.purchaseHistory
+			.create({
+				data: {
+					userId: userClerkId,
+					productId: Number(productId),
+					quantity: 1,
+				},
+			})
+			.then(() => console.log("(API) CREATED PURCHASE HISTORY:::::::::::::::"))
+			.catch((error) => {
+				console.log(
+					"(API) ERROR IN PRISMA app/api/(user)/checkout/buy-now/route.ts || prisma.purchaseHistory.createMany",
+					error
+				);
+			});
 
 		return NextResponse.json({
 			success: true,

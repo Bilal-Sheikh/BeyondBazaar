@@ -69,7 +69,7 @@ export default async function Checkout() {
 	const user = await currentUser();
 
 	const { cart } = await getData(user.id);
-	// console.log("CHECKOUTT ITEMS :::::::::::::::::::::::::::::::::", cart);
+	console.log("CHECKOUTT ITEMS :::::::::::::::::::::::::::::::::", cart);
 
 	const grandTotal =
 		cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0) +
