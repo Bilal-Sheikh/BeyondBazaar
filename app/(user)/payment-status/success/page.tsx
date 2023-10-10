@@ -7,12 +7,34 @@ import { useUser } from "@clerk/nextjs";
 
 export default function Success() {
 	const searchParams = useSearchParams();
-	const paymentId = searchParams.get("payment-id");
+	const productId = searchParams.get("product-id");
 	const orderId = searchParams.get("order-id");
-	const { user, isSignedIn } = useUser();
+	const paymentId = searchParams.get("payment-id");
+	const { user } = useUser();
 
-	useEffect(() => {
-		if (isSignedIn && paymentId && orderId) {
+	if (productId) {
+		useEffect(() => {
+			console.log("GOT PRODUCT ID::::::::::::::::::::::::::::::::", productId);
+			try {
+				axios
+					.post(
+						"/api/checkout/buy-now",
+						{},
+						{ headers: { UserClerkId: user.id, ProductId: productId } }
+					)
+					.then((res) => {
+						console.log("CHECKOUT SUCCESSFULL::::::::::::::::::::::::::::");
+					});
+			} catch (error) {
+				console.log(
+					"ERROR IN AXIOS /api/checkout/buy-now::::::::::::::::::::::::::::::::::::::::",
+					error
+				);
+			}
+		}, []);
+	} else {
+		useEffect(() => {
+			console.log("GOT paymentId orderId::::::::::::::::", paymentId, orderId);
 			try {
 				axios
 					.post("/api/checkout", {}, { headers: { UserClerkId: user.id } })
@@ -25,8 +47,8 @@ export default function Success() {
 					error
 				);
 			}
-		}
-	}, []);
+		}, []);
+	}
 
 	return (
 		<div className="py-10 px-5 w-full h-full lg:h-screen">

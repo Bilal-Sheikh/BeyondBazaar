@@ -39,6 +39,7 @@ import { useRouter } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cookies } from "next/headers";
 import { Separator } from "@/components/ui/separator";
+import BuyProduct from "@/components/razorpay/BuyProduct";
 
 async function getProduct(productId: number) {
 	try {
@@ -55,15 +56,24 @@ async function getProduct(productId: number) {
 	}
 }
 
-export default async function BuyNow({ params }: { params: { id: string } }) {
+export default async function BuyNowButton({
+	params,
+}: {
+	params: { id: string };
+}) {
 	const productId = params.id;
+	const user = await currentUser();
 
 	const product = await getProduct(Number(productId));
-
 	console.log("PRODUCT::::::::::::::::::::::::::::::::::::::::::::::", product);
 
+	const grandTotal = product.price + 30;
+	console.log("GRAND TOTAL ::::::::::::::::::::::::::::::::::::", grandTotal);
+
+	console.log("PRODUCTS ID:::::::::::::::::::::::::::::", productId);
+
 	return (
-		<div className="pt-10 px-5 w-full h-screen">
+		<div className="pt-10 px-5 w-full h-full">
 			<h2 className="mt-10 scroll-m-20 border-b pb-3 text-3xl font-bold tracking-tight transition-colors first:mt-0">
 				Checkout
 			</h2>
@@ -131,7 +141,7 @@ export default async function BuyNow({ params }: { params: { id: string } }) {
 							<CardFooter className="grid grid-rows-2">
 								<div className="flex justify-between items-center w-full py-5">
 									<p className="text-xl font-bold">Grand Total:</p>
-									<p className="text-xl font-bold">$ {product.price + 30}</p>
+									<p className="text-xl font-bold">$ {grandTotal}</p>
 								</div>
 
 								<div className="flex flex-auto justify-between items-center w-full gap-2">
@@ -140,7 +150,12 @@ export default async function BuyNow({ params }: { params: { id: string } }) {
 											Cancel Order
 										</Button>
 									</Link>
-									<Button className="w-full">Place Order</Button>
+
+									<BuyProduct
+										clerkId={user?.id}
+										grandTotal={grandTotal}
+										productId={productId}
+									/>
 								</div>
 							</CardFooter>
 						</Card>

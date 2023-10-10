@@ -9,7 +9,6 @@ export default function Failure() {
 	const searchParams = useSearchParams();
 	const paymentId = searchParams.get("payment-id");
 	const orderId = searchParams.get("order-id");
-	const quantity = searchParams.get("quantity");
 	const router = useRouter();
 
 	return (

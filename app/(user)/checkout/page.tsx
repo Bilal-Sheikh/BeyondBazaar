@@ -222,6 +222,7 @@ export default async function Checkout() {
 									<BuyProduct
 										clerkId={user?.id}
 										grandTotal={grandTotal}
+										productId={null}
 									/>
 								</div>
 							</CardFooter>

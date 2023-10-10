@@ -19,6 +19,7 @@ export async function POST() {
 	// return NextResponse.json({ success: "REACHED API VIEW PRODUCTS" });
 
 	try {
+		console.log("(API) DOING CART QUERIES:::::::::::::::::::::::::::::::");
 		const { cart } = await prisma.user.findUnique({
 			where: { clerkId: userClerkId },
 			include: {

@@ -7,7 +7,7 @@ import axios from "axios";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
 
-export default function BuyProduct({ clerkId, grandTotal }) {
+export default function BuyProduct({ clerkId, grandTotal, productId }) {
 	const [isLoading, setIsLoading] = React.useState(false);
 	const router = useRouter();
 
@@ -19,14 +19,8 @@ export default function BuyProduct({ clerkId, grandTotal }) {
 
 		const { data } = await axios.post(
 			"/api/razorpay/orders",
-			{
-				amount: grandTotal,
-			},
-			{
-				headers: {
-					ClerkId: clerkId,
-				},
-			}
+			{ amount: grandTotal },
+			{ headers: { ClerkId: clerkId } }
 		);
 
 		console.log("ORDER ID::::::::::::::::::::::::::", data.order.id);
@@ -54,12 +48,22 @@ export default function BuyProduct({ clerkId, grandTotal }) {
 				// console.log("PAYMENT VERIFY RES::::::::::::::::::::", data);
 
 				if (data?.success === true) {
-					// console.log("REDIRECTING::::::::::::::");
-					router.push(
-						`/payment-status/success?
-						payment-id=${response.razorpay_payment_id}
-						&order-id=${response.razorpay_order_id}`
-					);
+					if (productId) {
+						console.log("REDIRECTING TO PRODUCT ID::::::::::::::");
+						router.push(
+							`/payment-status/success?
+							product-id=${productId}
+							&order-id=${response.razorpay_order_id}
+							&payment-id=${response.razorpay_payment_id}`
+						);
+					} else {
+						console.log("REDIRECTING::::::::::::::");
+						router.push(
+							`/payment-status/success?
+							payment-id=${response.razorpay_payment_id}
+							&order-id=${response.razorpay_order_id}`
+						);
+					}
 				} else {
 					alert("Payment failed. Please try again. Contact support for help");
 					router.push(
