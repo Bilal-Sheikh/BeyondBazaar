@@ -4,6 +4,9 @@ import React, { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
+import { History } from "lucide-react";
+import Link from "next/link";
 
 export default function Success() {
 	const searchParams = useSearchParams();
@@ -51,14 +54,20 @@ export default function Success() {
 	}
 
 	return (
-		<div className="py-10 px-5 w-full h-full lg:h-screen">
-			<div className="flex flex-auto justify-start items-center border-b pb-3">
-				<div className="mt-10 scroll-m-20 text-3xl font-bold tracking-tight transition-colors first:mt-0">
+		<div className="py-10 px-5 w-full h-screen lg:h-screen">
+			<div className="flex flex-wrap justify-between items-center border-b pb-3">
+				<div className="flex flex-auto justify-start items-center mt-10 scroll-m-20 text-3xl font-bold tracking-tight transition-colors first:mt-0">
 					Payment
+					<div className="text-green-700 ml-2 scroll-m-20 text-3xl font-bold tracking-tight transition-colors">
+						Successful
+					</div>
 				</div>
-				<div className="text-green-700 ml-2 scroll-m-20 text-3xl font-bold tracking-tight transition-colors">
-					Successful
-				</div>
+
+				<Link href={"/account/purchases"}>
+					<Button className="gap-2 mt-5 lg:mt-0">
+						<History size={17} /> View Your Purchase
+					</Button>
+				</Link>
 			</div>
 
 			<div className="flex flex-col lg:flex-row justify-center items-center pt-10 gap-5 lg:gap-20">

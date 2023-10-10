@@ -56,6 +56,8 @@ import { SignOutButton } from "@clerk/nextjs";
 
 export default function Account() {
 	return (
+		// <Loading />
+
 		<div className="py-10 px-5 w-full h-full lg:h-screen">
 			<div className="flex flex-auto justify-between items-center border-b pb-3">
 				<h2 className="mt-10 scroll-m-20 text-3xl font-bold tracking-tight transition-colors first:mt-0">
