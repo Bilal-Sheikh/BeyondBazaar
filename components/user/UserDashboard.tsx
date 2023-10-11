@@ -62,6 +62,7 @@ import { Product } from "@prisma/client";
 
 export default async function UserDashboard() {
 	let valuePicks;
+	let bestSeller;
 
 	try {
 		valuePicks = await prisma.product.findMany({
@@ -77,6 +78,21 @@ export default async function UserDashboard() {
 		);
 	}
 	// console.log("VALUE PICKS :::::::::::::::::::::::::::::::::::", valuePicks);
+
+	try {
+		bestSeller = await prisma.product.findMany({
+			orderBy: {
+				sales: "desc",
+			},
+			take: 4,
+		});
+	} catch (error) {
+		console.log(
+			"ERROR in components/user/UserDashboard.tsx::::::::::::::::::::::::",
+			error
+		);
+	}
+	// console.log("BEST SELLERS :::::::::::::::::::::::::::::::::::", bestSeller);
 
 	return (
 		<div>
@@ -195,6 +211,63 @@ export default async function UserDashboard() {
 					<p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
 						Here are the products top 4 best selling products for this month
 					</p>
+
+					<div className="grid grid-cols-1 lg:grid-cols-4 justify-center rounded-xl gap-4 pt-5">
+						{bestSeller?.map((product) => (
+							<Card className="w-full" key={product.id}>
+								<CardHeader className="p-4 h-full">
+									{/* PC */}
+									<div className="hidden lg:flex lg:flex-col cursor-pointer">
+										<Link href={`/products/${product.id}`} target="_blank">
+											<AspectRatio ratio={16 / 9}>
+												<Image
+													alt="product"
+													src={product.imageUrl}
+													className="rounded-xl"
+													fill
+													objectFit="contain"
+													priority={true}
+												/>
+											</AspectRatio>
+										</Link>
+									</div>
+
+									<div className="grid grid-cols-2 gap-x-2 lg:flex lg:flex-auto">
+										{/* MOBILE */}
+										<div className="lg:hidden">
+											<Link href={`/products/${product.id}`} target="_blank">
+												<AspectRatio ratio={1 / 1}>
+													<Image
+														alt="product"
+														src={product.imageUrl}
+														className="rounded-xl"
+														fill
+														objectFit="contain"
+														priority={true}
+													/>
+												</AspectRatio>
+											</Link>
+										</div>
+										<div className="relative grid grid-rows-2 justify-start items-start w-full">
+											<div className="lg:flex">
+												<Link href={`/products/${product.id}`} target="_blank">
+													<CardTitle className="cursor-pointer line-clamp-2 text-lg hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0 justify-start text-start">
+														<p>{product.name}</p>
+													</CardTitle>
+												</Link>
+											</div>
+											<div className="flex flex-auto justify-start items-start bottom-0 absolute">
+												<p className="scroll-m-20 border-b text-lg font-semibold tracking-tight transition-colors first:mt-0">
+													Sold:{"  "}
+													{product.sales}
+												</p>
+											</div>
+										</div>
+									</div>
+								</CardHeader>
+							</Card>
+						))}
+					</div>
 				</div>
 			</section>
 
@@ -214,7 +287,7 @@ export default async function UserDashboard() {
 								<CardHeader className="p-4 h-full">
 									{/* PC */}
 									<div className="hidden lg:flex lg:flex-col cursor-pointer">
-										<Link href={`/products/${product.id}`}>
+										<Link href={`/products/${product.id}`} target="_blank">
 											<AspectRatio ratio={16 / 9}>
 												<Image
 													alt="product"
@@ -231,7 +304,7 @@ export default async function UserDashboard() {
 									<div className="grid grid-cols-2 gap-x-2 lg:flex lg:flex-auto">
 										{/* MOBILE */}
 										<div className="lg:hidden">
-											<Link href={`/products/${product.id}`}>
+											<Link href={`/products/${product.id}`} target="_blank">
 												<AspectRatio ratio={1 / 1}>
 													<Image
 														alt="product"
@@ -246,7 +319,7 @@ export default async function UserDashboard() {
 										</div>
 										<div className="relative grid grid-rows-2 justify-start items-start w-full">
 											<div className="lg:flex">
-												<Link href={`/products/${product.id}`}>
+												<Link href={`/products/${product.id}`} target="_blank">
 													<CardTitle className="cursor-pointer line-clamp-2 text-lg hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0 justify-start text-start">
 														<p>{product.name}</p>
 													</CardTitle>
