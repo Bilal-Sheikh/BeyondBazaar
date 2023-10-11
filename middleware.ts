@@ -14,6 +14,8 @@ export default authMiddleware({
 
 		"/seller-sign-up",
 
+		"/unauthorized",
+
 		"/api(.*)",
 	],
 });

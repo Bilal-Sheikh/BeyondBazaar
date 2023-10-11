@@ -59,7 +59,7 @@ export default async function DashboardPage() {
 				error
 			);
 		});
-	console.log("(SELLER) PRODUCTS:::::::::::::::::::::::::::", products);
+	// console.log("(SELLER) PRODUCTS:::::::::::::::::::::::::::", products);
 
 	for (let product of products) {
 		try {
@@ -81,13 +81,13 @@ export default async function DashboardPage() {
 			);
 		}
 	}
-	console.log("(SELLER) UPDATED PRODUCTS::::::::::::", updatedProducts);
+	// console.log("(SELLER) UPDATED PRODUCTS::::::::::::", updatedProducts);
 
 	const totalInCarts = products.map((product) =>
 		product.inCarts.map((cart) => cart.quantity).reduce((a, b) => a + b, 0)
 	);
 	console.log(
-		"(SELLER) TOTAL IN CARTS:::::::::::::::",
+		// "(SELLER) TOTAL IN CARTS:::::::::::::::",
 		totalInCarts.reduce((a, b) => a + b, 0)
 	);
 
@@ -103,7 +103,7 @@ export default async function DashboardPage() {
 		orderBy: { sales: "desc" },
 		take: 5,
 	});
-	console.log("(SELLER) HIGHEST SELLING:::::::::::::::", highestSellingProduct);
+	// console.log("(SELLER) HIGHEST SELLING:::::::::::::::", highestSellingProduct);
 
 	return (
 		<div className="flex-col md:flex">
@@ -111,7 +111,7 @@ export default async function DashboardPage() {
 				<div className="flex items-center justify-between space-y-2 border-b pb-4">
 					<h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
 					<div className="flex items-center space-x-2">
-						<Button>Download</Button>
+						<Button disabled>Download</Button>
 					</div>
 				</div>
 
