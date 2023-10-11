@@ -9,158 +9,319 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MainNav } from "@/app/(seller)/view-shop/components/main-nav";
-import { Overview } from "@/app/(seller)/view-shop/components/overview";
-import { Search } from "@/app/(seller)/view-shop/components/search";
+import { prisma } from "@/lib/db";
+import { currentUser } from "@clerk/nextjs";
+import {
+	Table,
+	TableBody,
+	TableCaption,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "@/components/ui/table";
+import Link from "next/link";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Info } from "lucide-react";
 
 export const metadata: Metadata = {
 	title: "Dashboard",
 	description: "Example dashboard app built using the components.",
 };
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+	let updatedProducts = [];
+	const user = await currentUser();
+
+	const products = await prisma.product
+		.findMany({
+			where: { postedById: user.id },
+			select: {
+				id: true,
+				price: true,
+				sales: true,
+				productRevenue: true,
+				inCarts: {
+					select: {
+						quantity: true,
+					},
+				},
+			},
+		})
+		.catch((error) => {
+			console.log(
+				"ERROR IN PRISMA app/(seller)/view-shop/page.tsx:::::::::::::::::::::",
+				error
+			);
+		});
+	console.log("(SELLER) PRODUCTS:::::::::::::::::::::::::::", products);
+
+	for (let product of products) {
+		try {
+			const updated = await prisma.product.update({
+				where: { id: product.id },
+				data: { productRevenue: product.sales * product.price },
+				select: {
+					id: true,
+					price: true,
+					sales: true,
+					productRevenue: true,
+				},
+			});
+			updatedProducts.push(updated);
+		} catch (error) {
+			console.log(
+				"ERROR IN PRISMA app/(seller)/view-shop/page.tsx:::::::::::::::::::::",
+				error
+			);
+		}
+	}
+	console.log("(SELLER) UPDATED PRODUCTS::::::::::::", updatedProducts);
+
+	const totalInCarts = products.map((product) =>
+		product.inCarts.map((cart) => cart.quantity).reduce((a, b) => a + b, 0)
+	);
+	console.log(
+		"(SELLER) TOTAL IN CARTS:::::::::::::::",
+		totalInCarts.reduce((a, b) => a + b, 0)
+	);
+
+	const highestSellingProduct = await prisma.product.findMany({
+		where: { postedById: user.id },
+		select: {
+			id: true,
+			name: true,
+			productRevenue: true,
+			sales: true,
+			stockQuantity: true,
+		},
+		orderBy: { sales: "desc" },
+		take: 5,
+	});
+	console.log("(SELLER) HIGHEST SELLING:::::::::::::::", highestSellingProduct);
+
 	return (
-		<>
-			<div className="hidden flex-col md:flex">
-				<div className="flex-1 space-y-4 p-8 pt-6">
-					<div className="flex items-center justify-between space-y-2">
-						<h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
-						<div className="flex items-center space-x-2">
-							<Button>Download</Button>
-						</div>
+		<div className="flex-col md:flex">
+			<div className="flex-1 space-y-4 p-8 pt-6">
+				<div className="flex items-center justify-between space-y-2 border-b pb-4">
+					<h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+					<div className="flex items-center space-x-2">
+						<Button>Download</Button>
 					</div>
-					<Tabs defaultValue="overview" className="space-y-4">
-						<TabsList>
-							<TabsTrigger value="overview">Overview</TabsTrigger>
-							<TabsTrigger value="analytics" disabled>
-								Analytics
-							</TabsTrigger>
-							<TabsTrigger value="reports" disabled>
-								Reports
-							</TabsTrigger>
-							<TabsTrigger value="notifications" disabled>
-								Notifications
-							</TabsTrigger>
-						</TabsList>
-						<TabsContent value="overview" className="space-y-4">
-							<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-								<Card>
-									<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-										<CardTitle className="text-sm font-medium">
-											Total Revenue
-										</CardTitle>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="currentColor"
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth="2"
-											className="h-4 w-4 text-muted-foreground"
-										>
-											<path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-										</svg>
-									</CardHeader>
-									<CardContent>
-										<div className="text-2xl font-bold">$45,231.89</div>
-										<p className="text-xs text-muted-foreground">
-											+20.1% from last month
-										</p>
-									</CardContent>
-								</Card>
-								<Card>
-									<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-										<CardTitle className="text-sm font-medium">
-											Subscriptions
-										</CardTitle>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="currentColor"
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth="2"
-											className="h-4 w-4 text-muted-foreground"
-										>
-											<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-											<circle cx="9" cy="7" r="4" />
-											<path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-										</svg>
-									</CardHeader>
-									<CardContent>
-										<div className="text-2xl font-bold">+2350</div>
-										<p className="text-xs text-muted-foreground">
-											+180.1% from last month
-										</p>
-									</CardContent>
-								</Card>
-								<Card>
-									<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-										<CardTitle className="text-sm font-medium">Sales</CardTitle>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="currentColor"
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth="2"
-											className="h-4 w-4 text-muted-foreground"
-										>
-											<rect width="20" height="14" x="2" y="5" rx="2" />
-											<path d="M2 10h20" />
-										</svg>
-									</CardHeader>
-									<CardContent>
-										<div className="text-2xl font-bold">+12,234</div>
-										<p className="text-xs text-muted-foreground">
-											+19% from last month
-										</p>
-									</CardContent>
-								</Card>
-								<Card>
-									<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-										<CardTitle className="text-sm font-medium">
-											Active Now
-										</CardTitle>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="currentColor"
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth="2"
-											className="h-4 w-4 text-muted-foreground"
-										>
-											<path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-										</svg>
-									</CardHeader>
-									<CardContent>
-										<div className="text-2xl font-bold">+573</div>
-										<p className="text-xs text-muted-foreground">
-											+201 since last hour
-										</p>
-									</CardContent>
-								</Card>
-							</div>
-							<div>
-								<Card>
-									<CardHeader>
-										<CardTitle>Recent Sales</CardTitle>
-										<CardDescription>
-											You made 265 sales this month.
-										</CardDescription>
-									</CardHeader>
-									<CardContent></CardContent>
-								</Card>
-							</div>
-						</TabsContent>
-					</Tabs>
 				</div>
+
+				{products.length === 0 ? (
+					<div className="py-32">
+						<p className="h-screen text-center text-4xl font-bold tracking-tight transition-colors">
+							Please add some products to view your dashboard
+						</p>
+					</div>
+				) : (
+					<>
+						<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+							<Card>
+								<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+									<CardTitle className="flex items-center justify-center text-sm font-medium">
+										Total Revenue
+										<TooltipProvider>
+											<Tooltip>
+												<TooltipTrigger asChild>
+													<Info
+														className="ml-2 cursor-pointer"
+														width={15}
+														height={15}
+														size={15}
+													/>
+												</TooltipTrigger>
+												<TooltipContent>
+													<p>This is the total of all the products you sold</p>
+												</TooltipContent>
+											</Tooltip>
+										</TooltipProvider>
+									</CardTitle>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth="2"
+										className="h-4 w-4 text-muted-foreground"
+									>
+										<path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+									</svg>
+								</CardHeader>
+								<CardContent>
+									<div className="text-2xl font-bold">
+										$
+										{updatedProducts
+											.map((product) => product.productRevenue)
+											.reduce((a, b) => a + b, 0)
+											.toFixed(2) ?? 0}
+									</div>
+									<p className="text-xs text-muted-foreground">
+										$
+										{updatedProducts
+											.map((product) => product.productRevenue)
+											.reduce((a, b) => a + b, 0)
+											.toFixed(2) ?? 0}{" "}
+										more from last month
+									</p>
+								</CardContent>
+							</Card>
+							<Card>
+								<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+									<CardTitle className="flex items-center justify-center text-sm font-medium">
+										In Carts
+										<TooltipProvider>
+											<Tooltip>
+												<TooltipTrigger asChild>
+													<Info
+														className="ml-2 cursor-pointer"
+														width={15}
+														height={15}
+														size={15}
+													/>
+												</TooltipTrigger>
+												<TooltipContent>
+													<p>
+														This shows the total number of products that users
+														have added in their cart
+													</p>
+												</TooltipContent>
+											</Tooltip>
+										</TooltipProvider>
+									</CardTitle>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth="2"
+										className="h-4 w-4 text-muted-foreground"
+									>
+										<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+										<circle cx="9" cy="7" r="4" />
+										<path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+									</svg>
+								</CardHeader>
+								<CardContent>
+									<div className="text-2xl font-bold">
+										{totalInCarts.reduce((a, b) => a + b, 0)}
+									</div>
+									<p className="text-xs text-muted-foreground">
+										{totalInCarts.reduce((a, b) => a + b, 0)} more from last
+										month
+									</p>
+								</CardContent>
+							</Card>
+							<Card>
+								<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+									<CardTitle className="flex items-center justify-center text-sm font-medium">
+										Sales
+										<TooltipProvider>
+											<Tooltip>
+												<TooltipTrigger asChild>
+													<Info
+														className="ml-2 cursor-pointer"
+														width={15}
+														height={15}
+														size={15}
+													/>
+												</TooltipTrigger>
+												<TooltipContent>
+													<p>
+														This shows the total number of products that you
+														sold
+													</p>
+												</TooltipContent>
+											</Tooltip>
+										</TooltipProvider>
+									</CardTitle>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth="2"
+										className="h-4 w-4 text-muted-foreground"
+									>
+										<rect width="20" height="14" x="2" y="5" rx="2" />
+										<path d="M2 10h20" />
+									</svg>
+								</CardHeader>
+								<CardContent>
+									<div className="text-2xl font-bold">
+										{updatedProducts
+											.map((product) => product.sales)
+											.reduce((a, b) => a + b, 0) ?? 0}
+									</div>
+									<p className="text-xs text-muted-foreground">
+										{updatedProducts
+											.map((product) => product.sales)
+											.reduce((a, b) => a + b, 0) ?? 0}{" "}
+										more from last month
+									</p>
+								</CardContent>
+							</Card>
+						</div>
+						<div>
+							<Card>
+								<CardHeader>
+									<CardTitle>Highest Selling Products</CardTitle>
+									<CardDescription>
+										Your top 5 highest selling products
+									</CardDescription>
+								</CardHeader>
+								<CardContent>
+									<Table>
+										<TableCaption>A list of your products.</TableCaption>
+										<TableHeader>
+											<TableRow>
+												<TableHead>Name</TableHead>
+												<TableHead>Sales</TableHead>
+												<TableHead>Product Revenue</TableHead>
+												<TableHead>Stocks Left</TableHead>
+											</TableRow>
+										</TableHeader>
+										<TableBody>
+											{highestSellingProduct.map((product) => (
+												<TableRow key={product.id}>
+													<TableCell>
+														<Link
+															href={`/view-products/${product.id}`}
+															target="_blank"
+															className="cursor-pointer line-clamp-2 hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0"
+														>
+															{product.name}
+														</Link>
+													</TableCell>
+													<TableCell>{product.sales}</TableCell>
+													<TableCell>
+														{"$"}
+														{product.productRevenue}
+													</TableCell>
+													<TableCell>{product.stockQuantity}</TableCell>
+												</TableRow>
+											))}
+										</TableBody>
+									</Table>
+								</CardContent>
+							</Card>
+						</div>
+					</>
+				)}
 			</div>
-		</>
+		</div>
 	);
 }

@@ -54,20 +54,12 @@ model User {
     payments        Payment[]
     purchaseHistory PurchaseHistory[]
 
-    //add Revenue
-    // revenue Int
+    totalRevenue Float @default(0)
 
     attributes Json
     createdAt  DateTime @default(now())
     updatedAt  DateTime @updatedAt
 }
-
-// prod 1 = sold * price = total revenue for that product /user side
-// prod 2 = sold * price = total revenue for that product /user side
-// prod 3 = sold * price = total revenue for that product /user side
-// prod 4 = sold * price = total revenue for that product /user side
-
-// Totatl revenue = productRevenue /seller side
 
 model Product {
     id            Int    @id @default(autoincrement())
@@ -84,11 +76,9 @@ model Product {
 
     inCarts CartItem[]
 
-    //number of times sold
     sales Int @default(0)
 
-    // totalSales     Int
-    // productRevenue Int
+    productRevenue Float @default(0)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
