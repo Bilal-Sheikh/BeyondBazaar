@@ -246,11 +246,11 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 									<Separator className="my-6" />
 
 									<div className="flex flex-auto justify-center items-center w-full gap-4">
-										<div>
+										{/* <div>
 											<Button variant="outline" size="icon">
 												<Heart size={17} />
 											</Button>
-										</div>
+										</div> */}
 										<div className="w-full">
 											<Button
 												size="icon"

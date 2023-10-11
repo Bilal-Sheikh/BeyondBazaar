@@ -68,11 +68,11 @@ export default function ProductsList({ products }: { products: Product }) {
 									<Badge className="cursor-pointer">{product.category}</Badge>
 								</Link>
 							</div>
-							<div className="hidden lg:flex">
+							{/* <div className="hidden lg:flex">
 								<Button variant="outline" size="icon">
 									<Heart size={17} />
 								</Button>
-							</div>
+							</div> */}
 						</div>
 
 						{/* PC */}
