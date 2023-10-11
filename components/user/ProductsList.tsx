@@ -108,7 +108,7 @@ export default function ProductsList({ products }: { products: Product }) {
 							</div>
 
 							<div className="grid w-full h-16 top-0 gap-4">
-								<Link href={`/products/${product.id}`}>
+								<Link href={`/products/${product.id}`} target="_blank">
 									<CardTitle className="cursor-pointer line-clamp-2 text-lg hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0">
 										{product.name}
 									</CardTitle>

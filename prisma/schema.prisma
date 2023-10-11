@@ -110,6 +110,7 @@ model Payment {
     razorpay_order_id   String
     razorpay_payment_id String
     razorpay_signature  String
+    amount              Float
 
     userId String
     user   User   @relation(fields: [userId], references: [clerkId])

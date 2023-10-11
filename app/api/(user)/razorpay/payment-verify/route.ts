@@ -8,7 +8,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 	const headersList = headers();
 	const clerkId = headersList.get("ClerkId");
 
-	const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+	const { razorpay_order_id, razorpay_payment_id, razorpay_signature, amount } =
 		await req.json();
 
 	if (!clerkId) {
@@ -39,6 +39,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 					razorpay_order_id,
 					razorpay_payment_id,
 					razorpay_signature,
+					amount: amount,
 					userId: clerkId,
 				},
 			})
