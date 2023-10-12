@@ -53,6 +53,7 @@ import {
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Product } from "@prisma/client";
+import { BASE_URL } from "@/config";
 
 export default function ProductsList({
 	productsEntries,
@@ -66,15 +67,12 @@ export default function ProductsList({
 	const handleDelete = async (productId) => {
 		console.log("DELETION STARTED FOR PRODUCT :::::::::::::::::::", productId);
 		try {
-			const { data } = await axios.delete(
-				"http://localhost:3000/api/delete-product",
-				{
-					headers: {
-						ProductId: productId,
-						ClerkId: sellerId,
-					},
-				}
-			);
+			const { data } = await axios.delete(`${BASE_URL}/api/delete-product`, {
+				headers: {
+					ProductId: productId,
+					ClerkId: sellerId,
+				},
+			});
 
 			if (data.success === true) {
 				console.log("PRODUCT DELETED :::::::::::::::::::", data.message);
@@ -104,7 +102,7 @@ export default function ProductsList({
 										<DropdownMenuSeparator />
 										<DropdownMenuItem>
 											<Link
-												href={`/view-products/${product.id}`}
+												href={`${BASE_URL}/view-products/${product.id}`}
 												className="flex flex-auto justify-start items-start"
 											>
 												<Pencil className="mr-2 h-4 w-4" />

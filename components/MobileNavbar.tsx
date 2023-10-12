@@ -22,6 +22,7 @@ import {
 import { UserButton } from "@clerk/nextjs";
 import { Button, buttonVariants } from "./ui/button";
 import { User } from "@clerk/nextjs/server";
+import { BASE_URL } from "@/config";
 
 interface NavbarProps {
 	user: User | null;
@@ -40,9 +41,11 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 						<SheetTitle>
 							<div className="flex items-center justify-start">
 								<div>
-									<Link href={"/"}>
-										<Image src={logoBlack} alt="Logo" width={130} />
-									</Link>
+									<SheetClose asChild>
+										<Link href={`${BASE_URL}`}>
+											<Image src={logoBlack} alt="Logo" width={130} />
+										</Link>
+									</SheetClose>
 								</div>
 							</div>
 						</SheetTitle>
@@ -53,7 +56,9 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 									<Button variant="link" className="w-full py-7">
 										<span className="items-center justify-between py-4 font-medium text-lg transition-all hover:underline">
 											<SheetClose asChild>
-												<Link href="/add-product">Add New Product</Link>
+												<Link href={`${BASE_URL}/add-product`}>
+													Add New Product
+												</Link>
 											</SheetClose>
 										</span>
 									</Button>
@@ -61,7 +66,9 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 									<Button variant="link" className="w-full py-7">
 										<span className="items-center justify-between py-4 font-medium text-lg transition-all hover:underline">
 											<SheetClose asChild>
-												<Link href="/view-products">View Your Products</Link>
+												<Link href={`${BASE_URL}/view-products`}>
+													View Your Products
+												</Link>
 											</SheetClose>
 										</span>
 									</Button>
@@ -69,7 +76,9 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 									<Button variant="link" className="w-full py-7">
 										<span className="items-center justify-between py-4 font-medium text-lg transition-all hover:underline">
 											<SheetClose asChild>
-												<Link href="/view-shop">View Your Shop</Link>
+												<Link href={`${BASE_URL}/view-shop`}>
+													View Your Shop
+												</Link>
 											</SheetClose>
 										</span>
 									</Button>
@@ -82,7 +91,9 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
 													<SheetClose asChild>
-														<Link href={"/products"}>All Products</Link>
+														<Link href={`${BASE_URL}/products`}>
+															All Products
+														</Link>
 													</SheetClose>
 												</span>
 											</AccordionContent>
@@ -92,7 +103,9 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
 													<SheetClose asChild>
-														<Link href={"/products?category=MENS_TOP_WEAR"}>
+														<Link
+															href={`${BASE_URL}/products?category=MENS_TOP_WEAR`}
+														>
 															Men's Top Wear
 														</Link>
 													</SheetClose>
@@ -101,7 +114,9 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
 													<SheetClose asChild>
-														<Link href={"/products?category=MENS_BOTTOM_WEAR"}>
+														<Link
+															href={`${BASE_URL}/products?category=MENS_BOTTOM_WEAR`}
+														>
 															Men's Bottom Wear
 														</Link>
 													</SheetClose>
@@ -110,7 +125,9 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
 													<SheetClose asChild>
-														<Link href={"/products?category=WOMENS_TOP_WEAR"}>
+														<Link
+															href={`${BASE_URL}/products?category=WOMENS_TOP_WEAR`}
+														>
 															Women's Top Wear
 														</Link>
 													</SheetClose>
@@ -120,7 +137,7 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 												<span className="text-gray-500 hover:text-gray-300">
 													<SheetClose asChild>
 														<Link
-															href={"/products?category=WOMENS_BOTTOM_WEAR"}
+															href={`${BASE_URL}/products?category=WOMENS_BOTTOM_WEAR`}
 														>
 															Women's Bottom Wear
 														</Link>
@@ -130,7 +147,9 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
 													<SheetClose asChild>
-														<Link href={"/products?category=MENS_FOOTWEAR"}>
+														<Link
+															href={`${BASE_URL}/products?category=MENS_FOOTWEAR`}
+														>
 															Men's Footwear
 														</Link>
 													</SheetClose>
@@ -139,7 +158,9 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
 													<SheetClose asChild>
-														<Link href={"/products?category=WOMENS_FOOTWEAR"}>
+														<Link
+															href={`${BASE_URL}/products?category=WOMENS_FOOTWEAR`}
+														>
 															Women's Footwear
 														</Link>
 													</SheetClose>
@@ -148,7 +169,9 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
 													<SheetClose asChild>
-														<Link href={"/products?category=KIDS"}>Kids</Link>
+														<Link href={`${BASE_URL}/products?category=KIDS`}>
+															Kids
+														</Link>
 													</SheetClose>
 												</span>
 											</AccordionContent>
@@ -158,7 +181,9 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
 													<SheetClose asChild>
-														<Link href={"/products?category=WALLETS"}>
+														<Link
+															href={`${BASE_URL}/products?category=WALLETS`}
+														>
 															Wallets
 														</Link>
 													</SheetClose>
@@ -167,7 +192,9 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
 													<SheetClose asChild>
-														<Link href={"/products?category=WATCHES"}>
+														<Link
+															href={`${BASE_URL}/products?category=WATCHES`}
+														>
 															Watches
 														</Link>
 													</SheetClose>
@@ -176,21 +203,27 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
 													<SheetClose asChild>
-														<Link href={"/products?category=BELTS"}>Belts</Link>
+														<Link href={`${BASE_URL}/products?category=BELTS`}>
+															Belts
+														</Link>
 													</SheetClose>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
 													<SheetClose asChild>
-														<Link href={"/products?category=BAGS"}>Bags</Link>
+														<Link href={`${BASE_URL}/products?category=BAGS`}>
+															Bags
+														</Link>
 													</SheetClose>
 												</span>
 											</AccordionContent>
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
 													<SheetClose asChild>
-														<Link href={"/products?category=PERFUMES"}>
+														<Link
+															href={`${BASE_URL}/products?category=PERFUMES`}
+														>
 															Perfumes
 														</Link>
 													</SheetClose>
@@ -202,7 +235,7 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
 													<SheetClose asChild>
-														<Link href={"/products?category=GAMING"}>
+														<Link href={`${BASE_URL}/products?category=GAMING`}>
 															Gaming
 														</Link>
 													</SheetClose>
@@ -211,7 +244,9 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
 													<SheetClose asChild>
-														<Link href={"/products?category=POWERBANK"}>
+														<Link
+															href={`${BASE_URL}/products?category=POWERBANK`}
+														>
 															Powerbank
 														</Link>
 													</SheetClose>
@@ -220,7 +255,9 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
 													<SheetClose asChild>
-														<Link href={"/products?category=HEADPHONES"}>
+														<Link
+															href={`${BASE_URL}/products?category=HEADPHONES`}
+														>
 															Headphones
 														</Link>
 													</SheetClose>
@@ -230,7 +267,7 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 												<span className="text-gray-500 hover:text-gray-300">
 													<SheetClose asChild>
 														<Link
-															href={"/products?category=MOBILE_ACCESSORIES"}
+															href={`${BASE_URL}/products?category=MOBILE_ACCESSORIES`}
 														>
 															Mobile Accessories
 														</Link>
@@ -243,7 +280,9 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
 													<SheetClose asChild>
-														<Link href={"/products?category=MOBILES"}>
+														<Link
+															href={`${BASE_URL}/products?category=MOBILES`}
+														>
 															Mobiles
 														</Link>
 													</SheetClose>
@@ -255,7 +294,7 @@ export default function MobileNavbar({ user, role }: NavbarProps) {
 											<AccordionContent>
 												<span className="text-gray-500 hover:text-gray-300">
 													<SheetClose asChild>
-														<Link href={"/products?category=OTHERS"}>
+														<Link href={`${BASE_URL}/products?category=OTHERS`}>
 															Others
 														</Link>
 													</SheetClose>

@@ -7,6 +7,7 @@ import { useUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { History } from "lucide-react";
 import Link from "next/link";
+import { BASE_URL } from "@/config";
 
 export default function Success() {
 	const searchParams = useSearchParams();
@@ -21,7 +22,7 @@ export default function Success() {
 			try {
 				axios
 					.post(
-						"/api/checkout/buy-now",
+						`${BASE_URL}/api/checkout/buy-now`,
 						{},
 						{ headers: { UserClerkId: user.id, ProductId: productId } }
 					)
@@ -40,7 +41,11 @@ export default function Success() {
 			console.log("GOT paymentId orderId::::::::::::::::", paymentId, orderId);
 			try {
 				axios
-					.post("/api/checkout", {}, { headers: { UserClerkId: user.id } })
+					.post(
+						`${BASE_URL}/api/checkout`,
+						{},
+						{ headers: { UserClerkId: user.id } }
+					)
 					.then((res) => {
 						console.log("CHECKOUT SUCCESSFULL::::::::::::::::::::::::::::");
 					});
@@ -63,7 +68,7 @@ export default function Success() {
 					</div>
 				</div>
 
-				<Link href={"/account/purchases"}>
+				<Link href={`${BASE_URL}/account/purchases`}>
 					<Button className="gap-2 mt-5 lg:mt-0">
 						<History size={17} /> View Your Purchase
 					</Button>

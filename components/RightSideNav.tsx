@@ -25,6 +25,7 @@ import { Cart } from "./user/Cart";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import avatar from "@/public/avatar 1.jpg";
+import { BASE_URL } from "@/config";
 
 interface NavbarProps {
 	user: User | null;
@@ -63,7 +64,7 @@ export default async function RightSideNav({ user, role }: NavbarProps) {
 							{role === "SELLER" ? (
 								<UserButton afterSignOutUrl="/" />
 							) : (
-								<Link href={"/account"}>
+								<Link href={`${BASE_URL}/account`}>
 									{user.hasImage ? (
 										<>
 											<Avatar>
@@ -86,7 +87,7 @@ export default async function RightSideNav({ user, role }: NavbarProps) {
 					) : (
 						<div className="flex items-center justify-center gap-3">
 							<Link
-								href={"/sign-in"}
+								href={`${BASE_URL}/sign-in`}
 								className={buttonVariants({
 									variant: "default",
 								})}

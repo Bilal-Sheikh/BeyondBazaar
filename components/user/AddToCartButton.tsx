@@ -7,6 +7,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 import { useUser } from "@clerk/nextjs";
+import { BASE_URL } from "@/config";
 
 export default function AddToCartButton({ productId, stock }) {
 	const router = useRouter();
@@ -24,13 +25,13 @@ export default function AddToCartButton({ productId, stock }) {
 				description: " ❗ Please Sign In first",
 				duration: 3000,
 			});
-			router.push("/sign-in");
+			router.push(`${BASE_URL}/sign-in`);
 		} else {
 			setIsLoading(true);
 			try {
 				axios
 					.post(
-						"/api/add-to-cart",
+						`${BASE_URL}/api/add-to-cart`,
 						{},
 						{
 							headers: {
@@ -64,7 +65,7 @@ export default function AddToCartButton({ productId, stock }) {
 			setIsFetching(true);
 			try {
 				axios
-					.get("http://localhost:3000/api/check-cart", {
+					.get(`${BASE_URL}/api/check-cart`, {
 						headers: {
 							ClerkId: user.id,
 							ProductId: productId,

@@ -28,6 +28,7 @@ import {
 	Minus,
 	Plus,
 	ShoppingCart,
+	Target,
 	Trash,
 } from "lucide-react";
 import Image from "next/image";
@@ -49,10 +50,11 @@ import { Separator } from "@/components/ui/separator";
 import Loading from "./loading";
 import PaymentButton from "@/components/user/PaymentButton";
 import BuyProduct from "@/components/razorpay/BuyProduct";
+import { BASE_URL } from "@/config";
 
 async function getData(clerkId) {
 	try {
-		const res = await fetch("http://localhost:3000/api/get-cart", {
+		const res = await fetch(`${BASE_URL}/api/get-cart`, {
 			headers: { ClerkId: clerkId },
 			cache: "no-store",
 		});
@@ -117,7 +119,9 @@ export default async function Checkout() {
 												/>
 
 												<CardTitle className="w-full">
-													<Link href={`/products/${item.product.id}`}>
+													<Link
+														href={`${BASE_URL}/products/${item.product.id}`} target="_blank"
+													>
 														<p className="hover:text-blue-500 cursor-pointer pt-2 md:pt-0 line-clamp-1 text-sm md:text-xl tracking-tight transition-colors">
 															{item.product.name}
 														</p>
@@ -213,7 +217,7 @@ export default async function Checkout() {
 								</div>
 
 								<div className="flex flex-auto justify-between items-center w-full gap-2">
-									<Link href={"/products"} className="w-full">
+									<Link href={`${BASE_URL}/products`} className="w-full">
 										<Button variant="outline" className="w-full">
 											Cancel Order
 										</Button>

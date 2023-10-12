@@ -68,6 +68,7 @@ import { UploadFileResponse } from "uploadthing/client";
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import { categories } from "@/lib/categories";
+import { BASE_URL } from "@/config";
 
 const formSchema = z.object({
 	name: z.string().nonempty({ message: "Name is required" }),
@@ -95,7 +96,7 @@ export default function EditProducts({ params }: { params: { id: string } }) {
 	React.useEffect(() => {
 		try {
 			axios
-				.get("http://localhost:3000/api/get-seller-product", {
+				.get(`${BASE_URL}/api/get-seller-product`, {
 					headers: {
 						ProductId: productId,
 					},
@@ -168,11 +169,15 @@ export default function EditProducts({ params }: { params: { id: string } }) {
 		};
 
 		try {
-			const { data } = await axios.post("/api/edit-product", product, {
-				headers: {
-					ProductId: productId,
-				},
-			});
+			const { data } = await axios.post(
+				`${BASE_URL}/api/edit-product`,
+				product,
+				{
+					headers: {
+						ProductId: productId,
+					},
+				}
+			);
 
 			console.log("RESPONSE AXIOS :::::::::::::::::", data);
 
@@ -628,7 +633,7 @@ export default function EditProducts({ params }: { params: { id: string } }) {
 								/>
 								<div className="flex py-9 justify-center gap-6">
 									<Button variant="outline" className="w-52" asChild>
-										<Link href={"/view-products"}>Cancel</Link>
+										<Link href={`${BASE_URL}/view-products`}>Cancel</Link>
 									</Button>
 
 									<Button disabled={isLoading} className="w-52" type="submit">

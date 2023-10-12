@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { BASE_URL } from "@/config";
 
 export default async function Purchases() {
 	const user = await currentUser();
@@ -154,7 +155,7 @@ export default async function Purchases() {
 											<TableCell className="font-medium">
 												<Link
 													target="_blank"
-													href={`/products/${purchase.productId}`}
+													href={`${BASE_URL}/products/${purchase.productId}`}
 													className="cursor-pointer line-clamp-2 hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0"
 												>
 													{purchase.productName}

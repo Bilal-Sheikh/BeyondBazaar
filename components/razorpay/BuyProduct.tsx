@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
+import { BASE_URL } from "@/config";
 
 export default function BuyProduct({ clerkId, grandTotal, productId }) {
 	const [isLoading, setIsLoading] = React.useState(false);
@@ -18,7 +19,7 @@ export default function BuyProduct({ clerkId, grandTotal, productId }) {
 		console.log(KEY_ID);
 
 		const { data } = await axios.post(
-			"/api/razorpay/orders",
+			`${BASE_URL}/api/razorpay/orders`,
 			{ amount: grandTotal },
 			{ headers: { ClerkId: clerkId } }
 		);
@@ -36,12 +37,12 @@ export default function BuyProduct({ clerkId, grandTotal, productId }) {
 				// console.log("RAZORPAY HANDLER RESPONSE::::::::::::::", response);
 
 				const { data } = await axios.post(
-					"/api/razorpay/payment-verify",
+					`${BASE_URL}/api/razorpay/payment-verify`,
 					{
 						razorpay_payment_id: response.razorpay_payment_id,
 						razorpay_order_id: response.razorpay_order_id,
 						razorpay_signature: response.razorpay_signature,
-						amount : grandTotal,
+						amount: grandTotal,
 					},
 					{ headers: { ClerkId: clerkId } }
 				);
@@ -52,7 +53,7 @@ export default function BuyProduct({ clerkId, grandTotal, productId }) {
 					if (productId) {
 						console.log("REDIRECTING TO PRODUCT ID::::::::::::::");
 						router.push(
-							`/payment-status/success?
+							`${BASE_URL}/payment-status/success?
 							product-id=${productId}
 							&order-id=${response.razorpay_order_id}
 							&payment-id=${response.razorpay_payment_id}`
@@ -60,7 +61,7 @@ export default function BuyProduct({ clerkId, grandTotal, productId }) {
 					} else {
 						console.log("REDIRECTING::::::::::::::");
 						router.push(
-							`/payment-status/success?
+							`${BASE_URL}/payment-status/success?
 							payment-id=${response.razorpay_payment_id}
 							&order-id=${response.razorpay_order_id}`
 						);
@@ -68,7 +69,7 @@ export default function BuyProduct({ clerkId, grandTotal, productId }) {
 				} else {
 					alert("Payment failed. Please try again. Contact support for help");
 					router.push(
-						`/payment-status/failure?
+						`${BASE_URL}/payment-status/failure?
 						payment-id=${response.razorpay_payment_id}
 						&order-id=${response.razorpay_order_id}`
 					);

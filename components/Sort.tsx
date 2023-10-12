@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { ArrowDownUp } from "lucide-react";
+import { BASE_URL } from "@/config";
 
 export default function Sort() {
 	const router = useRouter();
@@ -43,14 +44,16 @@ export default function Sort() {
 
 					<DropdownMenuItem
 						onSelect={() =>
-							router.push(`/products?sort=price.desc${categoryParam}`)
+							router.push(
+								`${BASE_URL}/products?sort=price.desc${categoryParam}`
+							)
 						}
 					>
 						Price ↑
 					</DropdownMenuItem>
 					<DropdownMenuItem
 						onSelect={() =>
-							router.push(`/products?sort=price.asc${categoryParam}`)
+							router.push(`${BASE_URL}/products?sort=price.asc${categoryParam}`)
 						}
 					>
 						Price ↓
@@ -60,14 +63,18 @@ export default function Sort() {
 
 					<DropdownMenuItem
 						onSelect={() =>
-							router.push(`/products?sort=createdAt.desc${categoryParam}`)
+							router.push(
+								`${BASE_URL}/products?sort=createdAt.desc${categoryParam}`
+							)
 						}
 					>
 						Date ↑
 					</DropdownMenuItem>
 					<DropdownMenuItem
 						onSelect={() =>
-							router.push(`/products?sort=createdAt.asc${categoryParam}`)
+							router.push(
+								`${BASE_URL}/products?sort=createdAt.asc${categoryParam}`
+							)
 						}
 					>
 						Date ↓

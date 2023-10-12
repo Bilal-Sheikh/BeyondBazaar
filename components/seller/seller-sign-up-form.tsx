@@ -24,6 +24,7 @@ import SignInOAuthButtons from "@/components/SignInOAuthButtons";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { headers } from "next/headers";
+import { BASE_URL } from "@/config";
 
 interface SignUpFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -114,7 +115,7 @@ export function SellerSignUpForm({ className, ...props }: SignUpFormProps) {
 				console.log("MAKING A POST REQ");
 				try {
 					axios
-						.post("/api/seller-sign-in", {
+						.post(`${BASE_URL}/api/seller-sign-in`, {
 							userId: completeSignUp.createdUserId,
 							role: "SELLER",
 						})
@@ -126,7 +127,7 @@ export function SellerSignUpForm({ className, ...props }: SignUpFormProps) {
 				}
 
 				setActive({ session: completeSignUp.createdSessionId });
-				router.push("/");
+				router.push(`${BASE_URL}`);
 				setIsLoading(false);
 			}
 		} catch (err: any) {

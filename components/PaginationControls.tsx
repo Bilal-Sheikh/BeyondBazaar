@@ -90,7 +90,6 @@ export default function PaginationControls({
 						onClick={() => {
 							router.push(
 								`${path}/?page=${totalPages}${categoryParam}${sortParam}`
-								//router.push(`${path}/?page=1${categoryParam}${sortParam}`);
 							);
 						}}
 					>

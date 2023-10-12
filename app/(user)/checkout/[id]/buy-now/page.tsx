@@ -40,6 +40,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cookies } from "next/headers";
 import { Separator } from "@/components/ui/separator";
 import BuyProduct from "@/components/razorpay/BuyProduct";
+import { BASE_URL } from "@/config";
 
 async function getProduct(productId: number) {
 	try {
@@ -93,7 +94,7 @@ export default async function BuyNowButton({
 									/>
 
 									<CardTitle className="w-full">
-										<Link href={`/products/${product.id}`}>
+										<Link href={`${BASE_URL}/products/${product.id}`}>
 											<p className="hover:text-blue-500 cursor-pointer pt-2 md:pt-0 line-clamp-1 text-sm md:text-xl tracking-tight transition-colors">
 												{product.name}
 											</p>
@@ -145,7 +146,7 @@ export default async function BuyNowButton({
 								</div>
 
 								<div className="flex flex-auto justify-between items-center w-full gap-2">
-									<Link href={"/products"} className="w-full">
+									<Link href={`${BASE_URL}/products`} className="w-full">
 										<Button variant="outline" className="w-full">
 											Cancel Order
 										</Button>

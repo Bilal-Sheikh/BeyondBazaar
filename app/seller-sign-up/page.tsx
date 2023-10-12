@@ -5,6 +5,7 @@ import React from "react";
 import logoBlack from "@/public/logoBlack.png";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
+import { BASE_URL } from "@/config";
 
 export default function page() {
 	return (
@@ -12,14 +13,14 @@ export default function page() {
 			<div className=" p-8 md:p-10 lg:p-10">
 				<div className="flex justify-between">
 					<div className="relative w-32">
-						<Link href={"/"}>
+						<Link href={`${BASE_URL}`}>
 							<Image alt="Logo" src={logoBlack} />
 						</Link>
 					</div>
 					<div>
 						<Link
 							className={cn(buttonVariants({ variant: "link" }), "text-base")}
-							href={"/sign-up"}
+							href={`${BASE_URL}/sign-up`}
 						>
 							{"<- "} Go Back
 						</Link>

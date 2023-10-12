@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
 import Loading from "./loading";
+import { BASE_URL } from "@/config";
 
 export const metadata: Metadata = {
 	title: "Dashboard",
@@ -302,7 +303,7 @@ export default async function DashboardPage() {
 												<TableRow key={product.id}>
 													<TableCell>
 														<Link
-															href={`/view-products/${product.id}`}
+															href={`${BASE_URL}/view-products/${product.id}`}
 															target="_blank"
 															className="cursor-pointer line-clamp-2 hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0"
 														>

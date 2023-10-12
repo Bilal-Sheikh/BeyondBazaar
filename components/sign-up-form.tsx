@@ -23,6 +23,7 @@ import {
 import SignInOAuthButtons from "./SignInOAuthButtons";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import { BASE_URL } from "@/config";
 
 interface SignUpFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -109,7 +110,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 			}
 			if (completeSignUp.status === "complete") {
 				await setActive({ session: completeSignUp.createdSessionId });
-				router.push("/");
+				router.push(`${BASE_URL}`);
 			}
 		} catch (err: any) {
 			setIsLoading(false);
@@ -228,7 +229,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 								<SignInOAuthButtons />
 
 								<Link
-									href="/seller-sign-up"
+									href={`${BASE_URL}/seller-sign-up`}
 									className={cn(
 										buttonVariants({ variant: "link" }),
 										"absolute w-max right-1/3 bottom-3 md:left-4 lg:top-8 lg:left-1/2"

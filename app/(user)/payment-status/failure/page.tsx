@@ -7,6 +7,7 @@ import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { History, RotateCcw } from "lucide-react";
+import { BASE_URL } from "@/config";
 
 export default function Failure() {
 	const searchParams = useSearchParams();
@@ -24,7 +25,7 @@ export default function Failure() {
 					</div>
 				</div>
 
-				<Link href={"/checkout"}>
+				<Link href={`${BASE_URL}/checkout`}>
 					<Button className="gap-2 mt-5 lg:mt-0">
 						<RotateCcw size={17} /> Try Again?
 					</Button>

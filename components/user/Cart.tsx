@@ -40,6 +40,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 import { Separator } from "../ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { BASE_URL } from "@/config";
 
 export function Cart() {
 	const { isSignedIn, user } = useUser();
@@ -53,7 +54,7 @@ export function Cart() {
 		if (isSignedIn) {
 			try {
 				axios
-					.get("http://localhost:3000/api/get-cart", {
+					.get(`${BASE_URL}/api/get-cart`, {
 						headers: {
 							ClerkId: user.id,
 						},
@@ -114,7 +115,7 @@ export function Cart() {
 			setIsLoading(true);
 
 			axios
-				.delete("/api/update-cart", {
+				.delete(`${BASE_URL}/api/update-cart`, {
 					headers: {
 						ClerkId: user.id,
 						ProductId: productId,
@@ -140,7 +141,7 @@ export function Cart() {
 
 			axios
 				.post(
-					"/api/update-cart",
+					`${BASE_URL}/api/update-cart`,
 					{},
 					{
 						headers: {
@@ -187,7 +188,7 @@ export function Cart() {
 					<div className="flex flex-col py-64 justify-center items-center">
 						<div className="pb-5">Please Sign in first</div>
 						<Link
-							href={"/sign-in"}
+							href={`${BASE_URL}/sign-in`}
 							className={cn(buttonVariants({ variant: "outline" }))}
 						>
 							Sign In
@@ -220,7 +221,9 @@ export function Cart() {
 												/>
 
 												<CardTitle className="w-full">
-													<Link href={`/products/${item.product.id}`}>
+													<Link
+														href={`${BASE_URL}/products/${item.product.id}`}
+													>
 														<p className="hover:text-blue-500 cursor-pointer pt-2 md:pt-0 line-clamp-1 text-sm md:text-xl tracking-tight transition-colors">
 															{item.product.name}
 														</p>
@@ -287,7 +290,11 @@ export function Cart() {
 						<Separator className="my-3" />
 						<SheetFooter>
 							<SheetClose asChild>
-								<Link href={"/checkout"} prefetch={false} className="w-full">
+								<Link
+									href={`${BASE_URL}/checkout`}
+									prefetch={false}
+									className="w-full"
+								>
 									<Button type="submit" className="w-full">
 										Proceed to Checkout
 									</Button>

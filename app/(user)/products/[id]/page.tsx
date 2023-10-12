@@ -37,6 +37,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { set } from "zod";
 import Link from "next/link";
+import { BASE_URL } from "@/config";
 
 export default function ViewProduct({ params }: { params: { id: string } }) {
 	const productId = params.id;
@@ -54,7 +55,7 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 	React.useEffect(() => {
 		try {
 			axios
-				.get("http://localhost:3000/api/get-product", {
+				.get(`${BASE_URL}/api/get-product`, {
 					headers: {
 						ProductId: productId,
 					},
@@ -67,7 +68,7 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 			if (isSignedIn) {
 				try {
 					axios
-						.get("http://localhost:3000/api/check-cart", {
+						.get(`${BASE_URL}/api/check-cart`, {
 							headers: {
 								ClerkId: user.id,
 								ProductId: productId,
@@ -116,13 +117,13 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 				description: " ❗ Please Sign In first",
 				duration: 3000,
 			});
-			router.push("/sign-in");
+			router.push(`${BASE_URL}/sign-in`);
 		} else {
 			setIsLoading(true);
 			try {
 				axios
 					.post(
-						"/api/add-to-cart",
+						`${BASE_URL}/api/add-to-cart`,
 						{},
 						{
 							headers: {
@@ -258,7 +259,7 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 												disabled={product.stockQuantity <= 0}
 											>
 												<Link
-													href={`/checkout/${productId}/buy-now`}
+													href={`${BASE_URL}/checkout/${productId}/buy-now`}
 													className="flex flex-1 justify-center items-center w-full h-full gap-3"
 												>
 													<CreditCard size={17} />

@@ -53,6 +53,7 @@ import { Separator } from "@/components/ui/separator";
 import UserProfilePage from "@/components/user/UserProfilePage";
 import Loading from "./loading";
 import { SignOutButton } from "@clerk/nextjs";
+import { BASE_URL } from "@/config";
 
 export default function Account() {
 	return (
@@ -73,7 +74,7 @@ export default function Account() {
 
 			<div className="flex flex-col lg:flex-row justify-center items-center pt-10 gap-5 lg:gap-20">
 				<Card className="w-80 h-60 cursor-pointer hover:bg-zinc-900">
-					<Link href={"/account/user"}>
+					<Link href={`${BASE_URL}/account/user`}>
 						<CardHeader>
 							<User size={60} strokeWidth={1} />
 							<CardTitle className="pt-4">Account</CardTitle>
@@ -85,7 +86,7 @@ export default function Account() {
 				</Card>
 
 				<Card className="w-80 h-60 cursor-pointer hover:bg-zinc-900">
-					<Link href={"/account/orders"}>
+					<Link href={`${BASE_URL}/account/orders`}>
 						<CardHeader>
 							<Package size={60} strokeWidth={1} />
 							<CardTitle className="pt-4">Orders</CardTitle>
@@ -97,7 +98,7 @@ export default function Account() {
 				</Card>
 
 				<Card className="w-80 h-60 cursor-pointer hover:bg-zinc-900">
-					<Link href={"/account/purchases"}>
+					<Link href={`${BASE_URL}/account/purchases`}>
 						<CardHeader>
 							<History size={60} strokeWidth={1} />
 							<CardTitle className="pt-4">Purchases</CardTitle>

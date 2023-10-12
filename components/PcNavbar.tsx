@@ -17,41 +17,42 @@ import {
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { buttonVariants } from "./ui/button";
+import { BASE_URL } from "@/config";
 
 const clothing: { title: string; href: string; description: string }[] = [
 	{
 		title: "Men's Top Wear",
-		href: "/products?category=MENS_TOP_WEAR",
+		href: `${BASE_URL}/products?category=MENS_TOP_WEAR`,
 		description: "For Men",
 	},
 	{
 		title: "Men's Bottom Wear",
-		href: "/products?category=MENS_BOTTOM_WEAR",
+		href: `${BASE_URL}/products?category=MENS_BOTTOM_WEAR`,
 		description: "For Men",
 	},
 	{
 		title: "Women's Top Wear",
-		href: "/products?category=WOMENS_TOP_WEAR",
+		href: `${BASE_URL}/products?category=WOMENS_TOP_WEAR`,
 		description: "For Women.",
 	},
 	{
 		title: "Women's Bottom Wear",
-		href: "/products?category=WOMENS_BOTTOM_WEAR",
+		href: `${BASE_URL}/products?category=WOMENS_BOTTOM_WEAR`,
 		description: "For Women.",
 	},
 	{
 		title: "Men Footwear",
-		href: "/products?category=MENS_FOOTWEAR",
+		href: `${BASE_URL}/products?category=MENS_FOOTWEAR`,
 		description: "For Mens Footwear.",
 	},
 	{
 		title: "Women Footwear",
-		href: "/products?category=WOMENS_FOOTWEAR",
+		href: `${BASE_URL}/products?category=WOMENS_FOOTWEAR`,
 		description: "For Womens Footwear",
 	},
 	{
 		title: "Kids",
-		href: "/products?category=KIDS",
+		href: `${BASE_URL}/products?category=KIDS`,
 		description: "For Kids.",
 	},
 ];
@@ -59,27 +60,27 @@ const clothing: { title: string; href: string; description: string }[] = [
 const accessories: { title: string; href: string; description: string }[] = [
 	{
 		title: "Wallets",
-		href: "/products?category=WALLETS",
+		href: `${BASE_URL}/products?category=WALLETS`,
 		description: "Best Quality Wallets",
 	},
 	{
 		title: "Watches",
-		href: "/products?category=WATCHES",
+		href: `${BASE_URL}/products?category=WATCHES`,
 		description: "Premium Watches",
 	},
 	{
 		title: "Belts",
-		href: "/products?category=BELTS",
+		href: `${BASE_URL}/products?category=BELTS`,
 		description: "For Men",
 	},
 	{
 		title: "Bags",
-		href: "/products?category=BAGS",
+		href: `${BASE_URL}/products?category=BAGS`,
 		description: "For Women",
 	},
 	{
 		title: "Perfumes",
-		href: "/products?category=PERFUMES",
+		href: `${BASE_URL}/products?category=PERFUMES`,
 		description: "Buy best Perfumes for Men & Women",
 	},
 ];
@@ -87,22 +88,22 @@ const accessories: { title: string; href: string; description: string }[] = [
 const electronics: { title: string; href: string; description: string }[] = [
 	{
 		title: "Gaming",
-		href: "/products?category=GAMING",
+		href: `${BASE_URL}/products?category=GAMING`,
 		description: "Gaming Peripherals",
 	},
 	{
 		title: "Powerbank",
-		href: "/products?category=POWERBANK",
+		href: `${BASE_URL}/products?category=POWERBANK`,
 		description: "Mobile Powerbank",
 	},
 	{
 		title: "Headphones",
-		href: "/products?category=HEADPHONES",
+		href: `${BASE_URL}/products?category=HEADPHONES`,
 		description: "Audio devices for all",
 	},
 	{
 		title: "Mobile Accessories",
-		href: "/products?category=MOBILE_ACCESSORIES",
+		href: `${BASE_URL}/products?category=MOBILE_ACCESSORIES`,
 		description: "Mobile Accessories",
 	},
 ];
@@ -142,7 +143,7 @@ export default function PcNavbar({ role }: NavbarProps) {
 		<>
 			{/* LEFT SIDE NAV */}
 			<div className="flex flex-1 gap-4">
-				<Link href={"/"}>
+				<Link href={`${BASE_URL}`}>
 					<Image src={logoBlack} alt="Logo" width={130} />
 				</Link>
 
@@ -150,7 +151,7 @@ export default function PcNavbar({ role }: NavbarProps) {
 					<NavigationMenu>
 						<NavigationMenuList>
 							<NavigationMenuItem>
-								<Link href="/add-product" legacyBehavior passHref>
+								<Link href={`${BASE_URL}/add-product`} legacyBehavior passHref>
 									<NavigationMenuLink className={navigationMenuTriggerStyle()}>
 										Add New Product
 									</NavigationMenuLink>
@@ -158,7 +159,11 @@ export default function PcNavbar({ role }: NavbarProps) {
 							</NavigationMenuItem>
 
 							<NavigationMenuItem>
-								<Link href="/view-products" legacyBehavior passHref>
+								<Link
+									href={`${BASE_URL}/view-products`}
+									legacyBehavior
+									passHref
+								>
 									<NavigationMenuLink className={navigationMenuTriggerStyle()}>
 										View Your Products
 									</NavigationMenuLink>
@@ -166,7 +171,7 @@ export default function PcNavbar({ role }: NavbarProps) {
 							</NavigationMenuItem>
 
 							<NavigationMenuItem>
-								<Link href="/view-shop" legacyBehavior passHref>
+								<Link href={`${BASE_URL}/view-shop`} legacyBehavior passHref>
 									<NavigationMenuLink className={navigationMenuTriggerStyle()}>
 										View Your Shop
 									</NavigationMenuLink>
@@ -178,7 +183,7 @@ export default function PcNavbar({ role }: NavbarProps) {
 					<NavigationMenu>
 						<NavigationMenuList>
 							<NavigationMenuItem>
-								<Link href="/products" legacyBehavior passHref>
+								<Link href={`${BASE_URL}/products`} legacyBehavior passHref>
 									<NavigationMenuLink className={navigationMenuTriggerStyle()}>
 										All Products
 									</NavigationMenuLink>
@@ -233,14 +238,22 @@ export default function PcNavbar({ role }: NavbarProps) {
 								</NavigationMenuContent>
 							</NavigationMenuItem>
 							<NavigationMenuItem>
-								<Link href="/products?category=MOBILES" legacyBehavior passHref>
+								<Link
+									href={`${BASE_URL}/products?category=MOBILES`}
+									legacyBehavior
+									passHref
+								>
 									<NavigationMenuLink className={navigationMenuTriggerStyle()}>
 										Mobiles
 									</NavigationMenuLink>
 								</Link>
 							</NavigationMenuItem>
 							<NavigationMenuItem>
-								<Link href="/products?category=OTHERS" legacyBehavior passHref>
+								<Link
+									href={`${BASE_URL}/products?category=OTHERS`}
+									legacyBehavior
+									passHref
+								>
 									<NavigationMenuLink className={navigationMenuTriggerStyle()}>
 										Other
 									</NavigationMenuLink>

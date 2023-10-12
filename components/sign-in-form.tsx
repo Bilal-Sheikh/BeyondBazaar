@@ -12,7 +12,8 @@ import { useRouter } from "next/navigation";
 import SignInOAuthButtons from "./SignInOAuthButtons";
 import { useToast } from "./ui/use-toast";
 import Link from "next/link";
-import { Loader2 } from "lucide-react"
+import { Loader2 } from "lucide-react";
+import { BASE_URL } from "@/config";
 
 interface SignInFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -40,7 +41,7 @@ export function SignInForm({ className, ...props }: SignInFormProps) {
 			if (result.status === "complete") {
 				console.log(result);
 				await setActive({ session: result.createdSessionId });
-				router.push("/");
+				router.push(`${BASE_URL}`);
 				setIsLoading(true);
 			} else {
 				/*Investigate why the login hasn't completed */
@@ -120,7 +121,7 @@ export function SignInForm({ className, ...props }: SignInFormProps) {
 							<SignInOAuthButtons />
 
 							<Link
-								href="/seller-sign-up"
+								href={`${BASE_URL}/seller-sign-up`}
 								className={cn(
 									buttonVariants({ variant: "link" }),
 									"absolute w-max right-1/3 bottom-36 md:left-4 lg:top-8 lg:left-1/2"

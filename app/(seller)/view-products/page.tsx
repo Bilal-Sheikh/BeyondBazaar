@@ -6,18 +6,16 @@ import Loading from "./loading";
 import PaginationControls from "@/components/PaginationControls";
 import { Button } from "@/components/ui/button";
 import { Searchbar } from "@/components/Searchbar";
+import { BASE_URL } from "@/config";
 
 async function getProducts() {
 	const user = await currentUser();
 	try {
-		const { data } = await axios.get(
-			"http://localhost:3000/api/view-products",
-			{
-				headers: {
-					ClerkId: user?.id,
-				},
-			}
-		);
+		const { data } = await axios.get(`${BASE_URL}/api/view-products`, {
+			headers: {
+				ClerkId: user?.id,
+			},
+		});
 		return data;
 	} catch (error) {
 		console.log("ERRORS :::::::::::::::::", error);
@@ -58,9 +56,11 @@ export default async function page({
 			) : (
 				<div className="w-full">
 					<div className="flex flex-wrap justify-center w-96 px-14 pt-5 md:flex md:flex-wrap md:justify-center md:items-center md:w-full md:px-40 md:pt-5">
-
 						<div className="w-full py-5 md:px-14">
-							<Searchbar products={products} path={"/view-products"} />
+							<Searchbar
+								products={products}
+								path={`${BASE_URL}/view-products`}
+							/>
 						</div>
 					</div>
 
@@ -72,7 +72,7 @@ export default async function page({
 					</React.Suspense>
 
 					<PaginationControls
-						path="/view-products"
+						path={`${BASE_URL}/view-products`}
 						hasPrevPage={start > 0}
 						hasNextPage={end < totalProducts}
 						totalProducts={totalProducts}

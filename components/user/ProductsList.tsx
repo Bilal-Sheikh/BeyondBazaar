@@ -55,6 +55,7 @@ import { Product } from "@prisma/client";
 import { useToast } from "../ui/use-toast";
 import AddToCartButton from "./AddToCartButton";
 import Loading from "@/app/(user)/products/loading";
+import { BASE_URL } from "@/config";
 
 export default function ProductsList({ products }: { products: Product }) {
 	return (
@@ -64,7 +65,9 @@ export default function ProductsList({ products }: { products: Product }) {
 					<CardHeader>
 						<div className="flex justify-between items-center">
 							<div>
-								<Link href={`/products/?category=${product.category}`}>
+								<Link
+									href={`${BASE_URL}/products/?category=${product.category}`}
+								>
 									<Badge className="cursor-pointer">{product.category}</Badge>
 								</Link>
 							</div>
@@ -76,7 +79,7 @@ export default function ProductsList({ products }: { products: Product }) {
 						</div>
 
 						{/* PC */}
-						<Link href={`/products/${product.id}`}>
+						<Link href={`${BASE_URL}/products/${product.id}`}>
 							<div className="hidden lg:flex lg:flex-col lg:space-y-1.5 cursor-pointer">
 								<AspectRatio ratio={16 / 9}>
 									<Image
@@ -96,19 +99,21 @@ export default function ProductsList({ products }: { products: Product }) {
 						<div className="flex flex-auto w-full gap-4">
 							<div className="flex flex-auto space-y-1.5 lg:hidden w-1/4">
 								<AspectRatio ratio={1 / 1}>
-									<Image
-										alt="product"
-										src={product.imageUrl}
-										className="rounded-xl"
-										fill
-										objectFit="contain"
-										priority={true}
-									/>
+									<Link href={`${BASE_URL}/products/${product.id}`}>
+										<Image
+											alt="product"
+											src={product.imageUrl}
+											className="rounded-xl"
+											fill
+											objectFit="contain"
+											priority={true}
+										/>
+									</Link>
 								</AspectRatio>
 							</div>
 
 							<div className="grid w-full h-16 top-0 gap-4">
-								<Link href={`/products/${product.id}`} target="_blank">
+								<Link href={`${BASE_URL}/products/${product.id}`}>
 									<CardTitle className="cursor-pointer line-clamp-2 text-lg hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0">
 										{product.name}
 									</CardTitle>
