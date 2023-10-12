@@ -1,8 +1,20 @@
 "use client";
 
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import React from "react";
+import axios from "axios";
+import Link from "next/link";
+import Image from "next/image";
+import { cn } from "@/lib/utils";
+import { BASE_URL } from "@/config";
+import { useUser } from "@clerk/nextjs";
+import { useToast } from "../ui/use-toast";
+import { Separator } from "../ui/separator";
+import { useRouter } from "next/navigation";
 import { Label } from "@/components/ui/label";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Loader2, Minus, Plus, ShoppingCart, Trash } from "lucide-react";
 import {
 	Sheet,
 	SheetClose,
@@ -13,42 +25,14 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet";
-import { prisma } from "@/lib/db";
-import { currentUser, useUser } from "@clerk/nextjs";
-import {
-	Delete,
-	Loader2,
-	Minus,
-	Plus,
-	ShoppingCart,
-	Trash,
-} from "lucide-react";
-import Image from "next/image";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
-import React from "react";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useToast } from "../ui/use-toast";
-import { Separator } from "../ui/separator";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { BASE_URL } from "@/config";
 
 export function Cart() {
+	const router = useRouter();
+	const { toast } = useToast();
 	const { isSignedIn, user } = useUser();
 	const [cartItems, setCartItems] = React.useState([]);
 	const [updateState, setUpdateState] = React.useState(0);
 	const [isLoading, setIsLoading] = React.useState(false);
-	const { toast } = useToast();
-	const router = useRouter();
 
 	React.useEffect(() => {
 		if (isSignedIn) {
@@ -64,14 +48,14 @@ export function Cart() {
 					});
 			} catch (error) {
 				console.log(
-					"ERROR IN GETIING CART ::::::::::::::::::::::::::::::",
+					"ERROR IN AXIOS components/user/Cart.tsx /api/get-cart ::::::::::::::::::::::::::::::",
 					error
 				);
 			}
 		}
 	}, [user, updateState]);
 
-	console.log("CART ITEMS::::::::::::::::::::::::::::::::::", cartItems);
+	// console.log("CART ITEMS::::::::::::::::::::::::::::::::::", cartItems);
 
 	const handlePlusClick = (item) => {
 		const cartId = item.id;
@@ -117,7 +101,7 @@ export function Cart() {
 			axios
 				.delete(`${BASE_URL}/api/update-cart`, {
 					headers: {
-						ClerkId: user.id,
+						ClerkId: user?.id,
 						ProductId: productId,
 						CartId: cartId,
 					},
@@ -138,14 +122,13 @@ export function Cart() {
 	const updateCartQuantity = async (cartId, productId, newQuantity) => {
 		try {
 			setIsLoading(true);
-
 			axios
 				.post(
 					`${BASE_URL}/api/update-cart`,
 					{},
 					{
 						headers: {
-							ClerkId: user.id,
+							ClerkId: user?.id,
 							CartId: cartId,
 							ProductId: productId,
 							Quantity: newQuantity,
@@ -159,7 +142,7 @@ export function Cart() {
 				});
 		} catch (error) {
 			console.log(
-				"ERROR in AXIOS /api/cart-quantity:::::::::::::::::::::::::::::::::::",
+				"ERROR in AXIOS /api/update-cart:::::::::::::::::::::::::::::::::::",
 				error
 			);
 		}

@@ -1,10 +1,9 @@
 import * as React from "react";
-import ProductsList from "@/components/seller/ProductsList";
 import axios from "axios";
-import { currentUser } from "@clerk/nextjs";
 import Loading from "./loading";
+import ProductsList from "@/components/seller/ProductsList";
 import PaginationControls from "@/components/PaginationControls";
-import { Button } from "@/components/ui/button";
+import { currentUser } from "@clerk/nextjs";
 import { Searchbar } from "@/components/Searchbar";
 import { BASE_URL } from "@/config";
 
@@ -18,7 +17,7 @@ async function getProducts() {
 		});
 		return data;
 	} catch (error) {
-		console.log("ERRORS :::::::::::::::::", error);
+		// console.log("ERRORS :::::::::::::::::", error);
 	}
 }
 

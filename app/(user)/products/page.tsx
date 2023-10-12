@@ -1,17 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { prisma } from "@/lib/db";
 import React from "react";
 import Loading from "./loading";
+import Sort from "@/components/Sort";
 import ProductsList from "@/components/user/ProductsList";
 import PaginationControls from "@/components/PaginationControls";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import Sort from "@/components/Sort";
+import { prisma } from "@/lib/db";
 import { BASE_URL } from "@/config";
 
 export default async function products({
@@ -19,15 +11,10 @@ export default async function products({
 }: {
 	searchParams: { [key: string]: string | string[] | undefined };
 }) {
-	let products;
-	let totalProducts;
-
 	const page = searchParams["page"] ?? "1";
 	const per_page = searchParams["per_page"] ?? "15";
 	const category = searchParams["category"] || "";
 	let sort = searchParams["sort"] || "createdAt";
-	// const price = searchParams["price"];
-	// const date = searchParams["date"];
 
 	// console.log("SEARCH PARAMS CATEGORY:::::::::::::::::::::::::::::", category);
 	// console.log("SEARCH PARAMS PRICE :::::::::::::::::::::::::::::", price);
@@ -64,10 +51,7 @@ export default async function products({
 
 			return data;
 		} catch (error) {
-			console.log(
-				"ERRORS in getAllProducts() :::::::::::::::::::::::::::::::::::::::",
-				error
-			);
+			console.log("ERRORS in getAllProducts() ::::::::::::::::::::", error);
 		}
 	}
 
@@ -77,19 +61,21 @@ export default async function products({
 
 			return data;
 		} catch (error) {
-			console.log(
-				"ERRORS in getProductsCount() :::::::::::::::::::::::::::::::::::::::",
-				error
-			);
+			console.log("ERRORS in getProductsCount()::::::::::::::::::::", error);
 		}
 	}
 
-	products = await getAllProducts();
-	totalProducts = await getProductsCount();
+	const products = await getAllProducts();
+	const totalProducts = await getProductsCount();
 
-	return (
-		<div className="flex flex-col justify-center items-center">
-			{products.length === 0 ? (
+	if (
+		products === undefined ||
+		products.length === 0 ||
+		totalProducts === undefined ||
+		totalProducts === 0
+	) {
+		return (
+			<div className="flex flex-col justify-center items-center">
 				<div className="flex justify-center items-center h-screen">
 					<div className="text-center">
 						<h1 className="text-2xl font-semibold tracking-tight lg:text-5xl">
@@ -97,26 +83,30 @@ export default async function products({
 						</h1>
 					</div>
 				</div>
-			) : (
-				<div>
-					<div className="flex flex-wrap justify-center w-96 px-14 py-5 md:items-center md:w-10/12 md:px-20 md:pt-5">
-						<div className="flex justify-start w-full gap-10">
-							<Sort />
-						</div>
+			</div>
+		);
+	}
+
+	return (
+		<div className="flex flex-col justify-center items-center">
+			<div>
+				<div className="flex flex-wrap justify-center w-96 px-14 py-5 md:items-center md:w-10/12 md:px-20 md:pt-5">
+					<div className="flex justify-start w-full gap-10">
+						<Sort />
 					</div>
-
-					<React.Suspense fallback={<Loading />}>
-						<ProductsList products={products} />
-					</React.Suspense>
-
-					<PaginationControls
-						path= {`${BASE_URL}/products`}
-						hasPrevPage={initialSkip > 0}
-						hasNextPage={end < totalProducts}
-						totalProducts={totalProducts}
-					/>
 				</div>
-			)}
+
+				<React.Suspense fallback={<Loading />}>
+					<ProductsList products={products} />
+				</React.Suspense>
+
+				<PaginationControls
+					path={`${BASE_URL}/products`}
+					hasPrevPage={initialSkip > 0}
+					hasNextPage={end < totalProducts}
+					totalProducts={totalProducts}
+				/>
+			</div>
 		</div>
 	);
 }

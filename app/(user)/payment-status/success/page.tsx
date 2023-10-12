@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { History } from "lucide-react";
-import Link from "next/link";
 import { BASE_URL } from "@/config";
 
 export default function Success() {
@@ -18,16 +18,16 @@ export default function Success() {
 
 	if (productId) {
 		useEffect(() => {
-			console.log("GOT PRODUCT ID::::::::::::::::::::::::::::::::", productId);
+			// console.log("GOT PRODUCT ID::::::::::::::::::::::::::::::::", productId);
 			try {
 				axios
 					.post(
 						`${BASE_URL}/api/checkout/buy-now`,
 						{},
-						{ headers: { UserClerkId: user.id, ProductId: productId } }
+						{ headers: { UserClerkId: user?.id, ProductId: productId } }
 					)
 					.then((res) => {
-						console.log("CHECKOUT SUCCESSFULL::::::::::::::::::::::::::::");
+						// console.log("CHECKOUT SUCCESSFULL::::::::::::::::::::::::::::");
 					});
 			} catch (error) {
 				console.log(
@@ -38,16 +38,16 @@ export default function Success() {
 		}, []);
 	} else {
 		useEffect(() => {
-			console.log("GOT paymentId orderId::::::::::::::::", paymentId, orderId);
+			// console.log("GOT paymentId orderId::::::::::::::::", paymentId, orderId);
 			try {
 				axios
 					.post(
 						`${BASE_URL}/api/checkout`,
 						{},
-						{ headers: { UserClerkId: user.id } }
+						{ headers: { UserClerkId: user?.id } }
 					)
 					.then((res) => {
-						console.log("CHECKOUT SUCCESSFULL::::::::::::::::::::::::::::");
+						// console.log("CHECKOUT SUCCESSFULL::::::::::::::::::::::::::::");
 					});
 			} catch (error) {
 				console.log(

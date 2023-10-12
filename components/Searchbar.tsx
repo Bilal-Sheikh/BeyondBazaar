@@ -1,7 +1,10 @@
 "use client";
 
 import * as React from "react";
+import { Button } from "./ui/button";
 import { Search } from "lucide-react";
+import { Product } from "@prisma/client";
+import { useRouter } from "next/navigation";
 import {
 	CommandDialog,
 	CommandEmpty,
@@ -10,17 +13,13 @@ import {
 	CommandItem,
 	CommandList,
 	CommandSeparator,
-	CommandShortcut,
 } from "@/components/ui/command";
-import { Button } from "./ui/button";
-import { Product } from "@prisma/client";
-import { useRouter } from "next/navigation";
 
 export function Searchbar({
 	products,
 	path,
 }: {
-	products: Array<Product>;
+	products: Product[];
 	path: string;
 }) {
 	const router = useRouter();
@@ -44,6 +43,7 @@ export function Searchbar({
 
 	// console.log("PRODCUTS BY CATEGORIES::::::::::::::", categorizedProducts);
 
+	// Open the searchbar on `Ctrl + k`
 	React.useEffect(() => {
 		const down = (e: KeyboardEvent) => {
 			if (e.key === "k" && (e.metaKey || e.ctrlKey)) {

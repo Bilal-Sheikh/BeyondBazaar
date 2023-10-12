@@ -1,5 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
-import { currentUser } from "@clerk/nextjs";
+import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { headers } from "next/headers";
 
@@ -8,12 +7,15 @@ export async function POST() {
 	const userClerkId = headersList.get("UserClerkId");
 	const productId = headersList.get("ProductId");
 
-	console.log("(API) USER ID :::::::::::::::::::::::", userClerkId);
+	// console.log("(API) USER ID :::::::::::::::::::::::", userClerkId);
 	if (!userClerkId) {
-		return NextResponse.json({
-			success: false,
-			message: "(API) Clerk id not found in headers",
-		});
+		return NextResponse.json(
+			{
+				success: false,
+				message: "(API) Clerk id not found in headers",
+			},
+			{ status: 400 }
+		);
 	}
 
 	// return NextResponse.json({ success: "REACHED API VIEW PRODUCTS" });
@@ -28,9 +30,9 @@ export async function POST() {
 					stockQuantity: { decrement: 1 },
 				},
 			})
-			.then(() =>
-				console.log("(API) UPDATED PRODUCT:::::::::::::::::::::::::::::::")
-			)
+			.then(() => {
+				// console.log("(API) UPDATED PRODUCT:::::::::::::::::::::::::::::::");
+			})
 			.catch((error) => {
 				console.log(
 					"ERROR IN PRISMA app/api/(user)/checkout/buy-now/route.ts || prisma.product.updateMany ",
@@ -46,7 +48,9 @@ export async function POST() {
 					quantity: 1,
 				},
 			})
-			.then(() => console.log("(API) CREATED PURCHASE HISTORY:::::::::::::::"))
+			.then(() => {
+				// console.log("(API) CREATED PURCHASE HISTORY:::::::::::::::");
+			})
 			.catch((error) => {
 				console.log(
 					"(API) ERROR IN PRISMA app/api/(user)/checkout/buy-now/route.ts || prisma.purchaseHistory.createMany",
@@ -54,19 +58,25 @@ export async function POST() {
 				);
 			});
 
-		return NextResponse.json({
-			success: true,
-			message: "(API) Successfully checked out.",
-		});
+		return NextResponse.json(
+			{
+				success: true,
+				message: "(API) Successfully checked out.",
+			},
+			{ status: 200 }
+		);
 	} catch (error) {
 		console.log(
 			"(API) ERROR IN app/api/(user)/checkout/buy-now/route.ts:::::::::::::::::::::::::::::::::::",
 			error
 		);
 
-		return NextResponse.json({
-			success: false,
-			message: "(API) Error in checkout.",
-		});
+		return NextResponse.json(
+			{
+				success: false,
+				message: "(API) Error in checkout.",
+			},
+			{ status: 500 }
+		);
 	}
 }

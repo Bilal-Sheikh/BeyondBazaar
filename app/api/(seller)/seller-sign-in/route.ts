@@ -5,11 +5,28 @@ export async function POST(request: Request) {
 	const { role, userId } = await request.json();
 	console.log("ROLE AND USERID ::::::::::::::::", role, userId);
 
-	await clerkClient.users.updateUserMetadata(userId, {
-		publicMetadata: {
-			role,
-		},
-	});
+	try {
+		await clerkClient.users.updateUserMetadata(userId, {
+			publicMetadata: {
+				role,
+			},
+		});
+		return NextResponse.json(
+			{
+				success: true,
+				message: "Successfully created seller account",
+			},
+			{ status: 200 }
+		);
+	} catch (error) {
+		console.log("ERROR IN app/api/(seller)/seller-sign-in/route.ts", error);
+	}
 
-	return NextResponse.json({ success: true });
+	return NextResponse.json(
+		{
+			success: true,
+			message: "Error in creating seller account",
+		},
+		{ status: 500 }
+	);
 }

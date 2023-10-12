@@ -1,15 +1,22 @@
 "use client";
 
-import React from "react";
-import { Suspense } from "react";
-import { useRouter } from "next/navigation";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
 import { BASE_URL } from "@/config";
+import { useState } from "react";
 
-export default function BuyProduct({ clerkId, grandTotal, productId }) {
-	const [isLoading, setIsLoading] = React.useState(false);
+export default function BuyProduct({
+	clerkId,
+	grandTotal,
+	productId,
+}: {
+	clerkId: string;
+	grandTotal: number;
+	productId: string | null;
+}) {
+	const [isLoading, setIsLoading] = useState(false);
 	const router = useRouter();
 
 	const handlePayment = async () => {
@@ -24,7 +31,7 @@ export default function BuyProduct({ clerkId, grandTotal, productId }) {
 			{ headers: { ClerkId: clerkId } }
 		);
 
-		console.log("ORDER ID::::::::::::::::::::::::::", data.order.id);
+		// console.log("ORDER ID::::::::::::::::::::::::::", data.order.id);
 
 		const options = {
 			key: KEY_ID,
@@ -32,8 +39,8 @@ export default function BuyProduct({ clerkId, grandTotal, productId }) {
 			currency: data.order.currency,
 			amount: data.order.amount,
 			order_id: data.order.id,
-			description: "Test payment for Beyond Bazzar",
-			handler: async function (response) {
+			description: "Payment for Beyond Bazzar",
+			handler: async function (response: any) {
 				// console.log("RAZORPAY HANDLER RESPONSE::::::::::::::", response);
 
 				const { data } = await axios.post(
@@ -79,7 +86,7 @@ export default function BuyProduct({ clerkId, grandTotal, productId }) {
 		const paymentObject = new window.Razorpay(options);
 		paymentObject.open();
 
-		paymentObject.on("payment.failed", function (response) {
+		paymentObject.on("payment.failed", function (response: any) {
 			alert("Payment failed. Please try again. Contact support for help");
 		});
 	};

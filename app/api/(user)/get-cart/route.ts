@@ -1,5 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
-import { currentUser } from "@clerk/nextjs";
+import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { headers } from "next/headers";
 
@@ -8,14 +7,16 @@ export async function GET() {
 	const clerkId = headersList.get("ClerkId");
 
 	if (!clerkId) {
-		return NextResponse.json({
-			success: false,
-			message: "(API) Clerk id not found in headers",
-		});
+		return NextResponse.json(
+			{
+				success: false,
+				message: "(API) Clerk id not found in headers",
+			},
+			{ status: 400 }
+		);
 	}
 
-	console.log("(API) USER ID :::::::::::::::::::::::", clerkId);
-
+	// console.log("(API) USER ID :::::::::::::::::::::::", clerkId);
 	// return NextResponse.json({ success: "REACHED API GET CART" });
 
 	try {
@@ -29,22 +30,28 @@ export async function GET() {
 				},
 			},
 		});
-        // console.log("(API) CART::::::::::::::::::::::", cart);
-        
-		return NextResponse.json({
-			success: true,
-			message: "(API) Successfully retrived cart items",
-			cart: cart,
-		});
+		// console.log("(API) CART::::::::::::::::::::::", cart);
+
+		return NextResponse.json(
+			{
+				success: true,
+				message: "(API) Successfully retrived cart items",
+				cart: cart,
+			},
+			{ status: 200 }
+		);
 	} catch (error) {
 		console.log(
 			"ERROR IN PRISMA app/api/(user)/get-cart/:::::::::::::::::::::::::::::::::::",
 			error
 		);
 
-		return NextResponse.json({
-			success: false,
-			message: "(API) Error in app/api/(user)/get-cart/route.ts.",
-		});
+		return NextResponse.json(
+			{
+				success: false,
+				message: "(API) Error in app/api/(user)/get-cart/route.ts.",
+			},
+			{ status: 500 }
+		);
 	}
 }

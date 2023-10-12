@@ -1,15 +1,10 @@
 "use client";
 
 import React from "react";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import { prisma } from "@/lib/db";
-import { Button, buttonVariants } from "./ui/button";
+import { cn } from "@/lib/utils";
+import { BASE_URL } from "@/config";
+import { ArrowDownUp } from "lucide-react";
+import { buttonVariants } from "./ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
 	DropdownMenu,
@@ -19,9 +14,6 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
-import { ArrowDownUp } from "lucide-react";
-import { BASE_URL } from "@/config";
 
 export default function Sort() {
 	const router = useRouter();

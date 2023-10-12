@@ -1,26 +1,27 @@
-import { NextRequest, NextResponse } from "next/server";
-import { currentUser } from "@clerk/nextjs";
+import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { headers } from "next/headers";
-import { error } from "console";
 
 export async function POST() {
 	const headersList = headers();
 	const userClerkId = headersList.get("UserClerkId");
 
-	console.log("(API) USER ID :::::::::::::::::::::::", userClerkId);
+	// console.log("(API) USER ID :::::::::::::::::::::::", userClerkId);
 
 	if (!userClerkId) {
-		return NextResponse.json({
-			success: false,
-			message: "(API) Clerk id not found in headers",
-		});
+		return NextResponse.json(
+			{
+				success: false,
+				message: "(API) Clerk id not found in headers",
+			},
+			{ status: 400 }
+		);
 	}
 
 	// return NextResponse.json({ success: "REACHED API VIEW PRODUCTS" });
 
 	try {
-		console.log("(API) DOING CART QUERIES:::::::::::::::::::::::::::::::");
+		// console.log("(API) DOING CART QUERIES:::::::::::::::::::::::::::::::");
 		const { cart } = await prisma.user.findUnique({
 			where: { clerkId: userClerkId },
 			include: {
@@ -33,13 +34,13 @@ export async function POST() {
 				},
 			},
 		});
-		console.log("(API) GOT CART DETAILS:::::::::::::::::::::::::::::", cart);
+		// console.log("(API) GOT CART DETAILS:::::::::::::::::::::::::::::", cart);
 
 		const productsId = cart.map((product) => product.productId);
-		console.log("(API) PRODUCTS ID:::::::::::::::::::::::::::::", productsId);
+		// console.log("(API) PRODUCTS ID:::::::::::::::::::::::::::::", productsId);
 
 		const productQuantities = cart.map((product) => product.quantity);
-		console.log("(API) PRODUCT QUANTITIES:::::::::::::::::", productQuantities);
+		// console.log("(API) PRODUCT QUANTITIES:::::::::::::::::", productQuantities);
 
 		await prisma.purchaseHistory
 			.createMany({
@@ -49,7 +50,9 @@ export async function POST() {
 					quantity: item.quantity,
 				})),
 			})
-			.then(() => console.log("(API) CREATED PURCHASE HISTORY:::::::::::::::"))
+			.then(() => {
+				// console.log("(API) CREATED PURCHASE HISTORY:::::::::::::::");
+			})
 			.catch((error) => {
 				console.log(
 					"(API) ERROR IN PRISMA app/api/(user)/checkout/route.ts || prisma.purchaseHistory.createMany",
@@ -66,9 +69,9 @@ export async function POST() {
 						stockQuantity: { decrement: Number(productQuantities[i]) },
 					},
 				})
-				.then(() =>
-					console.log("(API) UPDATED SALES AND STOCK QUANTITY:::::::::::::::")
-				)
+				.then(() => {
+					// console.log("(API) UPDATED SALES AND STOCK QUANTITY:::::::::::::::");
+				})
 				.catch((error) => {
 					console.log(
 						"ERROR IN PRISMA app/api/(user)/checkout/route.ts || prisma.product.updateMany ",
@@ -81,9 +84,9 @@ export async function POST() {
 			.deleteMany({
 				where: { userId: userClerkId },
 			})
-			.then(() =>
-				console.log("(API) DELETED CART ITEMS:::::::::::::::::::::::::::::")
-			)
+			.then(() => {
+				// console.log("(API) DELETED CART ITEMS:::::::::::::::::::::::::::::");
+			})
 			.catch((error) => {
 				console.log(
 					"ERROR IN PRISMA app/api/(user)/checkout/route.ts || prisma.cartItem.deleteMany",
@@ -91,19 +94,25 @@ export async function POST() {
 				);
 			});
 
-		return NextResponse.json({
-			success: true,
-			message: "(API) Successfully checked out.",
-		});
+		return NextResponse.json(
+			{
+				success: true,
+				message: "(API) Successfully checked out.",
+			},
+			{ status: 200 }
+		);
 	} catch (error) {
 		console.log(
 			"ERROR IN API app/api/(user)/checkout/route.ts:::::::::::::::::::::::::::::::::::",
 			error
 		);
 
-		return NextResponse.json({
-			success: false,
-			message: "(API) Error in checkout.",
-		});
+		return NextResponse.json(
+			{
+				success: false,
+				message: "(API) Error in checkout.",
+			},
+			{ status: 500 }
+		);
 	}
 }

@@ -2,6 +2,7 @@ import { prisma } from "@/lib/db";
 import { headers } from "next/headers";
 import { Webhook } from "svix";
 import { UserWebhookEvent } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || "";
 if (!WEBHOOK_SECRET) {
@@ -56,10 +57,12 @@ export async function POST(req: Request) {
 			"svix-signature": svix_signature,
 		}) as Event;
 	} catch (err) {
-		console.error("Error verifying webhook:", err);
-		return new Response("Error occured", {
-			status: 400,
-		});
+		console.error("Error verifying webhook:::::::::::::::::::::::", err);
+
+		return NextResponse.json(
+			{ success: false, message: "Error occured" },
+			{ status: 400 }
+		);
 	}
 
 	// Get the ID and type
@@ -70,18 +73,18 @@ export async function POST(req: Request) {
 	const email = evt.data.email_addresses[0]?.email_address;
 	const role = public_metadata?.role;
 
-	console.log("EVENT DATA ::::::::", evt.data);
-	console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
-	console.log("EVENT TYPE ::::::::: ", eventType);
-	console.log("EMAIL ADDRESSES :::::: ", email);
-	console.log("ROLE FROM EVT.DATA :::::::: ", role);
+	// console.log("EVENT DATA ::::::::", evt.data);
+	// console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
+	// console.log("EVENT TYPE ::::::::: ", eventType);
+	// console.log("EMAIL ADDRESSES :::::: ", email);
+	// console.log("ROLE FROM EVT.DATA :::::::: ", role);
 
 	if (
 		String(eventType) === "user.created" ||
 		String(eventType) === "user.updated"
 	) {
 		try {
-			console.log("ADDING IN DATABASE::::::::::::::::");
+			// console.log("ADDING IN DATABASE::::::::::::::::");
 			await prisma.user.upsert({
 				where: { clerkId: id },
 				create: {
@@ -99,13 +102,21 @@ export async function POST(req: Request) {
 					attributes,
 				},
 			});
+
+			return NextResponse.json(
+				{ success: true, message: "Successfully added user" },
+				{ status: 201 }
+			);
 		} catch (error) {
 			console.log(
 				"ERROR IN app/api/webhook/route.ts::::::::::::::::::::::::::::::::::::::",
 				error
 			);
+
+			return NextResponse.json(
+				{ success: false, message: "Error adding user" },
+				{ status: 500 }
+			);
 		}
 	}
-
-	return new Response("", { status: 201 });
 }

@@ -1,36 +1,25 @@
 "use client";
 
-import axios from "axios";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import * as React from "react";
-import { Button } from "@/components/ui/button";
+import axios from "axios";
+import Link from "next/link";
+import Image from "next/image";
+import imgPlaceholder from "@/public/image placeholder.gif";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { useRouter } from "next/navigation";
+import { Product } from "@prisma/client";
+import { BASE_URL } from "@/config";
+import { useToast } from "../ui/use-toast";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { MoreVertical, Pencil, Trash } from "lucide-react";
 import {
 	Card,
 	CardContent,
 	CardDescription,
-	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import { currentUser } from "@clerk/nextjs";
-import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
-import {
-	Divide,
-	MoreHorizontal,
-	MoreVertical,
-	Pencil,
-	Trash,
-} from "lucide-react";
 import {
 	DropdownMenuLabel,
 	DropdownMenu,
@@ -50,24 +39,19 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { Product } from "@prisma/client";
-import { BASE_URL } from "@/config";
-import { useToast } from "../ui/use-toast";
 
 export default function ProductsList({
 	productsEntries,
 	sellerId,
 }: {
-	productsEntries: Product;
+	productsEntries: Product[];
 	sellerId: string;
 }) {
 	const router = useRouter();
 	const { toast } = useToast();
 
-	const handleDelete = async (productId) => {
-		console.log("DELETION STARTED FOR PRODUCT :::::::::::::::::::", productId);
+	const handleDelete = async (productId: number) => {
+		// console.log("DELETION STARTED FOR PRODUCT :::::::::::::::::::", productId);
 		try {
 			const { data } = await axios.delete(`${BASE_URL}/api/delete-product`, {
 				headers: {
@@ -77,7 +61,7 @@ export default function ProductsList({
 			});
 
 			if (data.success === true) {
-				console.log("PRODUCT DELETED :::::::::::::::::::", data.message);
+				// console.log("PRODUCT DELETED :::::::::::::::::::", data.message);
 				router.refresh();
 				toast({
 					variant: "default",
@@ -86,7 +70,7 @@ export default function ProductsList({
 					duration: 3000,
 				});
 			} else {
-				console.log("PRODUCT DELETION FAILED ::::::::::::::", data.message);
+				// console.log("PRODUCT DELETION FAILED ::::::::::::::", data.message);
 				router.refresh();
 				toast({
 					variant: "destructive",
@@ -96,7 +80,10 @@ export default function ProductsList({
 				});
 			}
 		} catch (error) {
-			console.log("ERRORS :::::::::::::::::", error);
+			console.log(
+				"ERRORS IN AXIOS DELETE components/seller/ProductsList.tsx  :::::::::::::::::",
+				error
+			);
 		}
 	};
 
@@ -160,7 +147,7 @@ export default function ProductsList({
 							<AspectRatio ratio={1 / 1}>
 								<Image
 									alt="product"
-									src={product.imageUrl}
+									src={product.imageUrl || imgPlaceholder}
 									className="rounded-xl"
 									fill
 									priority={true}
@@ -192,12 +179,6 @@ export default function ProductsList({
 							</div>
 						</div>
 					</CardContent>
-					{/* <CardFooter>
-						<p className="text-sm text-muted-foreground">
-							Product by: <br />
-							{seller}
-						</p>
-					</CardFooter> */}
 				</Card>
 			))}
 		</div>

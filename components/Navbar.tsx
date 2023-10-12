@@ -1,8 +1,8 @@
 import React from "react";
 import PcNavbar from "./PcNavbar";
 import MobileNavbar from "./MobileNavbar";
-import { currentUser } from "@clerk/nextjs";
 import RightSideNav from "./RightSideNav";
+import { currentUser } from "@clerk/nextjs";
 
 export default async function Navbar() {
 	const user = await currentUser();

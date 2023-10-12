@@ -1,46 +1,19 @@
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import BuyProduct from "@/components/razorpay/BuyProduct";
 import { prisma } from "@/lib/db";
 import { currentUser } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
-import React from "react";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-	Sheet,
-	SheetClose,
-	SheetContent,
-	SheetDescription,
-	SheetFooter,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from "@/components/ui/sheet";
-import {
-	Delete,
-	Loader2,
-	Minus,
-	Plus,
-	ShoppingCart,
-	Trash,
-} from "lucide-react";
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { BASE_URL } from "@/config";
+import { Separator } from "@/components/ui/separator";
 import {
 	Card,
 	CardContent,
-	CardDescription,
 	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { cookies } from "next/headers";
-import { Separator } from "@/components/ui/separator";
-import BuyProduct from "@/components/razorpay/BuyProduct";
-import { BASE_URL } from "@/config";
 
 async function getProduct(productId: number) {
 	try {
@@ -66,12 +39,25 @@ export default async function BuyNowButton({
 	const user = await currentUser();
 
 	const product = await getProduct(Number(productId));
-	console.log("PRODUCT::::::::::::::::::::::::::::::::::::::::::::::", product);
+	// console.log("PRODUCT::::::::::::::::::::::::::::::::::::::::::::::", product);
+	if (product == null || product == undefined) {
+		return (
+			<div className="flex-col md:flex h-screen">
+				<div className="flex-1 space-y-4 p-8 pt-6">
+					<div className="py-32">
+						<p className="text-center text-base lg:text-4xl font-bold tracking-tight transition-colors">
+							Error fetching product
+						</p>
+					</div>
+				</div>
+			</div>
+		);
+	}
 
 	const grandTotal = product.price + 30;
-	console.log("GRAND TOTAL ::::::::::::::::::::::::::::::::::::", grandTotal);
+	// console.log("GRAND TOTAL ::::::::::::::::::::::::::::::::::::", grandTotal);
 
-	console.log("PRODUCTS ID:::::::::::::::::::::::::::::", productId);
+	// console.log("PRODUCTS ID:::::::::::::::::::::::::::::", productId);
 
 	return (
 		<div className="pt-10 px-5 w-full h-full">

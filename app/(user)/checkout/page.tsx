@@ -1,58 +1,28 @@
+import React from "react";
+import Loading from "./loading";
+import Image from "next/image";
+import Link from "next/link";
+import BuyProduct from "@/components/razorpay/BuyProduct";
+import { Info } from "lucide-react";
+import { currentUser } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
+import { BASE_URL } from "@/config";
+import { Separator } from "@/components/ui/separator";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { prisma } from "@/lib/db";
-import { currentUser } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
-import React from "react";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-	Sheet,
-	SheetClose,
-	SheetContent,
-	SheetDescription,
-	SheetFooter,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from "@/components/ui/sheet";
-import {
-	Delete,
-	Info,
-	Loader2,
-	Minus,
-	Plus,
-	ShoppingCart,
-	Target,
-	Trash,
-} from "lucide-react";
-import Image from "next/image";
 import {
 	Card,
 	CardContent,
-	CardDescription,
 	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { cookies } from "next/headers";
-import { Separator } from "@/components/ui/separator";
-import Loading from "./loading";
-import PaymentButton from "@/components/user/PaymentButton";
-import BuyProduct from "@/components/razorpay/BuyProduct";
-import { BASE_URL } from "@/config";
 
-async function getData(clerkId) {
+async function getData(clerkId: string) {
 	try {
 		const res = await fetch(`${BASE_URL}/api/get-cart`, {
 			headers: { ClerkId: clerkId },
@@ -71,7 +41,7 @@ export default async function Checkout() {
 	const user = await currentUser();
 
 	const { cart } = await getData(user.id);
-	console.log("CHECKOUTT ITEMS :::::::::::::::::::::::::::::::::", cart);
+	// console.log("CHECKOUTT ITEMS :::::::::::::::::::::::::::::::::", cart);
 
 	const grandTotal =
 		cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0) +
@@ -79,13 +49,13 @@ export default async function Checkout() {
 		(cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0) +
 			30) *
 			0.1;
-	console.log("GRAND TOTAL ::::::::::::::::::::::::::::::::::::", grandTotal);
+	// console.log("GRAND TOTAL ::::::::::::::::::::::::::::::::::::", grandTotal);
 
 	const productsId = cart.map((product) => product.productId);
-	console.log("PRODUCTS ID:::::::::::::::::::::::::::::", productsId);
+	// console.log("PRODUCTS ID:::::::::::::::::::::::::::::", productsId);
 
 	const productQuantities = cart.map((product) => product.quantity);
-	console.log("PRODUCT QUANTITIES:::::::::::::::::", productQuantities);
+	// console.log("PRODUCT QUANTITIES:::::::::::::::::", productQuantities);
 
 	return (
 		// <Loading />
@@ -120,7 +90,8 @@ export default async function Checkout() {
 
 												<CardTitle className="w-full">
 													<Link
-														href={`${BASE_URL}/products/${item.product.id}`} target="_blank"
+														href={`${BASE_URL}/products/${item.product.id}`}
+														target="_blank"
 													>
 														<p className="hover:text-blue-500 cursor-pointer pt-2 md:pt-0 line-clamp-1 text-sm md:text-xl tracking-tight transition-colors">
 															{item.product.name}

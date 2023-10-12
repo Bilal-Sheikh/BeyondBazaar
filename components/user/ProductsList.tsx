@@ -57,7 +57,7 @@ import AddToCartButton from "./AddToCartButton";
 import Loading from "@/app/(user)/products/loading";
 import { BASE_URL } from "@/config";
 
-export default function ProductsList({ products }: { products: Product }) {
+export default function ProductsList({ products }: { products: Product[] }) {
 	return (
 		<div className="flex flex-col justify-center items-center mx-4 gap-5 lg:grid lg:grid-cols-3 lg:px-14 lg:gap-10">
 			{products.map((product) => (

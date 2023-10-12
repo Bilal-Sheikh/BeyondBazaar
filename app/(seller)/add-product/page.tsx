@@ -1,9 +1,25 @@
 "use client";
 
-import { Skeleton } from "@/components/ui/skeleton";
+import * as z from "zod";
+import axios from "axios";
+import Link from "next/link";
+import React from "react";
+import Image from "next/image";
+import Loading from "./loading";
 import { OurFileRouter } from "@/app/api/(seller)/uploadthing/core";
 import { useState } from "react";
-import Image from "next/image";
+import { Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { cn } from "@/lib/utils";
+import { useForm } from "react-hook-form";
+import { Textarea } from "@/components/ui/textarea";
+import { UploadDropzone } from "@uploadthing/react";
+import { UploadFileResponse } from "uploadthing/client";
+import { useToast } from "@/components/ui/use-toast";
+import { categories } from "@/lib/categories";
+import { BASE_URL } from "@/config";
 import {
 	Check,
 	ChevronsUpDown,
@@ -14,31 +30,18 @@ import {
 	Smartphone,
 	Trash,
 } from "lucide-react";
-import { Tags, Loader2, Delete } from "lucide-react";
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { cn } from "@/lib/utils";
-import { useForm } from "react-hook-form";
-import { Textarea } from "@/components/ui/textarea";
 import {
 	Command,
 	CommandEmpty,
 	CommandGroup,
 	CommandInput,
 	CommandItem,
-	CommandList,
 } from "@/components/ui/command";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuGroup,
 	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
-	DropdownMenuShortcut,
 	DropdownMenuSub,
 	DropdownMenuSubContent,
 	DropdownMenuSubTrigger,
@@ -48,7 +51,6 @@ import {
 	Card,
 	CardContent,
 	CardDescription,
-	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
@@ -61,16 +63,6 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import Link from "next/link";
-import { Category } from "@prisma/client";
-import { UploadDropzone } from "@uploadthing/react";
-import { UploadThingError } from "@uploadthing/shared";
-import { UploadFileResponse } from "uploadthing/client";
-import { useToast } from "@/components/ui/use-toast";
-import axios from "axios";
-import { categories } from "@/lib/categories";
-import Loading from "./loading";
-import { BASE_URL } from "@/config";
 
 const formSchema = z.object({
 	name: z.string().nonempty({ message: "Name is required" }),
@@ -82,9 +74,8 @@ const formSchema = z.object({
 });
 
 export default function AddProducts() {
-	const [open, setOpen] = React.useState(false);
-	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const { toast } = useToast();
+	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const [uploadComplete, setUploadComplete] = useState(false);
 	const [images, setImages] = useState<
 		{
@@ -102,8 +93,8 @@ export default function AddProducts() {
 
 			const json = JSON.stringify(res);
 			// Do something with the response
-			console.log("UPLOAD THING::::::::::", json);
-			console.log("UPLOAD THING::::::::::", res);
+			// console.log("UPLOAD THING::::::::::", json);
+			// console.log("UPLOAD THING::::::::::", res);
 
 			// Set the uploadComplete state to true
 			setUploadComplete(true);
@@ -138,7 +129,7 @@ export default function AddProducts() {
 		form.reset();
 		setUploadComplete(false);
 		setIsLoading(true);
-		console.log("VALUES::::::::::::::::::::::", values);
+		// console.log("VALUES::::::::::::::::::::::", values);
 
 		const { name, description, price, imageUrl, stockQuantity, category } =
 			values;
@@ -155,7 +146,7 @@ export default function AddProducts() {
 		try {
 			const { data } = await axios.post(`${BASE_URL}/api/add-product`, product);
 
-			console.log("RESPONSE AXIOS :::::::::::::::::", data);
+			// console.log("RESPONSE AXIOS :::::::::::::::::", data);
 
 			if (data.success === true) {
 				setIsLoading(false);
@@ -175,7 +166,7 @@ export default function AddProducts() {
 				});
 			}
 		} catch (error) {
-			console.log("ERRORS :::::::::::::::::", error);
+			// console.log("ERRORS :::::::::::::::::", error);
 			toast({
 				variant: "destructive",
 				title: "Error",
@@ -281,7 +272,6 @@ export default function AddProducts() {
 															<Button
 																variant="outline"
 																role="combobox"
-																aria-expanded={open}
 																className="w-full justify-between"
 															>
 																{field.value
@@ -574,7 +564,6 @@ export default function AddProducts() {
 															</Button>
 														</>
 													) : (
-														// If upload is not complete, show UploadDropzone
 														<UploadDropzone<OurFileRouter>
 															className="cursor-pointer ut-uploading:cursor-not-allowed border-dashed border-gray-700 border-2 ut-button:ut-uploading:cursor-not-allowed"
 															endpoint="imageUploader"

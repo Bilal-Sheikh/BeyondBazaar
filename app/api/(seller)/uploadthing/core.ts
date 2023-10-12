@@ -1,7 +1,6 @@
 import { currentUser } from "@clerk/nextjs";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 
-
 const f = createUploadthing();
 
 // FileRouter for your app, can contain multiple FileRoutes
@@ -12,7 +11,7 @@ export const ourFileRouter = {
 		.middleware(async ({ req }) => {
 			// This code runs on your server before upload
 			const user = await currentUser();
-			
+
 			// If you throw, the user will not be able to upload
 			if (!user) throw new Error("Unauthorized");
 
@@ -21,9 +20,8 @@ export const ourFileRouter = {
 		})
 		.onUploadComplete(async ({ metadata, file }) => {
 			// This code RUNS ON YOUR SERVER after upload
-			console.log("Upload complete for userId::::::::", metadata.userId);
-
-			console.log("FILE URL::::::::::", file.url);
+			// console.log("Upload complete for userId::::::::", metadata.userId);
+			// console.log("FILE URL::::::::::", file.url);
 		}),
 } satisfies FileRouter;
 

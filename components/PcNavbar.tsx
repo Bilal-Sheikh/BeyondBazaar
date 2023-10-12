@@ -2,22 +2,19 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 import logoBlack from "@/public/logoBlack.png";
+import { cn } from "@/lib/utils";
+import { BASE_URL } from "@/config";
 import {
 	NavigationMenu,
 	NavigationMenuContent,
-	NavigationMenuIndicator,
 	NavigationMenuItem,
 	NavigationMenuLink,
 	NavigationMenuList,
 	NavigationMenuTrigger,
-	NavigationMenuViewport,
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { buttonVariants } from "./ui/button";
-import { BASE_URL } from "@/config";
 
 const clothing: { title: string; href: string; description: string }[] = [
 	{

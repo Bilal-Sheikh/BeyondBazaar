@@ -1,23 +1,29 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 import { useUser } from "@clerk/nextjs";
 import { BASE_URL } from "@/config";
 
-export default function AddToCartButton({ productId, stock }) {
+export default function AddToCartButton({
+	productId,
+	stock,
+}: {
+	productId: number;
+	stock: number;
+}) {
 	const router = useRouter();
-	const [isLoading, setIsLoading] = useState(false);
-	const [isFetching, setIsFetching] = useState(false);
-	const [exist, setExist] = useState(false);
 	const { toast } = useToast();
 	const { isSignedIn, user } = useUser();
+	const [exist, setExist] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+	const [isFetching, setIsFetching] = useState(false);
 
-	function handleAddToCart(productId) {
+	function handleAddToCart(productId: number) {
 		if (!isSignedIn) {
 			toast({
 				variant: "default",
@@ -41,7 +47,7 @@ export default function AddToCartButton({ productId, stock }) {
 						}
 					)
 					.then((res) => {
-						console.log("RES DATA :::::::::::::::::::::::", res.data);
+						// console.log("RES DATA :::::::::::::::::::::::", res.data);
 						setIsLoading(false);
 						setExist(true);
 						toast({
@@ -53,7 +59,7 @@ export default function AddToCartButton({ productId, stock }) {
 					});
 			} catch (error) {
 				console.log(
-					"ERRORS in http://localhost:3000/api/add-to-cart::::::::::::::::::::::::::::::::",
+					"ERRORS in AXIOS components/user/AddToCartButton.tsx /api/add-to-cart:::::::::::::::::::",
 					error
 				);
 			}
@@ -79,7 +85,8 @@ export default function AddToCartButton({ productId, stock }) {
 					});
 			} catch (error) {
 				console.log(
-					"ERROR in AXIOS components/user/AddToCartButton.tsx http://localhost:3000/api/check-cart"
+					"ERROR in AXIOS components/user/AddToCartButton.tsx /api/check-cart::::::::::::::::::::",
+					error
 				);
 			}
 		}

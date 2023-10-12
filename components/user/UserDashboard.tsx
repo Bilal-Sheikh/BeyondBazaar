@@ -1,65 +1,16 @@
-import Navbar from "../Navbar";
+import * as React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import Navbar from "@/components/Navbar";
 import gaming from "@/public/gaming.jpg";
 import watches from "@/public/watches.jpg";
 import headphones from "@/public/headphones.jpg";
 import mobiles from "@/public/mobiles.jpg";
+import imgPlaceholder from "@/public/image placeholder.gif";
 import { prisma } from "@/lib/db";
-import axios from "axios";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import * as React from "react";
-import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import { currentUser } from "@clerk/nextjs";
-import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
-import {
-	Divide,
-	Heart,
-	Loader2,
-	MoreHorizontal,
-	MoreVertical,
-	Pencil,
-	Trash,
-} from "lucide-react";
-import {
-	DropdownMenuLabel,
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
-	AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { Product } from "@prisma/client";
 import { BASE_URL } from "@/config";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function UserDashboard() {
 	let valuePicks;
@@ -98,7 +49,6 @@ export default async function UserDashboard() {
 	return (
 		<div>
 			<Navbar />
-			{/* <div>{JSON.stringify(prod)} works </div>  */}
 
 			<section className="space-y-6 pb-16 pt-14 md:pb-24 md:pt-20 lg:py-40">
 				<div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center">
@@ -131,7 +81,7 @@ export default async function UserDashboard() {
 							<Link href={`${BASE_URL}/products?category=GAMING`}>
 								<div className="relative h-full">
 									<Image
-										src={gaming}
+										src={gaming || imgPlaceholder}
 										alt="clothing"
 										width={250}
 										height={330}
@@ -150,7 +100,7 @@ export default async function UserDashboard() {
 							<Link href={`${BASE_URL}/products?category=WATCHES`}>
 								<div className="relative h-full">
 									<Image
-										src={watches}
+										src={watches || imgPlaceholder}
 										alt="accessories"
 										width={250}
 										height={330}
@@ -168,7 +118,7 @@ export default async function UserDashboard() {
 							<Link href={`${BASE_URL}/products?category=HEADPHONES`}>
 								<div className="relative h-full">
 									<Image
-										src={headphones}
+										src={headphones || imgPlaceholder}
 										alt="electronics"
 										width={250}
 										height={330}
@@ -186,7 +136,7 @@ export default async function UserDashboard() {
 							<Link href={`${BASE_URL}/products?category=MOBILES`}>
 								<div className="relative h-full">
 									<Image
-										src={mobiles}
+										src={mobiles || imgPlaceholder}
 										alt="mobiles"
 										width={250}
 										height={330}
@@ -219,13 +169,11 @@ export default async function UserDashboard() {
 								<CardHeader className="p-4 h-full">
 									{/* PC */}
 									<div className="hidden lg:flex lg:flex-col cursor-pointer">
-										<Link
-											href={`${BASE_URL}/products/${product.id}`}
-										>
+										<Link href={`${BASE_URL}/products/${product.id}`}>
 											<AspectRatio ratio={16 / 9}>
 												<Image
 													alt="product"
-													src={product.imageUrl}
+													src={product.imageUrl || imgPlaceholder}
 													className="rounded-xl"
 													fill
 													objectFit="contain"
@@ -238,13 +186,11 @@ export default async function UserDashboard() {
 									<div className="grid grid-cols-2 gap-x-2 lg:flex lg:flex-auto">
 										{/* MOBILE */}
 										<div className="lg:hidden">
-											<Link
-												href={`${BASE_URL}/products/${product.id}`}
-											>
+											<Link href={`${BASE_URL}/products/${product.id}`}>
 												<AspectRatio ratio={1 / 1}>
 													<Image
 														alt="product"
-														src={product.imageUrl}
+														src={product.imageUrl || imgPlaceholder}
 														className="rounded-xl"
 														fill
 														objectFit="contain"
@@ -255,9 +201,7 @@ export default async function UserDashboard() {
 										</div>
 										<div className="relative grid grid-rows-2 justify-start items-start w-full">
 											<div className="lg:flex">
-												<Link
-													href={`${BASE_URL}/products/${product.id}`}
-												>
+												<Link href={`${BASE_URL}/products/${product.id}`}>
 													<CardTitle className="cursor-pointer line-clamp-2 text-lg hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0 justify-start text-start">
 														<p>{product.name}</p>
 													</CardTitle>
@@ -294,13 +238,11 @@ export default async function UserDashboard() {
 								<CardHeader className="p-4 h-full">
 									{/* PC */}
 									<div className="hidden lg:flex lg:flex-col cursor-pointer">
-										<Link
-											href={`${BASE_URL}/products/${product.id}`}
-										>
+										<Link href={`${BASE_URL}/products/${product.id}`}>
 											<AspectRatio ratio={16 / 9}>
 												<Image
 													alt="product"
-													src={product.imageUrl}
+													src={product.imageUrl || imgPlaceholder}
 													className="rounded-xl"
 													fill
 													objectFit="contain"
@@ -313,13 +255,11 @@ export default async function UserDashboard() {
 									<div className="grid grid-cols-2 gap-x-2 lg:flex lg:flex-auto">
 										{/* MOBILE */}
 										<div className="lg:hidden">
-											<Link
-												href={`${BASE_URL}/products/${product.id}`}
-											>
+											<Link href={`${BASE_URL}/products/${product.id}`}>
 												<AspectRatio ratio={1 / 1}>
 													<Image
 														alt="product"
-														src={product.imageUrl}
+														src={product.imageUrl || imgPlaceholder}
 														className="rounded-xl"
 														fill
 														objectFit="contain"
@@ -330,9 +270,7 @@ export default async function UserDashboard() {
 										</div>
 										<div className="relative grid grid-rows-2 justify-start items-start w-full">
 											<div className="lg:flex">
-												<Link
-													href={`${BASE_URL}/products/${product.id}`}
-												>
+												<Link href={`${BASE_URL}/products/${product.id}`}>
 													<CardTitle className="cursor-pointer line-clamp-2 text-lg hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0 justify-start text-start">
 														<p>{product.name}</p>
 													</CardTitle>

@@ -1,58 +1,45 @@
 "use client";
 
+import axios from "axios";
+import Image from "next/image";
+import Loading from "./loading";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
+import { BASE_URL } from "@/config";
 import { Separator } from "@/components/ui/separator";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
 	HoverCard,
 	HoverCardContent,
 	HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { prisma } from "@/lib/db";
-import React from "react";
-import products from "../page";
-import Image from "next/image";
-import axios from "axios";
 import {
 	ChevronDown,
 	ChevronUp,
-	ChevronsUpDown,
 	CreditCard,
-	Heart,
 	Loader2,
-	Plus,
 	ShoppingCart,
-	X,
 } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
-import {
-	Collapsible,
-	CollapsibleContent,
-	CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import Loading from "./loading";
-import { useUser } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
-import { useToast } from "@/components/ui/use-toast";
-import { set } from "zod";
-import Link from "next/link";
-import { BASE_URL } from "@/config";
 
 export default function ViewProduct({ params }: { params: { id: string } }) {
 	const productId = params.id;
-	const [product, setProduct] = React.useState([]);
-	const [exist, setExist] = React.useState(false);
-	const [isFetched, setIsFetched] = React.useState(true);
-	const [isLoading, setIsLoading] = React.useState(false);
-	const [open, setOpen] = React.useState(false);
-	const [showReadMore, setShowReadMore] = React.useState(false);
-	const ref = React.useRef(null);
-	const { isSignedIn, user } = useUser();
 	const router = useRouter();
+	const ref = useRef(null);
+	const [open, setOpen] = useState(false);
+	const [exist, setExist] = useState(false);
+	const [product, setProduct] = useState([]);
+	const [isFetched, setIsFetched] = useState(true);
+	const [isLoading, setIsLoading] = useState(false);
+	const [showReadMore, setShowReadMore] = useState(false);
+	const { isSignedIn, user } = useUser();
 	const { toast } = useToast();
 
-	React.useEffect(() => {
+	useEffect(() => {
 		try {
 			axios
 				.get(`${BASE_URL}/api/get-product`, {
@@ -80,22 +67,24 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 							}
 						});
 				} catch (error) {
-					console.log("ERROR in http://localhost:3000/api/check-cart");
+					console.log(
+						"ERROR in AXIOS app/(user)/products/[id]/page.tsx /api/check-cart"
+					);
 				}
 			}
 		} catch (error) {
-			console.log("ERRORS ::::::::::::::::::::::::::::::::", error);
+			console.log("ERRORS in AXIOS app/(user)/products/[id]/page.tsx", error);
 		}
 	}, [user]);
 
 	//Read More ref
-	React.useEffect(() => {
+	useEffect(() => {
 		if (ref.current) {
-			console.log(
-				"REF OUTPUT :::::::::::::::::::::::::::::::",
-				ref.current.scrollHeight,
-				ref.current.clientHeight
-			);
+			// console.log(
+			// 	"REF OUTPUT :::::::::::::::::::::::::::::::",
+			// 	ref.current.scrollHeight,
+			// 	ref.current.clientHeight
+			// );
 
 			setShowReadMore(ref.current.scrollHeight !== ref.current.clientHeight);
 		}
@@ -133,7 +122,7 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 						}
 					)
 					.then((res) => {
-						console.log("RES DATA :::::::::::::::::::::::", res.data);
+						// console.log("RES DATA :::::::::::::::::::::::", res.data);
 						setIsLoading(false);
 						setExist(true);
 						toast({
@@ -145,7 +134,7 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 					});
 			} catch (error) {
 				console.log(
-					"ERRORS in http://localhost:3000/api/add-to-cart::::::::::::::::::::::::::::::::",
+					"ERROR in AXIOS app/(user)/products/[id]/page.tsx /api/add-to-cart",
 					error
 				);
 			}

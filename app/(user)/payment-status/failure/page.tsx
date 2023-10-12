@@ -1,19 +1,16 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import axios from "axios";
-import { useUser } from "@clerk/nextjs";
+import React from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { History, RotateCcw } from "lucide-react";
+import { RotateCcw } from "lucide-react";
 import { BASE_URL } from "@/config";
 
 export default function Failure() {
 	const searchParams = useSearchParams();
 	const paymentId = searchParams.get("payment-id");
 	const orderId = searchParams.get("order-id");
-	const router = useRouter();
 
 	return (
 		<div className="py-10 px-5 w-full h-full lg:h-screen">

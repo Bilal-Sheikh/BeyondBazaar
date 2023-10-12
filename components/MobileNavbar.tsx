@@ -1,4 +1,13 @@
 import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import logoBlack from "@/public/logoBlack.png";
+import { BASE_URL } from "@/config";
+import { Menu } from "lucide-react";
+import { Button } from "./ui/button";
+import { User } from "@clerk/nextjs/server";
+import { Separator } from "@/components/ui/separator";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
 	Sheet,
 	SheetClose,
@@ -7,22 +16,12 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet";
-import logoBlack from "@/public/logoBlack.png";
-import Link from "next/link";
-import Image from "next/image";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
-import { Menu } from "lucide-react";
 import {
 	Accordion,
 	AccordionContent,
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
-import { UserButton } from "@clerk/nextjs";
-import { Button, buttonVariants } from "./ui/button";
-import { User } from "@clerk/nextjs/server";
-import { BASE_URL } from "@/config";
 
 interface NavbarProps {
 	user: User | null;

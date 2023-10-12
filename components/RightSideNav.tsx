@@ -1,45 +1,39 @@
 import React from "react";
-import { Button, buttonVariants } from "./ui/button";
-import { ModeToggle } from "./ui/dark-mode";
-import { Search, ShoppingCart } from "lucide-react";
-import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
-import { User } from "@clerk/nextjs/server";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuGroup,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuPortal,
-	DropdownMenuSeparator,
-	DropdownMenuShortcut,
-	DropdownMenuSub,
-	DropdownMenuSubContent,
-	DropdownMenuSubTrigger,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Searchbar } from "./Searchbar";
 import { prisma } from "@/lib/db";
 import { Cart } from "./user/Cart";
-import { cn } from "@/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import avatar from "@/public/avatar 1.jpg";
 import { BASE_URL } from "@/config";
+import { Searchbar } from "./Searchbar";
+import { UserButton } from "@clerk/nextjs";
+import { buttonVariants } from "./ui/button";
+import { ModeToggle } from "./ui/dark-mode";
+import { User } from "@clerk/nextjs/server";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 interface NavbarProps {
 	user: User | null;
 	role: string;
 }
 
+async function getProducts() {
+	try {
+		const products = await prisma.product.findMany();
+		return products;
+	} catch (error) {
+		console.log(
+			"ERRORS IN PRISMA components/RightSideNav.tsx :::::::::::::::::",
+			error
+		);
+	}
+}
+
 export default async function RightSideNav({ user, role }: NavbarProps) {
-	let products;
 	const name = user?.firstName + " " + user?.lastName;
 
-	try {
-		products = await prisma.product.findMany();
-	} catch (error) {
-		console.log("ERRORS :::::::::::::::::", error);
+	const products = await getProducts();
+	console.log("PRODUCTS:::::::::::::::::::::::::::::::", products);
+	if (!products) {
+		return null;
 	}
 
 	return (

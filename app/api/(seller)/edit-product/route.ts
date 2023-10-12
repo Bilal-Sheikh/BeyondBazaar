@@ -26,23 +26,26 @@ export async function POST(req: Request, res: Response) {
 	const productId = headersList.get("ProductId");
 
 	const user = await currentUser();
-	console.log("(API) USER :::::::::::::::::", user);
+	// console.log("(API) USER :::::::::::::::::", user);
 
-	console.log(
-		"(API) REQUEST:::::::::::::::::::",
-		name,
-		description,
-		price,
-		imageUrl,
-		stockQuantity,
-		category
-	);
+	// console.log(
+	// 	"(API) REQUEST:::::::::::::::::::",
+	// 	name,
+	// 	description,
+	// 	price,
+	// 	imageUrl,
+	// 	stockQuantity,
+	// 	category
+	// );
 
 	if (!user) {
-		return NextResponse.json({
-			success: false,
-			message: "User not authenticated.",
-		});
+		return NextResponse.json(
+			{
+				success: false,
+				message: "User not authenticated.",
+			},
+			{ status: 401 }
+		);
 	}
 
 	try {
@@ -63,15 +66,24 @@ export async function POST(req: Request, res: Response) {
 				},
 			},
 		});
-		console.log("(API) SUCCESS EDITED PRODUCT:::::::::::::::::::::");
+		// console.log("(API) SUCCESS EDITED PRODUCT:::::::::::::::::::::");
 
-		return NextResponse.json({ success: true });
+		return NextResponse.json(
+			{
+				success: true,
+				message: "Successfully edited the product.",
+			},
+			{ status: 201 }
+		);
 	} catch (error) {
 		console.log("(API) ERROR:::::::::::::::::::", error);
 
-		return NextResponse.json({
-			success: false,
-			message: "Error creating the product.",
-		});
+		return NextResponse.json(
+			{
+				success: false,
+				message: "Error creating the product.",
+			},
+			{ status: 500 }
+		);
 	}
 }

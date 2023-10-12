@@ -1,5 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
-import { currentUser } from "@clerk/nextjs";
+import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { headers } from "next/headers";
 
@@ -11,13 +10,16 @@ export async function POST() {
 	const newQuantity = headersList.get("Quantity");
 
 	if (!clerkId) {
-		return NextResponse.json({
-			success: false,
-			message: "(API) Clerk id not found in headers",
-		});
+		return NextResponse.json(
+			{
+				success: false,
+				message: "(API) Clerk id not found in headers",
+			},
+			{ status: 400 }
+		);
 	}
 
-	console.log("(API) USER ID :::::::::::::::::::::::", clerkId);
+	// console.log("(API) USER ID :::::::::::::::::::::::", clerkId);
 	// return NextResponse.json({ success: "REACHED API CART QUANTITY" });
 
 	try {
@@ -26,26 +28,32 @@ export async function POST() {
 			data: { quantity: Number(newQuantity) },
 		});
 
-		console.log(
-			"(API) CHANGED QUANTITY IN CART FOR PRODUCT :::::::::::::::::::::::",
-			cartId,
-			productId
-		);
+		// console.log(
+		// 	"(API) CHANGED QUANTITY IN CART FOR PRODUCT :::::::::::::::::::::::",
+		// 	cartId,
+		// 	productId
+		// );
 
-		return NextResponse.json({
-			success: true,
-			message: "(API) Successfully CHANGED QUANTITY",
-		});
+		return NextResponse.json(
+			{
+				success: true,
+				message: "(API) Successfully CHANGED QUANTITY",
+			},
+			{ status: 201 }
+		);
 	} catch (error) {
 		console.log(
 			"ERROR IN PRISMA app/api/(user)/cart-quantity/route.ts:::::::::::::::::::::::::::::::::::",
 			error
 		);
 
-		return NextResponse.json({
-			success: false,
-			message: "(API) Error increasing cart quantity.",
-		});
+		return NextResponse.json(
+			{
+				success: false,
+				message: "(API) Error increasing cart quantity.",
+			},
+			{ status: 500 }
+		);
 	}
 }
 
@@ -55,14 +63,16 @@ export async function DELETE() {
 	const cartId = headersList.get("CartId");
 
 	if (!clerkId) {
-		return NextResponse.json({
-			success: false,
-			message: "(API) Clerk id not found in headers",
-		});
+		return NextResponse.json(
+			{
+				success: false,
+				message: "(API) Clerk id not found in headers",
+			},
+			{ status: 400 }
+		);
 	}
 
-	console.log("(API) USER ID :::::::::::::::::::::::", clerkId);
-
+	// console.log("(API) USER ID :::::::::::::::::::::::", clerkId);
 	// return NextResponse.json({ success: "REACHED API CART QUANTITY" });
 
 	try {
@@ -70,24 +80,30 @@ export async function DELETE() {
 			where: { id: Number(cartId) },
 		});
 
-		console.log(
-			"(API) DELETED ITEM FROM CART ITEM :::::::::::::::::::::::",
-			cartId
-		);
+		// console.log(
+		// 	"(API) DELETED ITEM FROM CART ITEM :::::::::::::::::::::::",
+		// 	cartId
+		// );
 
-		return NextResponse.json({
-			success: true,
-			message: "(API) Successfully DELETED CART ITEM",
-		});
+		return NextResponse.json(
+			{
+				success: true,
+				message: "(API) Successfully DELETED CART ITEM",
+			},
+			{ status: 200 }
+		);
 	} catch (error) {
 		console.log(
 			"ERROR IN PRISMA app/api/(user)/update-cart/route.ts:::::::::::::::::::::::::::::::::::",
 			error
 		);
 
-		return NextResponse.json({
-			success: false,
-			message: "(API) Error DELETING cart item.",
-		});
+		return NextResponse.json(
+			{
+				success: false,
+				message: "(API) Error DELETING cart item.",
+			},
+			{ status: 500 }
+		);
 	}
 }

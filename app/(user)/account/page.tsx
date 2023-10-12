@@ -1,59 +1,11 @@
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { prisma } from "@/lib/db";
-import { currentUser } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
 import React from "react";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-	Sheet,
-	SheetClose,
-	SheetContent,
-	SheetDescription,
-	SheetFooter,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from "@/components/ui/sheet";
-import {
-	Delete,
-	Info,
-	Loader2,
-	Minus,
-	Package,
-	Plus,
-	ShoppingCart,
-	Trash,
-	User,
-	History,
-	LogOut,
-} from "lucide-react";
-import Image from "next/image";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { cookies } from "next/headers";
-import { Separator } from "@/components/ui/separator";
-import UserProfilePage from "@/components/user/UserProfilePage";
 import Loading from "./loading";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { SignOutButton } from "@clerk/nextjs";
 import { BASE_URL } from "@/config";
+import { Package, User, History, LogOut } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Account() {
 	return (

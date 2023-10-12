@@ -20,25 +20,27 @@ export async function POST(req: Request, res: Response) {
 		stockQuantity,
 		category,
 	}: BodyType = await req.json();
-	// const body = await req.json();
 	const user = await currentUser();
-	console.log("(API) USER :::::::::::::::::", user);
+	// console.log("(API) USER :::::::::::::::::", user);
 
-	console.log(
-		" (API) REQEST:::::::::::::::::::",
-		name,
-		description,
-		price,
-		imageUrl,
-		stockQuantity,
-		category
-	);
+	// console.log(
+	// 	" (API) REQEST:::::::::::::::::::",
+	// 	name,
+	// 	description,
+	// 	price,
+	// 	imageUrl,
+	// 	stockQuantity,
+	// 	category
+	// );
 
 	if (!user) {
-		return NextResponse.json({
-			success: false,
-			message: "User not authenticated.",
-		});
+		return NextResponse.json(
+			{
+				success: false,
+				message: "User not authenticated.",
+			},
+			{ status: 401 }
+		);
 	}
 
 	try {
@@ -56,15 +58,23 @@ export async function POST(req: Request, res: Response) {
 				},
 			},
 		});
-		console.log("(API) SUCCESS ADDED:::::::::::::::::::::PRODUCT");
+		// console.log("(API) SUCCESS CREATED:::::::::::::::::::::PRODUCT");
 
-		return NextResponse.json({ success: true });
+		return NextResponse.json(
+			{
+				success: true,
+				message: "Successfully created the product.",
+			},
+			{ status: 201 }
+		);
 	} catch (error) {
 		console.log("(API) ERROR:::::::::::::::::::", error);
-
-		return NextResponse.json({
-			success: false,
-			message: "Error creating the product.",
-		});
+		return NextResponse.json(
+			{
+				success: false,
+				message: "Error creating the product.",
+			},
+			{ status: 500 }
+		);
 	}
 }

@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/db";
 import { headers } from "next/headers";
 import Razorpay from "razorpay";
 
@@ -15,10 +14,13 @@ export async function POST(req: NextRequest, res: NextResponse) {
 	const body = await req.json();
 
 	if (!clerkId) {
-		return NextResponse.json({
-			success: false,
-			message: "(API) Clerk id not found in headers",
-		});
+		return NextResponse.json(
+			{
+				success: false,
+				message: "(API) Clerk id not found in headers",
+			},
+			{ status: 400 }
+		);
 	}
 	// console.log("(API) USER ID :::::::::::::::::::::::", clerkId);
 	// return NextResponse.json({ success: "REACHED API razorpay" });
@@ -28,12 +30,30 @@ export async function POST(req: NextRequest, res: NextResponse) {
 		currency: "USD",
 	};
 
-	const order = await instance.orders.create(options);
-	console.log("ORDER CREATED:::::::::::::::::::::::::::", order);
+	try {
+		const order = await instance.orders.create(options);
+		// console.log("ORDER CREATED:::::::::::::::::::::::::::", order);
 
-	return NextResponse.json({
-		success: true,
-		message: "(API) Order created successfully",
-		order: order,
-	});
+		return NextResponse.json(
+			{
+				success: true,
+				message: "(API) Order created successfully",
+				order: order,
+			},
+			{ status: 201 }
+		);
+	} catch (error) {
+		console.log(
+			"ERROR IN app/api/(user)/razorpay/orders/route.ts:::::::::::::::::::::::::",
+			error
+		);
+
+		return NextResponse.json(
+			{
+				success: false,
+				message: "(API) Error in creating order",
+			},
+			{ status: 500 }
+		);
+	}
 }
