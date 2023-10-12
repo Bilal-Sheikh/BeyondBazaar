@@ -39,7 +39,7 @@ export async function DELETE() {
 
 		return NextResponse.json({
 			success: false,
-			message: "Error showing the product.",
+			message: "Error deleting the product.",
 		});
 	}
 }

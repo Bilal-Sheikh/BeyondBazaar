@@ -86,7 +86,7 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 		} catch (error) {
 			console.log("ERRORS ::::::::::::::::::::::::::::::::", error);
 		}
-	}, []);
+	}, [user]);
 
 	//Read More ref
 	React.useEffect(() => {

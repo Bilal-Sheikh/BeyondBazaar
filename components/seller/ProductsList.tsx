@@ -54,6 +54,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Product } from "@prisma/client";
 import { BASE_URL } from "@/config";
+import { useToast } from "../ui/use-toast";
 
 export default function ProductsList({
 	productsEntries,
@@ -63,6 +64,7 @@ export default function ProductsList({
 	sellerId: string;
 }) {
 	const router = useRouter();
+	const { toast } = useToast();
 
 	const handleDelete = async (productId) => {
 		console.log("DELETION STARTED FOR PRODUCT :::::::::::::::::::", productId);
@@ -77,6 +79,21 @@ export default function ProductsList({
 			if (data.success === true) {
 				console.log("PRODUCT DELETED :::::::::::::::::::", data.message);
 				router.refresh();
+				toast({
+					variant: "default",
+					title: "Deleted successfully",
+					description: `✅ Product Deleted successfully`,
+					duration: 3000,
+				});
+			} else {
+				console.log("PRODUCT DELETION FAILED ::::::::::::::", data.message);
+				router.refresh();
+				toast({
+					variant: "destructive",
+					title: "Deleted Operation Failed",
+					description: `❗️ Product Deletion Failed`,
+					duration: 3000,
+				});
 			}
 		} catch (error) {
 			console.log("ERRORS :::::::::::::::::", error);
