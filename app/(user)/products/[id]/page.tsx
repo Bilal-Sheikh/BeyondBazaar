@@ -193,7 +193,7 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 
 									<div className="flex flex-auto justify-between items-center mt-8">
 										<h3 className="scroll-m-20 text-2xl font-semibold tracking-tight underline underline-offset-4">
-											{"$ "} {product?.price}
+											{"$ "} {product?.price.toLocaleString("en-US")}
 										</h3>
 										{product?.stockQuantity <= 0 ? (
 											<h4 className="scroll-m-20 text-xl text-red-700 font-semibold tracking-tight">

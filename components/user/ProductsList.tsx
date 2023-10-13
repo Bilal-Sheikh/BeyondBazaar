@@ -126,7 +126,7 @@ export default function ProductsList({ products }: { products: Product[] }) {
 							<Label>Price: </Label>
 							<br />
 							<Label className="scroll-m-20 border-b pb-2 text-lg font-semibold tracking-tight transition-colors first:mt-0">
-								$ {product.price}
+								$ {product.price.toLocaleString("en-US")}
 							</Label>
 						</div>
 
