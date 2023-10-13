@@ -1,11 +1,10 @@
+import Link from "next/link";
 import Loading from "./loading";
+import { prisma } from "@/lib/db";
 import { Info } from "lucide-react";
 import { BASE_URL } from "@/config";
-import { Metadata } from "next";
-import { Button } from "@/components/ui/button";
-import { prisma } from "@/lib/db";
 import { currentUser } from "@clerk/nextjs";
-import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -28,11 +27,6 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-
-export const metadata: Metadata = {
-	title: "Dashboard",
-	description: "Example dashboard app built using the components.",
-};
 
 export default async function DashboardPage() {
 	let updatedProducts = [];

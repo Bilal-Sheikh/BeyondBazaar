@@ -183,7 +183,7 @@ export default async function Checkout() {
 									{cart.length === 0 ? (
 										<p>$0</p>
 									) : (
-										<p className="text-xl font-bold">{grandTotal}</p>
+										<p className="text-xl font-bold">${grandTotal}</p>
 									)}
 								</div>
 

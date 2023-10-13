@@ -11,8 +11,8 @@ import { SignUpForm } from "@/components/sign-up-form";
 import { buttonVariants } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-	title: "Authentication",
-	description: "Authentication forms built using the components.",
+	title: "Sign Up",
+	description: "Sign up to Beyond Bazzar.",
 };
 
 export default function SignUp() {
