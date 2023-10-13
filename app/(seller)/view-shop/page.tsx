@@ -99,10 +99,10 @@ export default async function DashboardPage() {
 	const totalInCarts = products.map((product) =>
 		product.inCarts.map((cart) => cart.quantity).reduce((a, b) => a + b, 0)
 	);
-	console.log(
-		// "(SELLER) TOTAL IN CARTS:::::::::::::::",
-		totalInCarts.reduce((a, b) => a + b, 0)
-	);
+	// console.log(
+	// 	"(SELLER) TOTAL IN CARTS:::::::::::::::",
+	// 	totalInCarts.reduce((a, b) => a + b, 0)
+	// );
 
 	const highestSellingProduct = await prisma.product.findMany({
 		where: { postedById: user?.id },

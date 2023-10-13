@@ -6,7 +6,7 @@ import SellerDashboard from "@/components/seller/SellerDashboard";
 export default async function Home() {
 	const user = await currentUser();
 	const role = user?.publicMetadata?.role;
-	console.log("ROLE FROM FRONTEND ::::::::::::::", role);
+	// console.log("ROLE FROM FRONTEND ::::::::::::::", role);
 
 	return (
 		<>

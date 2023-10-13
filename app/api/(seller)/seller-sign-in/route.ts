@@ -3,7 +3,7 @@ import { clerkClient } from "@clerk/nextjs";
 
 export async function POST(request: Request) {
 	const { role, userId } = await request.json();
-	console.log("ROLE AND USERID ::::::::::::::::", role, userId);
+	// console.log("ROLE AND USERID ::::::::::::::::", role, userId);
 
 	try {
 		await clerkClient.users.updateUserMetadata(userId, {
@@ -24,7 +24,7 @@ export async function POST(request: Request) {
 
 	return NextResponse.json(
 		{
-			success: true,
+			success: false,
 			message: "Error in creating seller account",
 		},
 		{ status: 500 }

@@ -31,7 +31,7 @@ export default async function RightSideNav({ user, role }: NavbarProps) {
 	const name = user?.firstName + " " + user?.lastName;
 
 	const products = await getProducts();
-	console.log("PRODUCTS:::::::::::::::::::::::::::::::", products);
+	// console.log("PRODUCTS:::::::::::::::::::::::::::::::", products);
 	if (!products) {
 		return null;
 	}

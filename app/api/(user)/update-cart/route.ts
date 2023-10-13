@@ -90,7 +90,7 @@ export async function DELETE() {
 				success: true,
 				message: "(API) Successfully DELETED CART ITEM",
 			},
-			{ status: 200 }
+			{ status: 201 }
 		);
 	} catch (error) {
 		console.log(

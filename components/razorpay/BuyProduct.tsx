@@ -23,7 +23,7 @@ export default function BuyProduct({
 		setIsLoading(true);
 
 		const KEY_ID = process.env.RAZORPAY_KEY_ID;
-		console.log(KEY_ID);
+		// console.log(KEY_ID);
 
 		const { data } = await axios.post(
 			`${BASE_URL}/api/razorpay/orders`,

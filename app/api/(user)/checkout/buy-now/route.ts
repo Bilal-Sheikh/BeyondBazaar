@@ -21,7 +21,7 @@ export async function POST() {
 	// return NextResponse.json({ success: "REACHED API VIEW PRODUCTS" });
 
 	try {
-		console.log("(API) DOING BUY NOW QUERY:::::::::::::::::::::::::::::::");
+		// console.log("(API) DOING BUY NOW QUERY:::::::::::::::::::::::::::::::");
 		await prisma.product
 			.update({
 				where: { id: Number(productId) },

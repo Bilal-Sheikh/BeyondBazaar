@@ -36,7 +36,7 @@ export async function GET() {
 					exists: true,
 					message: "(API) Product EXISTS in the user's cart",
 				},
-				{ status: 201 }
+				{ status: 200 }
 			);
 		}
 
@@ -47,7 +47,7 @@ export async function GET() {
 				exists: false,
 				message: "(API) Product DOES NOT EXISTS in the user's cart",
 			},
-			{ status: 201 }
+			{ status: 200 }
 		);
 	} catch (error) {
 		console.log(
