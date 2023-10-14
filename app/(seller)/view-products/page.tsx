@@ -5,18 +5,29 @@ import { currentUser } from "@clerk/nextjs";
 import { Searchbar } from "@/components/Searchbar";
 import ProductsList from "@/components/seller/ProductsList";
 import PaginationControls from "@/components/PaginationControls";
+import Unauthorized from "@/app/unauthorized/page";
+import { prisma } from "@/lib/db";
 
-async function getProducts() {
-	const user = await currentUser();
+async function getProducts(clerkId: string) {
 	try {
-		const { data } = await axios.get(`/api/view-products`, {
-			headers: {
-				ClerkId: user?.id,
+		const data = await prisma.user.findUnique({
+			where: {
+				clerkId: clerkId,
+			},
+			include: {
+				postedProducts: true,
 			},
 		});
-		return data;
+
+		const postedProducts = data?.postedProducts || [];
+		// console.log("USER WITH PRODUCTS::::::::::::::::::::::::::", postedProducts);
+
+		return { data, postedProducts };
 	} catch (error) {
-		// console.log("ERRORS :::::::::::::::::", error);
+		console.log(
+			"ERROR IN PRISMA app/(seller)/view-products/page.tsx:::::::::::::::::::",
+			error
+		);
 	}
 }
 
@@ -25,10 +36,16 @@ export default async function page({
 }: {
 	searchParams: { [key: string]: string | string[] | undefined };
 }) {
-	const data = await getProducts();
-	const sellerId = data.data.clerkId;
+	const user = await currentUser();
 
+	if (user === null) {
+		return <Unauthorized />;
+	}
+
+	const { data, postedProducts }: any = await getProducts(user.id);
 	// console.log("PRODUCTS :::::::::::::::::::::::::", data);
+
+	const sellerId = data.clerkId;
 	// console.log("SELLER ID :::::::::::::::::::::::::", sellerId);
 
 	const page = searchParams["page"] ?? "1";
@@ -37,7 +54,7 @@ export default async function page({
 	const start = (Number(page) - 1) * Number(per_page);
 	const end = start + Number(per_page);
 
-	const products = data.postedProducts;
+	const products = postedProducts;
 	const totalProducts = products.length;
 	const productsEntries = products.slice(start, end);
 
@@ -55,10 +72,7 @@ export default async function page({
 				<div className="w-full">
 					<div className="flex flex-wrap justify-center w-96 px-14 pt-5 md:flex md:flex-wrap md:justify-center md:items-center md:w-full md:px-40 md:pt-5">
 						<div className="w-full py-5 md:px-14">
-							<Searchbar
-								products={products}
-								path={`/view-products`}
-							/>
+							<Searchbar products={products} path={`/view-products`} />
 						</div>
 					</div>
 
