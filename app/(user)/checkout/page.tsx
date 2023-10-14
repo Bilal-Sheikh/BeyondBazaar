@@ -44,7 +44,7 @@ export default async function Checkout() {
 		return <Unauthorized />;
 	}
 
-	const { cart } = await getData(user.id);
+	const cart = await getData(user.id);
 	// console.log("CHECKOUTT ITEMS :::::::::::::::::::::::::::::::::", cart);
 
 	const grandTotal =
