@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Unauthorized from "@/app/unauthorized/page";
 import BuyProduct from "@/components/razorpay/BuyProduct";
+import { prisma } from "@/lib/db";
 import { Info } from "lucide-react";
 import { currentUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
@@ -24,14 +25,21 @@ import {
 
 async function getData(clerkId: string) {
 	try {
-		const res = await fetch(`/api/get-cart`, {
-			headers: { ClerkId: clerkId },
-			cache: "no-store",
+		const { cart }: any = await prisma.user.findUnique({
+			where: { clerkId: clerkId },
+			include: {
+				cart: {
+					include: {
+						product: true,
+					},
+				},
+			},
 		});
-		return res.json();
+		// console.log("CART FROM PRISMA::::::::::::::::::::::", cart);
+		return cart;
 	} catch (error) {
 		console.log(
-			"ERROR in app/(user)/checkout/page.tsx:::::::::::::::::::::::",
+			"ERROR IN PRISMA app/api/(user)/get-cart/:::::::::::::::::::::::::::::::::::",
 			error
 		);
 	}
