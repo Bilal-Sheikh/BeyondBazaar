@@ -120,7 +120,7 @@ export default async function Checkout() {
 														<div className="py-1">
 															<p className="text-sm md:text-sm font-extralight">
 																Item Price: $
-																{item.product.price.toLocaleString("en-US")} x
+																{item.product.price.toLocaleString("en-US")} x{" "}
 																{item.quantity}
 															</p>
 															<p className="text-sm md:text-lg font-medium">

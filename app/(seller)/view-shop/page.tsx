@@ -111,6 +111,19 @@ export default async function DashboardPage() {
 	});
 	// console.log("(SELLER) HIGHEST SELLING:::::::::::::::", highestSellingProduct);
 
+	const totalRevenue =
+		updatedProducts
+			.map((product) => product.productRevenue)
+			.reduce((a, b) => a + b, 0)
+			.toFixed(2) ?? 0;
+	// console.log("(SELLER) TOATAL REVENUE:::::::::::::::", totalRevenue);
+
+	const totalSales =
+		updatedProducts
+			.map((product) => product.sales)
+			.reduce((a, b) => a + b, 0) ?? 0;
+	// console.log("(SELLER) TOTAL SALES:::::::::::::::", totalSales);
+
 	return (
 		// <Loading />
 
@@ -158,20 +171,9 @@ export default async function DashboardPage() {
 							</svg>
 						</CardHeader>
 						<CardContent>
-							<div className="text-2xl font-bold">
-								$
-								{updatedProducts
-									.map((product) => product.productRevenue)
-									.reduce((a, b) => a + b, 0)
-									.toFixed(2) ?? 0}
-							</div>
+							<div className="text-2xl font-bold">${totalRevenue}</div>
 							<p className="text-xs text-muted-foreground">
-								$
-								{updatedProducts
-									.map((product) => product.productRevenue)
-									.reduce((a, b) => a + b, 0)
-									.toFixed(2) ?? 0}{" "}
-								more from last month
+								${totalRevenue} more from last month
 							</p>
 						</CardContent>
 					</Card>
@@ -259,16 +261,9 @@ export default async function DashboardPage() {
 							</svg>
 						</CardHeader>
 						<CardContent>
-							<div className="text-2xl font-bold">
-								{updatedProducts
-									.map((product) => product.sales)
-									.reduce((a, b) => a + b, 0) ?? 0}
-							</div>
+							<div className="text-2xl font-bold">{totalSales}</div>
 							<p className="text-xs text-muted-foreground">
-								{updatedProducts
-									.map((product) => product.sales)
-									.reduce((a, b) => a + b, 0) ?? 0}{" "}
-								more from last month
+								{totalSales} more from last month
 							</p>
 						</CardContent>
 					</Card>
