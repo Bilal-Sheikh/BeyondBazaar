@@ -1,11 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Unauthorized from "@/app/unauthorized/page";
 import BuyProduct from "@/components/razorpay/BuyProduct";
 import { prisma } from "@/lib/db";
+import { BASE_URL } from "@/config";
 import { currentUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
-import { BASE_URL } from "@/config";
 import { Separator } from "@/components/ui/separator";
 import {
 	Card,
@@ -38,6 +39,10 @@ export default async function BuyNowButton({
 	const productId = params.id;
 	const user = await currentUser();
 
+	if (user === null) {
+		return <Unauthorized />;
+	}
+
 	const product = await getProduct(Number(productId));
 	// console.log("PRODUCT::::::::::::::::::::::::::::::::::::::::::::::", product);
 	if (product == null || product == undefined) {
@@ -56,7 +61,6 @@ export default async function BuyNowButton({
 
 	const grandTotal = product.price + 30;
 	// console.log("GRAND TOTAL ::::::::::::::::::::::::::::::::::::", grandTotal);
-
 	// console.log("PRODUCTS ID:::::::::::::::::::::::::::::", productId);
 
 	return (
@@ -139,7 +143,7 @@ export default async function BuyNowButton({
 									</Link>
 
 									<BuyProduct
-										clerkId={user?.id}
+										clerkId={user.id}
 										grandTotal={grandTotal}
 										productId={productId}
 									/>

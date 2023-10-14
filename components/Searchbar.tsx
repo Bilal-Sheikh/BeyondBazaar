@@ -25,9 +25,11 @@ export function Searchbar({
 	const router = useRouter();
 	const [open, setOpen] = React.useState(false);
 
-	const categorizedProducts = products.reduce((acc, product) => {
+	const categorizedProducts = products.reduce((acc: any, product) => {
 		const category = product.category;
-		const existingCategory = acc.find((item) => item.category === category);
+		const existingCategory = acc.find(
+			(item: any) => item.category === category
+		);
 
 		if (existingCategory) {
 			existingCategory.products.push(product);

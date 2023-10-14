@@ -3,9 +3,9 @@ import axios from "axios";
 import Loading from "./loading";
 import ProductsList from "@/components/seller/ProductsList";
 import PaginationControls from "@/components/PaginationControls";
+import { BASE_URL } from "@/config";
 import { currentUser } from "@clerk/nextjs";
 import { Searchbar } from "@/components/Searchbar";
-import { BASE_URL } from "@/config";
 
 async function getProducts() {
 	const user = await currentUser();

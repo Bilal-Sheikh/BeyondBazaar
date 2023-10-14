@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs";
 import { prisma } from "@/lib/db";
+import { $Enums } from "@prisma/client";
 
 interface BodyType {
 	name: string;
@@ -8,7 +9,7 @@ interface BodyType {
 	price: number;
 	imageUrl: string;
 	stockQuantity: number;
-	category: string;
+	category: $Enums.Category;
 }
 
 export async function POST(req: Request, res: Response) {

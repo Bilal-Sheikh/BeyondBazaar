@@ -26,13 +26,38 @@ import {
 	ShoppingCart,
 } from "lucide-react";
 
+interface Product {
+	id: number;
+	name: string;
+	price: number;
+	description: string;
+	image: string;
+	imageUrl: string;
+	stockQuantity: number;
+	category: string;
+	postedById: string;
+	sales: number;
+	productRevenue: number;
+	createdAt: Date;
+	updatedAt: Date;
+	postedBy: {
+		id: number;
+		firstName: string;
+		lastName: string;
+		createdAt: string;
+		attributes: {
+			image_url: string;
+		};
+	};
+}
+
 export default function ViewProduct({ params }: { params: { id: string } }) {
 	const productId = params.id;
 	const router = useRouter();
 	const ref = useRef(null);
 	const [open, setOpen] = useState(false);
 	const [exist, setExist] = useState(false);
-	const [product, setProduct] = useState([]);
+	const [product, setProduct] = useState<Product>();
 	const [isFetched, setIsFetched] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
 	const [showReadMore, setShowReadMore] = useState(false);
@@ -86,6 +111,7 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 			// 	ref.current.clientHeight
 			// );
 
+			//@ts-ignore
 			setShowReadMore(ref.current.scrollHeight !== ref.current.clientHeight);
 		}
 	}, [product]);
@@ -93,9 +119,10 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 	const seller =
 		product?.postedBy?.firstName + " " + product?.postedBy?.lastName;
 
-	const jsonDate = product?.postedBy?.createdAt;
+	const jsonDate: any = product?.postedBy?.createdAt;
 	const dateObject = new Date(jsonDate);
 	const options = { year: "numeric", month: "long" };
+	//@ts-ignore
 	const formattedDate = dateObject.toLocaleDateString("en-US", options);
 
 	function handleAddToCart() {

@@ -20,7 +20,7 @@ export default async function products({
 	// console.log("SEARCH PARAMS PRICE :::::::::::::::::::::::::::::", price);
 	// console.log("SEARCH PARAMS DATE :::::::::::::::::::::::::::::", date);
 	// console.log("SEARCH PARAMS SORT:::::::::::::::::::::::::::::", sort);
-
+	
 	sort ? (sort = sort.split(".")) : (sort = [sort]);
 	// console.log("SORT:::::::::::::::::::::::::::::::", sort);
 

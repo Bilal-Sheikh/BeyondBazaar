@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
@@ -10,6 +9,7 @@ import { useUser } from "@clerk/nextjs";
 import { useToast } from "../ui/use-toast";
 import { Separator } from "../ui/separator";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -26,15 +26,29 @@ import {
 	SheetTrigger,
 } from "@/components/ui/sheet";
 
+interface Cart {
+	id: string;
+	productId: string;
+	quantity: number;
+	product: {
+		id: number;
+		name: string;
+		price: number;
+		image: string;
+		imageUrl: string;
+		stockQuantity: number;
+	};
+}
+
 export function Cart() {
 	const router = useRouter();
 	const { toast } = useToast();
 	const { isSignedIn, user } = useUser();
-	const [cartItems, setCartItems] = React.useState([]);
-	const [updateState, setUpdateState] = React.useState(0);
-	const [isLoading, setIsLoading] = React.useState(false);
+	const [cartItems, setCartItems] = useState<Cart[]>([]);
+	const [updateState, setUpdateState] = useState(0);
+	const [isLoading, setIsLoading] = useState(false);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (isSignedIn) {
 			try {
 				axios
@@ -57,7 +71,7 @@ export function Cart() {
 
 	// console.log("CART ITEMS::::::::::::::::::::::::::::::::::", cartItems);
 
-	const handlePlusClick = (item) => {
+	const handlePlusClick = (item: any) => {
 		const cartId = item.id;
 		const productId = item.productId;
 		const newQuantity = item.quantity + 1;
@@ -74,7 +88,7 @@ export function Cart() {
 
 		updateCartQuantity(cartId, productId, newQuantity);
 	};
-	const handleMinusClick = (item) => {
+	const handleMinusClick = (item: any) => {
 		const cartId = item.id;
 		const productId = item.productId;
 		const newQuantity = item.quantity - 1;
@@ -91,7 +105,7 @@ export function Cart() {
 
 		updateCartQuantity(cartId, productId, newQuantity);
 	};
-	const handleDeleteClick = (item) => {
+	const handleDeleteClick = (item: any) => {
 		const cartId = item.id;
 		const productId = item.productId;
 
@@ -119,7 +133,11 @@ export function Cart() {
 		}
 	};
 
-	const updateCartQuantity = async (cartId, productId, newQuantity) => {
+	const updateCartQuantity = async (
+		cartId: number,
+		productId: number,
+		newQuantity: number
+	) => {
 		try {
 			setIsLoading(true);
 			axios

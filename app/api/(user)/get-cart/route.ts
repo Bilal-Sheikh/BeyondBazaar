@@ -20,7 +20,7 @@ export async function GET() {
 	// return NextResponse.json({ success: "REACHED API GET CART" });
 
 	try {
-		const { cart } = await prisma.user.findUnique({
+		const { cart }: any = await prisma.user.findUnique({
 			where: { clerkId: clerkId },
 			include: {
 				cart: {

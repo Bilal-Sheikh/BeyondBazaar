@@ -21,6 +21,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import Unauthorized from "@/app/unauthorized/page";
 
 async function getData(clerkId: string) {
 	try {
@@ -40,21 +41,31 @@ async function getData(clerkId: string) {
 export default async function Checkout() {
 	const user = await currentUser();
 
+	if (user === null) {
+		return <Unauthorized />;
+	}
+
 	const { cart } = await getData(user.id);
 	// console.log("CHECKOUTT ITEMS :::::::::::::::::::::::::::::::::", cart);
 
 	const grandTotal =
-		cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0) +
+		cart.reduce(
+			(acc: any, item: any) => acc + item.product.price * item.quantity,
+			0
+		) +
 		30 -
-		(cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0) +
+		(cart.reduce(
+			(acc: any, item: any) => acc + item.product.price * item.quantity,
+			0
+		) +
 			30) *
 			0.1;
 	// console.log("GRAND TOTAL ::::::::::::::::::::::::::::::::::::", grandTotal);
 
-	const productsId = cart.map((product) => product.productId);
+	// const productsId = cart.map((product) => product.productId);
 	// console.log("PRODUCTS ID:::::::::::::::::::::::::::::", productsId);
 
-	const productQuantities = cart.map((product) => product.quantity);
+	// const productQuantities = cart.map((product) => product.quantity);
 	// console.log("PRODUCT QUANTITIES:::::::::::::::::", productQuantities);
 
 	return (
@@ -75,7 +86,7 @@ export default async function Checkout() {
 						</div>
 					) : (
 						<>
-							{cart.map((item) => (
+							{cart.map((item: any) => (
 								<div className="py-3">
 									<Card key={item.id}>
 										<CardHeader>
@@ -138,7 +149,8 @@ export default async function Checkout() {
 									<p>
 										$
 										{cart.reduce(
-											(acc, item) => acc + item.product.price * item.quantity,
+											(acc: any, item: any) =>
+												acc + item.product.price * item.quantity,
 											0
 										)}
 									</p>

@@ -114,9 +114,10 @@ export default async function Purchases() {
 	const purchase = purchaseHistory.map((purchase) => {
 		return {
 			...purchase,
-			productName: products.find((product) => product.id === purchase.productId)
-				?.name,
-			productPrice: products.find(
+			productName: products?.find(
+				(product) => product.id === purchase.productId
+			)?.name,
+			productPrice: products?.find(
 				(product) => product.id === purchase.productId
 			)?.price,
 		};

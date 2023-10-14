@@ -70,7 +70,8 @@ export async function POST(req: Request) {
 	const { id, first_name, last_name, public_metadata, ...attributes } =
 		evt.data;
 
-	const email = evt.data.email_addresses[0]?.email_address;
+	//@ts-ignore
+	const email = evt.data.email_addresses[0].email_address;
 	const role = public_metadata?.role;
 
 	// console.log("EVENT DATA ::::::::", evt.data);
@@ -92,12 +93,14 @@ export async function POST(req: Request) {
 					firstName: first_name,
 					lastName: last_name,
 					email: email,
+					//@ts-ignore
 					role: role,
 					attributes,
 				},
 				update: {
 					firstName: first_name,
 					lastName: last_name,
+					//@ts-ignore
 					role: role,
 					attributes,
 				},

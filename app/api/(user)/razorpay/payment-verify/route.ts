@@ -26,6 +26,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 	// console.log("id==", body);
 
 	const expectedSignature = crypto
+		//@ts-ignore
 		.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
 		.update(body.toString())
 		.digest("hex");

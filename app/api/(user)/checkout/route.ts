@@ -22,7 +22,7 @@ export async function POST() {
 
 	try {
 		// console.log("(API) DOING CART QUERIES:::::::::::::::::::::::::::::::");
-		const { cart } = await prisma.user.findUnique({
+		const { cart }: any = await prisma.user.findUnique({
 			where: { clerkId: userClerkId },
 			include: {
 				cart: {
@@ -36,15 +36,15 @@ export async function POST() {
 		});
 		// console.log("(API) GOT CART DETAILS:::::::::::::::::::::::::::::", cart);
 
-		const productsId = cart.map((product) => product.productId);
+		const productsId = cart.map((product: any) => product.productId);
 		// console.log("(API) PRODUCTS ID:::::::::::::::::::::::::::::", productsId);
 
-		const productQuantities = cart.map((product) => product.quantity);
+		const productQuantities = cart.map((product: any) => product.quantity);
 		// console.log("(API) PRODUCT QUANTITIES:::::::::::::::::", productQuantities);
 
 		await prisma.purchaseHistory
 			.createMany({
-				data: cart.map((item) => ({
+				data: cart.map((item: any) => ({
 					userId: item.userId,
 					productId: item.productId,
 					quantity: item.quantity,

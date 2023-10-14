@@ -83,6 +83,7 @@ export default function BuyProduct({
 				}
 			},
 		};
+		//@ts-ignore
 		const paymentObject = new window.Razorpay(options);
 		paymentObject.open();
 
