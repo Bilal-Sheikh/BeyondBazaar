@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { History } from "lucide-react";
-import { BASE_URL } from "@/config";
 
 export default function Success() {
 	const searchParams = useSearchParams();
@@ -22,7 +21,7 @@ export default function Success() {
 			try {
 				axios
 					.post(
-						`${BASE_URL}/api/checkout/buy-now`,
+						`/api/checkout/buy-now`,
 						{},
 						{ headers: { UserClerkId: user?.id, ProductId: productId } }
 					)
@@ -42,7 +41,7 @@ export default function Success() {
 			try {
 				axios
 					.post(
-						`${BASE_URL}/api/checkout`,
+						`/api/checkout`,
 						{},
 						{ headers: { UserClerkId: user?.id } }
 					)
@@ -68,7 +67,7 @@ export default function Success() {
 					</div>
 				</div>
 
-				<Link href={`${BASE_URL}/account/purchases`}>
+				<Link href={`/account/purchases`}>
 					<Button className="gap-2 mt-5 lg:mt-0">
 						<History size={17} /> View Your Purchase
 					</Button>

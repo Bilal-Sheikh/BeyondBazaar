@@ -5,7 +5,6 @@ import Link from "next/link";
 import SignInOAuthButtons from "./SignInOAuthButtons";
 import { cn } from "@/lib/utils";
 import { Input } from "./ui/input";
-import { BASE_URL } from "@/config";
 import { Loader2 } from "lucide-react";
 import { useSignUp } from "@clerk/nextjs";
 import { useForm } from "react-hook-form";
@@ -104,7 +103,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 			}
 			if (completeSignUp.status === "complete") {
 				await setActive({ session: completeSignUp.createdSessionId });
-				router.push(`${BASE_URL}`);
+				router.push(`/`);
 			}
 		} catch (err: any) {
 			setIsLoading(false);
@@ -218,7 +217,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 							<SignInOAuthButtons />
 
 							<Link
-								href={`${BASE_URL}/seller-sign-up`}
+								href={`/seller-sign-up`}
 								className={cn(
 									buttonVariants({ variant: "link" }),
 									"absolute w-max right-1/3 bottom-3 md:left-4 lg:top-8 lg:left-1/2"

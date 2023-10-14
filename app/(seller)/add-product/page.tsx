@@ -3,7 +3,6 @@
 import * as z from "zod";
 import axios from "axios";
 import Link from "next/link";
-import React from "react";
 import Image from "next/image";
 import Loading from "./loading";
 import { OurFileRouter } from "@/app/api/(seller)/uploadthing/core";
@@ -19,7 +18,6 @@ import { UploadDropzone } from "@uploadthing/react";
 import { UploadFileResponse } from "uploadthing/client";
 import { useToast } from "@/components/ui/use-toast";
 import { categories } from "@/lib/categories";
-import { BASE_URL } from "@/config";
 import {
 	Check,
 	ChevronsUpDown,
@@ -75,7 +73,7 @@ const formSchema = z.object({
 
 export default function AddProducts() {
 	const { toast } = useToast();
-	const [isLoading, setIsLoading] = React.useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [uploadComplete, setUploadComplete] = useState(false);
 	const [images, setImages] = useState<
 		{
@@ -144,7 +142,7 @@ export default function AddProducts() {
 		};
 
 		try {
-			const { data } = await axios.post(`${BASE_URL}/api/add-product`, product);
+			const { data } = await axios.post(`/api/add-product`, product);
 
 			// console.log("RESPONSE AXIOS :::::::::::::::::", data);
 
@@ -581,7 +579,7 @@ export default function AddProducts() {
 								/>
 								<div className="flex py-9 justify-center gap-6">
 									<Button variant="outline" className="w-52" asChild>
-										<Link href={`${BASE_URL}`}>Cancel</Link>
+										<Link href={`/`}>Cancel</Link>
 									</Button>
 
 									<Button disabled={isLoading} className="w-52" type="submit">

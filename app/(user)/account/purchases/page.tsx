@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import { BASE_URL } from "@/config";
 import { prisma } from "@/lib/db";
 import { currentUser } from "@clerk/nextjs";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -181,7 +180,7 @@ export default async function Purchases() {
 										<TableCell className="font-medium">
 											<Link
 												target="_blank"
-												href={`${BASE_URL}/products/${purchase.productId}`}
+												href={`/products/${purchase.productId}`}
 												className="cursor-pointer line-clamp-2 hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0"
 											>
 												{purchase.productName}

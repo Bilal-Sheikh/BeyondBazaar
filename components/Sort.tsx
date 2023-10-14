@@ -2,7 +2,6 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
-import { BASE_URL } from "@/config";
 import { ArrowDownUp } from "lucide-react";
 import { buttonVariants } from "./ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -37,7 +36,7 @@ export default function Sort() {
 					<DropdownMenuItem
 						onSelect={() =>
 							router.push(
-								`${BASE_URL}/products?sort=price.desc${categoryParam}`
+								`/products?sort=price.desc${categoryParam}`
 							)
 						}
 					>
@@ -45,7 +44,7 @@ export default function Sort() {
 					</DropdownMenuItem>
 					<DropdownMenuItem
 						onSelect={() =>
-							router.push(`${BASE_URL}/products?sort=price.asc${categoryParam}`)
+							router.push(`/products?sort=price.asc${categoryParam}`)
 						}
 					>
 						Price ↓
@@ -56,7 +55,7 @@ export default function Sort() {
 					<DropdownMenuItem
 						onSelect={() =>
 							router.push(
-								`${BASE_URL}/products?sort=createdAt.desc${categoryParam}`
+								`/products?sort=createdAt.desc${categoryParam}`
 							)
 						}
 					>
@@ -65,7 +64,7 @@ export default function Sort() {
 					<DropdownMenuItem
 						onSelect={() =>
 							router.push(
-								`${BASE_URL}/products?sort=createdAt.asc${categoryParam}`
+								`/products?sort=createdAt.asc${categoryParam}`
 							)
 						}
 					>

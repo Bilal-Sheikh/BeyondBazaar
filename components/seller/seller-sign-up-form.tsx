@@ -3,13 +3,12 @@
 import * as z from "zod";
 import axios from "axios";
 import { cn } from "@/lib/utils";
-import { Icons } from "@/components/icons";
-import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Loader2 } from "lucide-react";
 import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { BASE_URL } from "@/config";
 import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HTMLAttributes, SyntheticEvent, useState } from "react";
@@ -21,7 +20,6 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import { Loader2 } from "lucide-react";
 
 interface SignUpFormProps extends HTMLAttributes<HTMLDivElement> {}
 
@@ -105,7 +103,7 @@ export function SellerSignUpForm({ className, ...props }: SignUpFormProps) {
 				// console.log("MAKING A POST REQ");
 				try {
 					axios
-						.post(`${BASE_URL}/api/seller-sign-in`, {
+						.post(`/api/seller-sign-in`, {
 							userId: completeSignUp.createdUserId,
 							role: "SELLER",
 						})
@@ -120,7 +118,7 @@ export function SellerSignUpForm({ className, ...props }: SignUpFormProps) {
 				}
 
 				setActive({ session: completeSignUp.createdSessionId });
-				router.push(`${BASE_URL}`);
+				router.push(`/`);
 			}
 		} catch (err: any) {
 			setIsLoading(false);

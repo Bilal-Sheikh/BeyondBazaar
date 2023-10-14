@@ -1,10 +1,9 @@
-import React from "react";
 import Loading from "./loading";
 import Sort from "@/components/Sort";
 import ProductsList from "@/components/user/ProductsList";
 import PaginationControls from "@/components/PaginationControls";
+import { Suspense } from "react";
 import { prisma } from "@/lib/db";
-import { BASE_URL } from "@/config";
 
 export default async function products({
 	searchParams,
@@ -96,12 +95,12 @@ export default async function products({
 					</div>
 				</div>
 
-				<React.Suspense fallback={<Loading />}>
+				<Suspense fallback={<Loading />}>
 					<ProductsList products={products} />
-				</React.Suspense>
+				</Suspense>
 
 				<PaginationControls
-					path={`${BASE_URL}/products`}
+					path={`/products`}
 					hasPrevPage={initialSkip > 0}
 					hasNextPage={end < totalProducts}
 					totalProducts={totalProducts}

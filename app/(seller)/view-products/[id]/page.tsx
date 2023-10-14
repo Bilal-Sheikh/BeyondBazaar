@@ -19,7 +19,6 @@ import { UploadDropzone } from "@uploadthing/react";
 import { UploadFileResponse } from "uploadthing/client";
 import { categories } from "@/lib/categories";
 import { useToast } from "@/components/ui/use-toast";
-import { BASE_URL } from "@/config";
 import {
 	Check,
 	ChevronsUpDown,
@@ -89,7 +88,7 @@ export default function EditProducts({ params }: { params: { id: string } }) {
 	useEffect(() => {
 		try {
 			axios
-				.get(`${BASE_URL}/api/get-seller-product`, {
+				.get(`/api/get-seller-product`, {
 					headers: {
 						ProductId: productId,
 					},
@@ -162,7 +161,7 @@ export default function EditProducts({ params }: { params: { id: string } }) {
 
 		try {
 			const { data } = await axios.post(
-				`${BASE_URL}/api/edit-product`,
+				`/api/edit-product`,
 				product,
 				{
 					headers: {
@@ -609,7 +608,7 @@ export default function EditProducts({ params }: { params: { id: string } }) {
 							/>
 							<div className="flex py-9 justify-center gap-6">
 								<Button variant="outline" className="w-52" asChild>
-									<Link href={`${BASE_URL}/view-products`}>Cancel</Link>
+									<Link href={`/view-products`}>Cancel</Link>
 								</Button>
 
 								<Button disabled={isLoading} className="w-52" type="submit">

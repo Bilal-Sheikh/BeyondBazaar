@@ -3,7 +3,6 @@ import Image from "next/image";
 import logoBlack from "@/public/logoBlack.png";
 import shopping from "@/public/shopping.jpg";
 import { cn } from "@/lib/utils";
-import { BASE_URL } from "@/config";
 import { SignInForm } from "@/components/sign-in-form";
 import { buttonVariants } from "@/components/ui/button";
 
@@ -11,7 +10,7 @@ export default function SignIn() {
 	return (
 		<div className="container relative grid max-w-none h-[800px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
 			<Link
-				href={`${BASE_URL}/sign-up`}
+				href={`/sign-up`}
 				className={cn(
 					buttonVariants({ variant: "outline" }),
 					"absolute right-4 top-4 md:right-8 md:top-8"
@@ -21,7 +20,7 @@ export default function SignIn() {
 			</Link>
 
 			<Link
-				href={`${BASE_URL}`}
+				href={`/`}
 				className="h-32 w-32 absolute left-4 top-4 md:right-8 md:top-8"
 			>
 				<Image alt="Logo" src={logoBlack} />
@@ -31,7 +30,7 @@ export default function SignIn() {
 				<Image src={shopping} alt="bg image" layout="fill" objectFit="cover" />
 
 				<div className="relative flex items-start justify-start h-32 w-32 ">
-					<Link href={`${BASE_URL}`}>
+					<Link href={`/`}>
 						<Image alt="Logo" src={logoBlack} />
 					</Link>
 				</div>

@@ -1,16 +1,15 @@
-import * as React from "react";
 import axios from "axios";
 import Loading from "./loading";
-import ProductsList from "@/components/seller/ProductsList";
-import PaginationControls from "@/components/PaginationControls";
-import { BASE_URL } from "@/config";
+import { Suspense } from "react";
 import { currentUser } from "@clerk/nextjs";
 import { Searchbar } from "@/components/Searchbar";
+import ProductsList from "@/components/seller/ProductsList";
+import PaginationControls from "@/components/PaginationControls";
 
 async function getProducts() {
 	const user = await currentUser();
 	try {
-		const { data } = await axios.get(`${BASE_URL}/api/view-products`, {
+		const { data } = await axios.get(`/api/view-products`, {
 			headers: {
 				ClerkId: user?.id,
 			},
@@ -58,20 +57,20 @@ export default async function page({
 						<div className="w-full py-5 md:px-14">
 							<Searchbar
 								products={products}
-								path={`${BASE_URL}/view-products`}
+								path={`/view-products`}
 							/>
 						</div>
 					</div>
 
-					<React.Suspense fallback={<Loading />}>
+					<Suspense fallback={<Loading />}>
 						<ProductsList
 							productsEntries={productsEntries}
 							sellerId={sellerId}
 						/>
-					</React.Suspense>
+					</Suspense>
 
 					<PaginationControls
-						path={`${BASE_URL}/view-products`}
+						path={`/view-products`}
 						hasPrevPage={start > 0}
 						hasNextPage={end < totalProducts}
 						totalProducts={totalProducts}

@@ -2,11 +2,11 @@ import React from "react";
 import Loading from "./loading";
 import Image from "next/image";
 import Link from "next/link";
+import Unauthorized from "@/app/unauthorized/page";
 import BuyProduct from "@/components/razorpay/BuyProduct";
 import { Info } from "lucide-react";
 import { currentUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
-import { BASE_URL } from "@/config";
 import { Separator } from "@/components/ui/separator";
 import {
 	Tooltip,
@@ -21,11 +21,10 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import Unauthorized from "@/app/unauthorized/page";
 
 async function getData(clerkId: string) {
 	try {
-		const res = await fetch(`${BASE_URL}/api/get-cart`, {
+		const res = await fetch(`/api/get-cart`, {
 			headers: { ClerkId: clerkId },
 			cache: "no-store",
 		});
@@ -101,7 +100,7 @@ export default async function Checkout() {
 
 												<CardTitle className="w-full">
 													<Link
-														href={`${BASE_URL}/products/${item.product.id}`}
+														href={`/products/${item.product.id}`}
 														target="_blank"
 													>
 														<p className="hover:text-blue-500 cursor-pointer pt-2 md:pt-0 line-clamp-1 text-sm md:text-xl tracking-tight transition-colors">
@@ -200,7 +199,7 @@ export default async function Checkout() {
 								</div>
 
 								<div className="flex flex-auto justify-between items-center w-full gap-2">
-									<Link href={`${BASE_URL}/products`} className="w-full">
+									<Link href={`/products`} className="w-full">
 										<Button variant="outline" className="w-full">
 											Cancel Order
 										</Button>

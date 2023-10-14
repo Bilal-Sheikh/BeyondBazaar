@@ -8,7 +8,6 @@ import headphones from "@/public/headphones.jpg";
 import mobiles from "@/public/mobiles.jpg";
 import imgPlaceholder from "@/public/image placeholder.gif";
 import { prisma } from "@/lib/db";
-import { BASE_URL } from "@/config";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -78,7 +77,7 @@ export default async function UserDashboard() {
 
 					<div className="relative grid grid-cols-2 lg:grid-cols-4 justify-center rounded-xl gap-4 pt-5">
 						<div className="overflow-hidden rounded-xl">
-							<Link href={`${BASE_URL}/products?category=GAMING`}>
+							<Link href={`/products?category=GAMING`}>
 								<div className="relative h-full">
 									<Image
 										src={gaming || imgPlaceholder}
@@ -97,7 +96,7 @@ export default async function UserDashboard() {
 							</Link>
 						</div>
 						<div className="overflow-hidden rounded-xl">
-							<Link href={`${BASE_URL}/products?category=WATCHES`}>
+							<Link href={`/products?category=WATCHES`}>
 								<div className="relative h-full">
 									<Image
 										src={watches || imgPlaceholder}
@@ -115,7 +114,7 @@ export default async function UserDashboard() {
 							</Link>
 						</div>
 						<div className="overflow-hidden rounded-xl">
-							<Link href={`${BASE_URL}/products?category=HEADPHONES`}>
+							<Link href={`/products?category=HEADPHONES`}>
 								<div className="relative h-full">
 									<Image
 										src={headphones || imgPlaceholder}
@@ -133,7 +132,7 @@ export default async function UserDashboard() {
 							</Link>
 						</div>
 						<div className="overflow-hidden rounded-xl">
-							<Link href={`${BASE_URL}/products?category=MOBILES`}>
+							<Link href={`/products?category=MOBILES`}>
 								<div className="relative h-full">
 									<Image
 										src={mobiles || imgPlaceholder}
@@ -169,7 +168,7 @@ export default async function UserDashboard() {
 								<CardHeader className="p-4 h-full">
 									{/* PC */}
 									<div className="hidden lg:flex lg:flex-col cursor-pointer">
-										<Link href={`${BASE_URL}/products/${product.id}`}>
+										<Link href={`/products/${product.id}`}>
 											<AspectRatio ratio={16 / 9}>
 												<Image
 													alt="product"
@@ -186,7 +185,7 @@ export default async function UserDashboard() {
 									<div className="grid grid-cols-2 gap-x-2 lg:flex lg:flex-auto">
 										{/* MOBILE */}
 										<div className="lg:hidden">
-											<Link href={`${BASE_URL}/products/${product.id}`}>
+											<Link href={`/products/${product.id}`}>
 												<AspectRatio ratio={1 / 1}>
 													<Image
 														alt="product"
@@ -201,7 +200,7 @@ export default async function UserDashboard() {
 										</div>
 										<div className="relative grid grid-rows-2 justify-start items-start w-full">
 											<div className="lg:flex">
-												<Link href={`${BASE_URL}/products/${product.id}`}>
+												<Link href={`/products/${product.id}`}>
 													<CardTitle className="cursor-pointer line-clamp-2 text-lg hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0 justify-start text-start">
 														<p>{product.name}</p>
 													</CardTitle>
@@ -238,7 +237,7 @@ export default async function UserDashboard() {
 								<CardHeader className="p-4 h-full">
 									{/* PC */}
 									<div className="hidden lg:flex lg:flex-col cursor-pointer">
-										<Link href={`${BASE_URL}/products/${product.id}`}>
+										<Link href={`/products/${product.id}`}>
 											<AspectRatio ratio={16 / 9}>
 												<Image
 													alt="product"
@@ -255,7 +254,7 @@ export default async function UserDashboard() {
 									<div className="grid grid-cols-2 gap-x-2 lg:flex lg:flex-auto">
 										{/* MOBILE */}
 										<div className="lg:hidden">
-											<Link href={`${BASE_URL}/products/${product.id}`}>
+											<Link href={`/products/${product.id}`}>
 												<AspectRatio ratio={1 / 1}>
 													<Image
 														alt="product"
@@ -270,7 +269,7 @@ export default async function UserDashboard() {
 										</div>
 										<div className="relative grid grid-rows-2 justify-start items-start w-full">
 											<div className="lg:flex">
-												<Link href={`${BASE_URL}/products/${product.id}`}>
+												<Link href={`/products/${product.id}`}>
 													<CardTitle className="cursor-pointer line-clamp-2 text-lg hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0 justify-start text-start">
 														<p>{product.name}</p>
 													</CardTitle>

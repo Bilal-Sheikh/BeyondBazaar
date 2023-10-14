@@ -1,11 +1,10 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import logoBlack from "@/public/logoBlack.png";
 import { cn } from "@/lib/utils";
-import { BASE_URL } from "@/config";
+import { ComponentPropsWithoutRef, ElementRef, forwardRef } from "react";
 import {
 	NavigationMenu,
 	NavigationMenuContent,
@@ -19,37 +18,37 @@ import {
 const clothing: { title: string; href: string; description: string }[] = [
 	{
 		title: "Men's Top Wear",
-		href: `${BASE_URL}/products?category=MENS_TOP_WEAR`,
+		href: `/products?category=MENS_TOP_WEAR`,
 		description: "For Men",
 	},
 	{
 		title: "Men's Bottom Wear",
-		href: `${BASE_URL}/products?category=MENS_BOTTOM_WEAR`,
+		href: `/products?category=MENS_BOTTOM_WEAR`,
 		description: "For Men",
 	},
 	{
 		title: "Women's Top Wear",
-		href: `${BASE_URL}/products?category=WOMENS_TOP_WEAR`,
+		href: `/products?category=WOMENS_TOP_WEAR`,
 		description: "For Women.",
 	},
 	{
 		title: "Women's Bottom Wear",
-		href: `${BASE_URL}/products?category=WOMENS_BOTTOM_WEAR`,
+		href: `/products?category=WOMENS_BOTTOM_WEAR`,
 		description: "For Women.",
 	},
 	{
 		title: "Men Footwear",
-		href: `${BASE_URL}/products?category=MENS_FOOTWEAR`,
+		href: `/products?category=MENS_FOOTWEAR`,
 		description: "For Mens Footwear.",
 	},
 	{
 		title: "Women Footwear",
-		href: `${BASE_URL}/products?category=WOMENS_FOOTWEAR`,
+		href: `/products?category=WOMENS_FOOTWEAR`,
 		description: "For Womens Footwear",
 	},
 	{
 		title: "Kids",
-		href: `${BASE_URL}/products?category=KIDS`,
+		href: `/products?category=KIDS`,
 		description: "For Kids.",
 	},
 ];
@@ -57,27 +56,27 @@ const clothing: { title: string; href: string; description: string }[] = [
 const accessories: { title: string; href: string; description: string }[] = [
 	{
 		title: "Wallets",
-		href: `${BASE_URL}/products?category=WALLETS`,
+		href: `/products?category=WALLETS`,
 		description: "Best Quality Wallets",
 	},
 	{
 		title: "Watches",
-		href: `${BASE_URL}/products?category=WATCHES`,
+		href: `/products?category=WATCHES`,
 		description: "Premium Watches",
 	},
 	{
 		title: "Belts",
-		href: `${BASE_URL}/products?category=BELTS`,
+		href: `/products?category=BELTS`,
 		description: "For Men",
 	},
 	{
 		title: "Bags",
-		href: `${BASE_URL}/products?category=BAGS`,
+		href: `/products?category=BAGS`,
 		description: "For Women",
 	},
 	{
 		title: "Perfumes",
-		href: `${BASE_URL}/products?category=PERFUMES`,
+		href: `/products?category=PERFUMES`,
 		description: "Buy best Perfumes for Men & Women",
 	},
 ];
@@ -85,50 +84,49 @@ const accessories: { title: string; href: string; description: string }[] = [
 const electronics: { title: string; href: string; description: string }[] = [
 	{
 		title: "Gaming",
-		href: `${BASE_URL}/products?category=GAMING`,
+		href: `/products?category=GAMING`,
 		description: "Gaming Peripherals",
 	},
 	{
 		title: "Powerbank",
-		href: `${BASE_URL}/products?category=POWERBANK`,
+		href: `/products?category=POWERBANK`,
 		description: "Mobile Powerbank",
 	},
 	{
 		title: "Headphones",
-		href: `${BASE_URL}/products?category=HEADPHONES`,
+		href: `/products?category=HEADPHONES`,
 		description: "Audio devices for all",
 	},
 	{
 		title: "Mobile Accessories",
-		href: `${BASE_URL}/products?category=MOBILE_ACCESSORIES`,
+		href: `/products?category=MOBILE_ACCESSORIES`,
 		description: "Mobile Accessories",
 	},
 ];
 
-const ListItem = React.forwardRef<
-	React.ElementRef<"a">,
-	React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-	return (
-		<li>
-			<NavigationMenuLink asChild>
-				<a
-					ref={ref}
-					className={cn(
-						"block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-						className
-					)}
-					{...props}
-				>
-					<div className="text-sm font-medium leading-none">{title}</div>
-					<p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-						{children}
-					</p>
-				</a>
-			</NavigationMenuLink>
-		</li>
-	);
-});
+const ListItem = forwardRef<ElementRef<"a">, ComponentPropsWithoutRef<"a">>(
+	({ className, title, children, ...props }, ref) => {
+		return (
+			<li>
+				<NavigationMenuLink asChild>
+					<a
+						ref={ref}
+						className={cn(
+							"block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+							className
+						)}
+						{...props}
+					>
+						<div className="text-sm font-medium leading-none">{title}</div>
+						<p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+							{children}
+						</p>
+					</a>
+				</NavigationMenuLink>
+			</li>
+		);
+	}
+);
 ListItem.displayName = "ListItem";
 
 interface NavbarProps {
@@ -140,7 +138,7 @@ export default function PcNavbar({ role }: NavbarProps) {
 		<>
 			{/* LEFT SIDE NAV */}
 			<div className="flex flex-1 gap-4">
-				<Link href={`${BASE_URL}`}>
+				<Link href={`/`}>
 					<Image src={logoBlack} alt="Logo" width={130} />
 				</Link>
 
@@ -148,7 +146,7 @@ export default function PcNavbar({ role }: NavbarProps) {
 					<NavigationMenu>
 						<NavigationMenuList>
 							<NavigationMenuItem>
-								<Link href={`${BASE_URL}/add-product`} legacyBehavior passHref>
+								<Link href={`/add-product`} legacyBehavior passHref>
 									<NavigationMenuLink className={navigationMenuTriggerStyle()}>
 										Add New Product
 									</NavigationMenuLink>
@@ -156,11 +154,7 @@ export default function PcNavbar({ role }: NavbarProps) {
 							</NavigationMenuItem>
 
 							<NavigationMenuItem>
-								<Link
-									href={`${BASE_URL}/view-products`}
-									legacyBehavior
-									passHref
-								>
+								<Link href={`/view-products`} legacyBehavior passHref>
 									<NavigationMenuLink className={navigationMenuTriggerStyle()}>
 										View Your Products
 									</NavigationMenuLink>
@@ -168,7 +162,7 @@ export default function PcNavbar({ role }: NavbarProps) {
 							</NavigationMenuItem>
 
 							<NavigationMenuItem>
-								<Link href={`${BASE_URL}/view-shop`} legacyBehavior passHref>
+								<Link href={`/view-shop`} legacyBehavior passHref>
 									<NavigationMenuLink className={navigationMenuTriggerStyle()}>
 										View Your Shop
 									</NavigationMenuLink>
@@ -180,7 +174,7 @@ export default function PcNavbar({ role }: NavbarProps) {
 					<NavigationMenu>
 						<NavigationMenuList>
 							<NavigationMenuItem>
-								<Link href={`${BASE_URL}/products`} legacyBehavior passHref>
+								<Link href={`/products`} legacyBehavior passHref>
 									<NavigationMenuLink className={navigationMenuTriggerStyle()}>
 										All Products
 									</NavigationMenuLink>
@@ -236,7 +230,7 @@ export default function PcNavbar({ role }: NavbarProps) {
 							</NavigationMenuItem>
 							<NavigationMenuItem>
 								<Link
-									href={`${BASE_URL}/products?category=MOBILES`}
+									href={`/products?category=MOBILES`}
 									legacyBehavior
 									passHref
 								>
@@ -247,7 +241,7 @@ export default function PcNavbar({ role }: NavbarProps) {
 							</NavigationMenuItem>
 							<NavigationMenuItem>
 								<Link
-									href={`${BASE_URL}/products?category=OTHERS`}
+									href={`/products?category=OTHERS`}
 									legacyBehavior
 									passHref
 								>

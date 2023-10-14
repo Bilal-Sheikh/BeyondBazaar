@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
-import { BASE_URL } from "@/config";
 import { Separator } from "@/components/ui/separator";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -67,7 +66,7 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 	useEffect(() => {
 		try {
 			axios
-				.get(`${BASE_URL}/api/get-product`, {
+				.get(`/api/get-product`, {
 					headers: {
 						ProductId: productId,
 					},
@@ -80,7 +79,7 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 			if (isSignedIn) {
 				try {
 					axios
-						.get(`${BASE_URL}/api/check-cart`, {
+						.get(`/api/check-cart`, {
 							headers: {
 								ClerkId: user.id,
 								ProductId: productId,
@@ -133,13 +132,13 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 				description: " ❗ Please Sign In first",
 				duration: 3000,
 			});
-			router.push(`${BASE_URL}/sign-in`);
+			router.push(`/sign-in`);
 		} else {
 			setIsLoading(true);
 			try {
 				axios
 					.post(
-						`${BASE_URL}/api/add-to-cart`,
+						`/api/add-to-cart`,
 						{},
 						{
 							headers: {
@@ -275,7 +274,7 @@ export default function ViewProduct({ params }: { params: { id: string } }) {
 												disabled={product.stockQuantity <= 0}
 											>
 												<Link
-													href={`${BASE_URL}/checkout/${productId}/buy-now`}
+													href={`/checkout/${productId}/buy-now`}
 													className="flex flex-1 justify-center items-center w-full h-full gap-3"
 												>
 													<CreditCard size={17} />

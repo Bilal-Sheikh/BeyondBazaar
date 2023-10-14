@@ -1,61 +1,20 @@
-import axios from "axios";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import * as React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import AddToCartButton from "./AddToCartButton";
+import Loading from "@/app/(user)/products/loading";
+import { Product } from "@prisma/client";
+import { Badge } from "@/components/ui/badge";
+import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 import {
 	Card,
 	CardContent,
-	CardDescription,
 	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import { currentUser, useUser } from "@clerk/nextjs";
-import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
-import {
-	Divide,
-	Heart,
-	Loader2,
-	MoreHorizontal,
-	MoreVertical,
-	Pencil,
-	Trash,
-} from "lucide-react";
-import {
-	DropdownMenuLabel,
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
-	AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import Link from "next/link";
-import { Product } from "@prisma/client";
-import { useToast } from "../ui/use-toast";
-import AddToCartButton from "./AddToCartButton";
-import Loading from "@/app/(user)/products/loading";
-import { BASE_URL } from "@/config";
 
 export default function ProductsList({ products }: { products: Product[] }) {
 	return (
@@ -66,7 +25,7 @@ export default function ProductsList({ products }: { products: Product[] }) {
 						<div className="flex justify-between items-center">
 							<div>
 								<Link
-									href={`${BASE_URL}/products/?category=${product.category}`}
+									href={`/products/?category=${product.category}`}
 								>
 									<Badge className="cursor-pointer">{product.category}</Badge>
 								</Link>
@@ -79,7 +38,7 @@ export default function ProductsList({ products }: { products: Product[] }) {
 						</div>
 
 						{/* PC */}
-						<Link href={`${BASE_URL}/products/${product.id}`}>
+						<Link href={`/products/${product.id}`}>
 							<div className="hidden lg:flex lg:flex-col lg:space-y-1.5 cursor-pointer">
 								<AspectRatio ratio={16 / 9}>
 									<Image
@@ -99,7 +58,7 @@ export default function ProductsList({ products }: { products: Product[] }) {
 						<div className="flex flex-auto w-full gap-4">
 							<div className="flex flex-auto space-y-1.5 lg:hidden w-1/4">
 								<AspectRatio ratio={1 / 1}>
-									<Link href={`${BASE_URL}/products/${product.id}`}>
+									<Link href={`/products/${product.id}`}>
 										<Image
 											alt="product"
 											src={product.imageUrl}
@@ -113,7 +72,7 @@ export default function ProductsList({ products }: { products: Product[] }) {
 							</div>
 
 							<div className="grid w-full h-16 top-0 gap-4">
-								<Link href={`${BASE_URL}/products/${product.id}`}>
+								<Link href={`/products/${product.id}`}>
 									<CardTitle className="cursor-pointer line-clamp-2 text-lg hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0">
 										{product.name}
 									</CardTitle>

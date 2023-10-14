@@ -4,7 +4,6 @@ import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { BASE_URL } from "@/config";
 import { useUser } from "@clerk/nextjs";
 import { useToast } from "../ui/use-toast";
 import { Separator } from "../ui/separator";
@@ -52,7 +51,7 @@ export function Cart() {
 		if (isSignedIn) {
 			try {
 				axios
-					.get(`${BASE_URL}/api/get-cart`, {
+					.get(`/api/get-cart`, {
 						headers: {
 							ClerkId: user.id,
 						},
@@ -113,7 +112,7 @@ export function Cart() {
 			setIsLoading(true);
 
 			axios
-				.delete(`${BASE_URL}/api/update-cart`, {
+				.delete(`/api/update-cart`, {
 					headers: {
 						ClerkId: user?.id,
 						ProductId: productId,
@@ -142,7 +141,7 @@ export function Cart() {
 			setIsLoading(true);
 			axios
 				.post(
-					`${BASE_URL}/api/update-cart`,
+					`/api/update-cart`,
 					{},
 					{
 						headers: {
@@ -189,7 +188,7 @@ export function Cart() {
 					<div className="flex flex-col py-64 justify-center items-center">
 						<div className="pb-5">Please Sign in first</div>
 						<Link
-							href={`${BASE_URL}/sign-in`}
+							href={`/sign-in`}
 							className={cn(buttonVariants({ variant: "outline" }))}
 						>
 							Sign In
@@ -223,7 +222,7 @@ export function Cart() {
 
 												<CardTitle className="w-full">
 													<Link
-														href={`${BASE_URL}/products/${item.product.id}`}
+														href={`/products/${item.product.id}`}
 													>
 														<p className="hover:text-blue-500 cursor-pointer pt-2 md:pt-0 line-clamp-1 text-sm md:text-xl tracking-tight transition-colors">
 															{item.product.name}
@@ -292,7 +291,7 @@ export function Cart() {
 						<SheetFooter>
 							<SheetClose asChild>
 								<Link
-									href={`${BASE_URL}/checkout`}
+									href={`/checkout`}
 									prefetch={false}
 									className="w-full"
 								>

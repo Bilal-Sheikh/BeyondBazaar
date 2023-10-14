@@ -2,7 +2,6 @@ import Link from "next/link";
 import Loading from "./loading";
 import { prisma } from "@/lib/db";
 import { Info } from "lucide-react";
-import { BASE_URL } from "@/config";
 import { currentUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import {
@@ -298,7 +297,7 @@ export default async function DashboardPage() {
 										<TableRow key={product.id}>
 											<TableCell>
 												<Link
-													href={`${BASE_URL}/view-products/${product.id}`}
+													href={`/view-products/${product.id}`}
 													target="_blank"
 													className="cursor-pointer line-clamp-2 hover:text-blue-500 font-semibold tracking-tight transition-colors first:mt-0"
 												>

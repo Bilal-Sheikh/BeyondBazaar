@@ -3,7 +3,6 @@ import Loading from "./loading";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { SignOutButton } from "@clerk/nextjs";
-import { BASE_URL } from "@/config";
 import { Package, User, History, LogOut } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -26,7 +25,7 @@ export default function Account() {
 
 			<div className="flex flex-col lg:flex-row justify-center items-center pt-10 gap-5 lg:gap-20">
 				<Card className="w-80 h-60 cursor-pointer hover:bg-zinc-900">
-					<Link href={`${BASE_URL}/account/user`}>
+					<Link href={`/account/user`}>
 						<CardHeader>
 							<User size={60} strokeWidth={1} />
 							<CardTitle className="pt-4">Account</CardTitle>
@@ -38,7 +37,7 @@ export default function Account() {
 				</Card>
 
 				<Card className="w-80 h-60 cursor-pointer hover:bg-zinc-900">
-					<Link href={`${BASE_URL}/account/orders`}>
+					<Link href={`/account/orders`}>
 						<CardHeader>
 							<Package size={60} strokeWidth={1} />
 							<CardTitle className="pt-4">Orders</CardTitle>
@@ -50,7 +49,7 @@ export default function Account() {
 				</Card>
 
 				<Card className="w-80 h-60 cursor-pointer hover:bg-zinc-900">
-					<Link href={`${BASE_URL}/account/purchases`}>
+					<Link href={`/account/purchases`}>
 						<CardHeader>
 							<History size={60} strokeWidth={1} />
 							<CardTitle className="pt-4">Purchases</CardTitle>

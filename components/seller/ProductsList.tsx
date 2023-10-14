@@ -9,7 +9,6 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { useRouter } from "next/navigation";
 import { Product } from "@prisma/client";
-import { BASE_URL } from "@/config";
 import { useToast } from "../ui/use-toast";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { MoreVertical, Pencil, Trash } from "lucide-react";
@@ -53,7 +52,7 @@ export default function ProductsList({
 	const handleDelete = async (productId: number) => {
 		// console.log("DELETION STARTED FOR PRODUCT :::::::::::::::::::", productId);
 		try {
-			const { data } = await axios.delete(`${BASE_URL}/api/delete-product`, {
+			const { data } = await axios.delete(`/api/delete-product`, {
 				headers: {
 					ProductId: productId,
 					ClerkId: sellerId,
@@ -106,7 +105,7 @@ export default function ProductsList({
 										<DropdownMenuSeparator />
 										<DropdownMenuItem>
 											<Link
-												href={`${BASE_URL}/view-products/${product.id}`}
+												href={`/view-products/${product.id}`}
 												className="flex flex-auto justify-start items-start"
 											>
 												<Pencil className="mr-2 h-4 w-4" />

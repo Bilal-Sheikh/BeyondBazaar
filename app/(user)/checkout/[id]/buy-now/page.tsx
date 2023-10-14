@@ -4,7 +4,6 @@ import Link from "next/link";
 import Unauthorized from "@/app/unauthorized/page";
 import BuyProduct from "@/components/razorpay/BuyProduct";
 import { prisma } from "@/lib/db";
-import { BASE_URL } from "@/config";
 import { currentUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -84,7 +83,7 @@ export default async function BuyNowButton({
 									/>
 
 									<CardTitle className="w-full">
-										<Link href={`${BASE_URL}/products/${product.id}`}>
+										<Link href={`/products/${product.id}`}>
 											<p className="hover:text-blue-500 cursor-pointer pt-2 md:pt-0 line-clamp-1 text-sm md:text-xl tracking-tight transition-colors">
 												{product.name}
 											</p>
@@ -136,7 +135,7 @@ export default async function BuyNowButton({
 								</div>
 
 								<div className="flex flex-auto justify-between items-center w-full gap-2">
-									<Link href={`${BASE_URL}/products`} className="w-full">
+									<Link href={`/products`} className="w-full">
 										<Button variant="outline" className="w-full">
 											Cancel Order
 										</Button>

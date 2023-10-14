@@ -7,7 +7,6 @@ import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 import { useUser } from "@clerk/nextjs";
-import { BASE_URL } from "@/config";
 
 export default function AddToCartButton({
 	productId,
@@ -31,13 +30,13 @@ export default function AddToCartButton({
 				description: " ❗ Please Sign In first",
 				duration: 3000,
 			});
-			router.push(`${BASE_URL}/sign-in`);
+			router.push(`/sign-in`);
 		} else {
 			setIsLoading(true);
 			try {
 				axios
 					.post(
-						`${BASE_URL}/api/add-to-cart`,
+						`/api/add-to-cart`,
 						{},
 						{
 							headers: {
@@ -71,7 +70,7 @@ export default function AddToCartButton({
 			setIsFetching(true);
 			try {
 				axios
-					.get(`${BASE_URL}/api/check-cart`, {
+					.get(`/api/check-cart`, {
 						headers: {
 							ClerkId: user.id,
 							ProductId: productId,

@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { Cart } from "./user/Cart";
-import { BASE_URL } from "@/config";
 import { Searchbar } from "./Searchbar";
 import { UserButton } from "@clerk/nextjs";
 import { buttonVariants } from "./ui/button";
@@ -58,7 +57,7 @@ export default async function RightSideNav({ user, role }: NavbarProps) {
 							{role === "SELLER" ? (
 								<UserButton afterSignOutUrl="/" />
 							) : (
-								<Link href={`${BASE_URL}/account`}>
+								<Link href={`/account`}>
 									{user.hasImage ? (
 										<>
 											<Avatar>
@@ -81,7 +80,7 @@ export default async function RightSideNav({ user, role }: NavbarProps) {
 					) : (
 						<div className="flex items-center justify-center gap-3">
 							<Link
-								href={`${BASE_URL}/sign-in`}
+								href={`/sign-in`}
 								className={buttonVariants({
 									variant: "default",
 								})}
