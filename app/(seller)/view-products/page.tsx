@@ -1,4 +1,3 @@
-import axios from "axios";
 import Loading from "./loading";
 import { Suspense } from "react";
 import { currentUser } from "@clerk/nextjs";
