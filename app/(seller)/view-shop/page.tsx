@@ -26,14 +26,12 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
+import Unauthorized from "@/app/unauthorized/page";
 
-export default async function DashboardPage() {
-	let updatedProducts = [];
-	const user = await currentUser();
-
-	const products = await prisma.product
-		.findMany({
-			where: { postedById: user?.id },
+async function getProducts(clerkId: string) {
+	try {
+		const products = await prisma.product.findMany({
+			where: { postedById: clerkId },
 			select: {
 				id: true,
 				price: true,
@@ -45,14 +43,27 @@ export default async function DashboardPage() {
 					},
 				},
 			},
-		})
-		.catch((error) => {
-			console.log(
-				"ERROR IN PRISMA app/(seller)/view-shop/page.tsx:::::::::::::::::::::",
-				error
-			);
 		});
-	// console.log("(SELLER) PRODUCTS:::::::::::::::::::::::::::", products);
+		return products;
+	} catch (error) {
+		console.log(
+			"ERROR IN PRISMA app/(seller)/view-shop/page.tsx:::::::::::::::::::::",
+			error
+		);
+	}
+}
+
+export default async function DashboardPage() {
+	let updatedProducts = [];
+	const user = await currentUser();
+
+	if (user === null) {
+		return <Unauthorized />;
+	}
+
+	const products = await getProducts(user.id);
+	console.log("(SELLER) PRODUCTS:::::::::::::::::::::::::::", products);
+
 	if (products === void 0 || products.length === 0 || products === null) {
 		return (
 			<div className="flex-col md:flex h-screen">
