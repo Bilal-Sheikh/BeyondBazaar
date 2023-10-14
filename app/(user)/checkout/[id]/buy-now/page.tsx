@@ -15,6 +15,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 
+
 async function getProduct(productId: number) {
 	try {
 		const product = await prisma.product.findUnique({
