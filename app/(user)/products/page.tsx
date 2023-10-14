@@ -14,20 +14,20 @@ export default async function products({
 	const page = searchParams["page"] ?? "1";
 	const per_page = searchParams["per_page"] ?? "15";
 	const category = searchParams["category"] || "";
-	let sort = searchParams["sort"] || "createdAt";
+	let sort: any = searchParams["sort"] || "createdAt";
 
 	// console.log("SEARCH PARAMS CATEGORY:::::::::::::::::::::::::::::", category);
 	// console.log("SEARCH PARAMS PRICE :::::::::::::::::::::::::::::", price);
 	// console.log("SEARCH PARAMS DATE :::::::::::::::::::::::::::::", date);
 	// console.log("SEARCH PARAMS SORT:::::::::::::::::::::::::::::", sort);
-	
+
 	sort ? (sort = sort.split(".")) : (sort = [sort]);
 	// console.log("SORT:::::::::::::::::::::::::::::::", sort);
 
-	const where = {};
+	const where: any = {};
 	if (category) where.category = category;
 
-	let orderBy = {};
+	let orderBy: any = {};
 	// console.log("ORDER BY :::::::::::::::::::::::::::::::", orderBy);
 	if (sort[1]) {
 		orderBy[sort[0]] = sort[1];
