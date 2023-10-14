@@ -84,9 +84,9 @@ export function Searchbar({
 				<CommandList>
 					<CommandEmpty>No products found.</CommandEmpty>
 
-					{categorizedProducts.map((category) => (
+					{categorizedProducts.map((category: any) => (
 						<CommandGroup heading={category.category} key={category.category}>
-							{category.products.map((product) => (
+							{category.products.map((product: any) => (
 								<CommandItem
 									className="cursor-pointer"
 									onSelect={() => router.push(`${path}/${product.id}`)}
