@@ -62,7 +62,7 @@ export default async function DashboardPage() {
 	}
 
 	const products = await getProducts(user.id);
-	console.log("(SELLER) PRODUCTS:::::::::::::::::::::::::::", products);
+	// console.log("(SELLER) PRODUCTS:::::::::::::::::::::::::::", products);
 
 	if (products === void 0 || products.length === 0 || products === null) {
 		return (
@@ -100,13 +100,11 @@ export default async function DashboardPage() {
 	}
 	// console.log("(SELLER) UPDATED PRODUCTS::::::::::::", updatedProducts);
 
-	const totalInCarts = products.map((product) =>
+	const inCarts = products.map((product) =>
 		product.inCarts.map((cart) => cart.quantity).reduce((a, b) => a + b, 0)
 	);
-	// console.log(
-	// 	"(SELLER) TOTAL IN CARTS:::::::::::::::",
-	// 	totalInCarts.reduce((a, b) => a + b, 0)
-	// );
+	const totalInCarts = inCarts.reduce((a, b) => a + b, 0);
+	// console.log("(SELLER) TOTAL IN CARTS::::::::::::::::::", totalInCarts);
 
 	const highestSellingProduct = await prisma.product.findMany({
 		where: { postedById: user?.id },
@@ -227,11 +225,9 @@ export default async function DashboardPage() {
 							</svg>
 						</CardHeader>
 						<CardContent>
-							<div className="text-2xl font-bold">
-								{totalInCarts.reduce((a, b) => a + b, 0)}
-							</div>
+							<div className="text-2xl font-bold">{totalInCarts}</div>
 							<p className="text-xs text-muted-foreground">
-								{totalInCarts.reduce((a, b) => a + b, 0)} more from last month
+								{totalInCarts} more from last month
 							</p>
 						</CardContent>
 					</Card>
