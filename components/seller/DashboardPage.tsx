@@ -53,7 +53,7 @@ async function getProducts(clerkId: string) {
 }
 
 export default async function DashboardPage() {
-	let updatedProducts = [];
+	// let updatedProducts = [];
 	const user = await currentUser();
 
 	if (user === null) {
@@ -76,10 +76,9 @@ export default async function DashboardPage() {
 			</div>
 		);
 	}
-
-	for (let product of products) {
-		try {
-			const updated = await prisma.product.update({
+	const updatedProducts = await prisma.$transaction(
+		products.map((product) =>
+			prisma.product.update({
 				where: { id: product.id },
 				data: { productRevenue: product.sales * product.price },
 				select: {
@@ -88,15 +87,30 @@ export default async function DashboardPage() {
 					sales: true,
 					productRevenue: true,
 				},
-			});
-			updatedProducts.push(updated);
-		} catch (error) {
-			console.log(
-				"ERROR IN PRISMA app/(seller)/view-shop/page.tsx:::::::::::::::::::::",
-				error
-			);
-		}
-	}
+			})
+		)
+	);
+
+	// for (let product of products) {
+	// 	try {
+	// 		const updated = await prisma.product.update({
+	// 			where: { id: product.id },
+	// 			data: { productRevenue: product.sales * product.price },
+	// 			select: {
+	// 				id: true,
+	// 				price: true,
+	// 				sales: true,
+	// 				productRevenue: true,
+	// 			},
+	// 		});
+	// 		updatedProducts.push(updated);
+	// 	} catch (error) {
+	// 		console.log(
+	// 			"ERROR IN PRISMA app/(seller)/view-shop/page.tsx:::::::::::::::::::::",
+	// 			error
+	// 		);
+	// 	}
+	// }
 	// console.log("(SELLER) UPDATED PRODUCTS::::::::::::", updatedProducts);
 
 	const inCarts = products.map((product) =>
