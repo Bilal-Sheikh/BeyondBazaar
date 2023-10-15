@@ -18,6 +18,22 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+## How to Purchase? 
+
+This project uses Razorpay, a International/Domestic(Indian) payment gateway, that provides all the payments options.
+
+1. Using credit cards(https://razorpay.com/docs/payments/payments/test-card-details/) - Razorpay provides fake cards for both Indian and International cards. Remember to put any random CVV and any future date
+# Test Card for Indian Payments
+            Mastercard : 5267 3181 8797 5449
+            Visa : 	4111 1111 1111 1111	
+
+# Test Card for International Payments
+          Mastercard	5555 5555 5555 4444
+                      5105 1051 0510 5100	
+
+          Visa	      4012 8888 8888 1881
+                      5104 0600 0000 0008
+                      
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
