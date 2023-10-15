@@ -65,16 +65,15 @@ export default async function DashboardPage() {
 
 	if (!products || products.length === 0) {
 		return (
-			<></>
-			// <div className="flex-col md:flex h-screen">
-			// 	<div className="flex-1 space-y-4 p-8 pt-6">
-			// 		<div className="py-32">
-			// 			<p className="text-center text-base lg:text-4xl font-bold tracking-tight transition-colors">
-			// 				Please add some products to view your dashboard
-			// 			</p>
-			// 		</div>
-			// 	</div>
-			// </div>
+			<div className="flex-col md:flex h-screen">
+				<div className="flex-1 space-y-4 p-8 pt-6">
+					<div className="py-32">
+						<p className="text-center text-base lg:text-4xl font-bold tracking-tight transition-colors">
+							Please add some products to view your dashboard
+						</p>
+					</div>
+				</div>
+			</div>
 		);
 	}
 
@@ -100,10 +99,12 @@ export default async function DashboardPage() {
 	}
 	// console.log("(SELLER) UPDATED PRODUCTS::::::::::::", updatedProducts);
 
-	const inCarts = products.map((product) =>
-		product.inCarts.map((cart) => cart.quantity).reduce((a, b) => a + b, 0)
-	);
-	const totalInCarts = inCarts.reduce((a, b) => a + b, 0);
+	const inCarts = 0
+	// products.map((product) =>
+	// 	product.inCarts.map((cart) => cart.quantity).reduce((a, b) => a + b, 0)
+	// );
+	const totalInCarts = 0 
+	// inCarts.reduce((a, b) => a + b, 0);
 	// console.log("(SELLER) TOTAL IN CARTS::::::::::::::::::", totalInCarts);
 
 	const highestSellingProduct = await prisma.product.findMany({
@@ -120,17 +121,17 @@ export default async function DashboardPage() {
 	});
 	// console.log("(SELLER) HIGHEST SELLING:::::::::::::::", highestSellingProduct);
 
-	const totalRevenue =
-		updatedProducts
-			.map((product) => product.productRevenue)
-			.reduce((a, b) => a + b, 0)
-			.toFixed(2) ?? 0;
+	const totalRevenue = 0
+		// updatedProducts
+		// 	.map((product) => product.productRevenue)
+		// 	.reduce((a, b) => a + b, 0)
+		// 	.toFixed(2) ?? 0;
 	// console.log("(SELLER) TOATAL REVENUE:::::::::::::::", totalRevenue);
 
-	const totalSales =
-		updatedProducts
-			.map((product) => product.sales)
-			.reduce((a, b) => a + b, 0) ?? 0;
+	const totalSales = 0
+		// updatedProducts
+		// 	.map((product) => product.sales)
+		// 	.reduce((a, b) => a + b, 0) ?? 0;
 	// console.log("(SELLER) TOTAL SALES:::::::::::::::", totalSales);
 
 	return (
