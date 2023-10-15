@@ -7,8 +7,8 @@ export default function ViewShop() {
 		<div>
 			<Suspense
 				fallback={
-					<Loading />
-					// <p>Loading shop...</p>
+					// <Loading />
+					<p>Loading shop...</p>
 				}
 			>
 				<DashboardPage />
