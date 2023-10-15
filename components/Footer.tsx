@@ -35,7 +35,7 @@ export default function Footer() {
 						</a>{" "}
 						· The source code is available on{" "}
 						<a
-							href="https://github.com/Bilal-Sheikh/BeyondBazzar"
+							href="https://github.com/Bilal-Sheikh/BeyondBazaar"
 							target="_blank"
 							rel="noreferrer"
 							className="font-medium underline underline-offset-4"

@@ -34,11 +34,11 @@ export default function BuyProduct({
 
 		const options = {
 			key: KEY_ID,
-			name: "Beyond Bazzar",
+			name: "Beyond Bazaar",
 			currency: data.order.currency,
 			amount: data.order.amount,
 			order_id: data.order.id,
-			description: "Payment for Beyond Bazzar",
+			description: "Payment for Beyond Bazaar",
 			handler: async function (response: any) {
 				// console.log("RAZORPAY HANDLER RESPONSE::::::::::::::", response);
 

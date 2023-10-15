@@ -9,7 +9,7 @@ import { buttonVariants } from "@/components/ui/button";
 
 export const metadata: Metadata = {
 	title: "Sign Up",
-	description: "Sign up to Beyond Bazzar.",
+	description: "Sign up to Beyond Bazaar.",
 };
 
 export default function SignUp() {

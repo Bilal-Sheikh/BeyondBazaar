@@ -10,7 +10,7 @@ import Script from "next/script";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Beyond Bazzar",
+	title: "Beyond Bazaar",
 	description:
 		"A E-commerce website for buying and selling products build using Nextjs 13 and Shadcn UI",
 };
