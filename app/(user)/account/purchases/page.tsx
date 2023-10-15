@@ -187,7 +187,7 @@ export default async function Purchases() {
 											</Link>
 										</TableCell>
 										<TableCell>{purchase.quantity}</TableCell>
-										<TableCell>{purchase.productPrice}</TableCell>
+										<TableCell>${purchase.productPrice}</TableCell>
 										<TableCell>{purchase.createdAt.toUTCString()}</TableCell>
 									</TableRow>
 								))}
