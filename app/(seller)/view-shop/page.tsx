@@ -63,7 +63,7 @@ export default async function DashboardPage() {
 	const products = await getProducts(user.id);
 	// console.log("(SELLER) PRODUCTS:::::::::::::::::::::::::::", products);
 
-	if (!products || products.length === 0) {
+	if (products === void 0 || products.length === 0 || products === null) {
 		return (
 			<div className="flex-col md:flex h-screen">
 				<div className="flex-1 space-y-4 p-8 pt-6">
@@ -99,12 +99,10 @@ export default async function DashboardPage() {
 	}
 	// console.log("(SELLER) UPDATED PRODUCTS::::::::::::", updatedProducts);
 
-	const inCarts = 0
-	// products.map((product) =>
-	// 	product.inCarts.map((cart) => cart.quantity).reduce((a, b) => a + b, 0)
-	// );
-	const totalInCarts = 0 
-	// inCarts.reduce((a, b) => a + b, 0);
+	const inCarts = products.map((product) =>
+		product.inCarts.map((cart) => cart.quantity).reduce((a, b) => a + b, 0)
+	);
+	const totalInCarts = inCarts.reduce((a, b) => a + b, 0);
 	// console.log("(SELLER) TOTAL IN CARTS::::::::::::::::::", totalInCarts);
 
 	const highestSellingProduct = await prisma.product.findMany({
@@ -121,17 +119,17 @@ export default async function DashboardPage() {
 	});
 	// console.log("(SELLER) HIGHEST SELLING:::::::::::::::", highestSellingProduct);
 
-	const totalRevenue = 0
-		// updatedProducts
-		// 	.map((product) => product.productRevenue)
-		// 	.reduce((a, b) => a + b, 0)
-		// 	.toFixed(2) ?? 0;
+	const totalRevenue =
+		updatedProducts
+			.map((product) => product.productRevenue)
+			.reduce((a, b) => a + b, 0)
+			.toFixed(2) ?? 0;
 	// console.log("(SELLER) TOATAL REVENUE:::::::::::::::", totalRevenue);
 
-	const totalSales = 0
-		// updatedProducts
-		// 	.map((product) => product.sales)
-		// 	.reduce((a, b) => a + b, 0) ?? 0;
+	const totalSales =
+		updatedProducts
+			.map((product) => product.sales)
+			.reduce((a, b) => a + b, 0) ?? 0;
 	// console.log("(SELLER) TOTAL SALES:::::::::::::::", totalSales);
 
 	return (
@@ -165,7 +163,7 @@ export default async function DashboardPage() {
 									</Tooltip>
 								</TooltipProvider>
 							</CardTitle>
-							<svg
+							{/* <svg
 								xmlns="http://www.w3.org/2000/svg"
 								viewBox="0 0 24 24"
 								fill="none"
@@ -176,7 +174,7 @@ export default async function DashboardPage() {
 								className="h-4 w-4 text-muted-foreground"
 							>
 								<path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-							</svg>
+							</svg> */}
 						</CardHeader>
 						<CardContent>
 							<div className="text-2xl font-bold">${totalRevenue}</div>
@@ -208,7 +206,7 @@ export default async function DashboardPage() {
 									</Tooltip>
 								</TooltipProvider>
 							</CardTitle>
-							<svg
+							{/* <svg
 								xmlns="http://www.w3.org/2000/svg"
 								viewBox="0 0 24 24"
 								fill="none"
@@ -221,7 +219,7 @@ export default async function DashboardPage() {
 								<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
 								<circle cx="9" cy="7" r="4" />
 								<path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-							</svg>
+							</svg> */}
 						</CardHeader>
 						<CardContent>
 							<div className="text-2xl font-bold">{totalInCarts}</div>
@@ -252,7 +250,7 @@ export default async function DashboardPage() {
 									</Tooltip>
 								</TooltipProvider>
 							</CardTitle>
-							<svg
+							{/* <svg
 								xmlns="http://www.w3.org/2000/svg"
 								viewBox="0 0 24 24"
 								fill="none"
@@ -264,7 +262,7 @@ export default async function DashboardPage() {
 							>
 								<rect width="20" height="14" x="2" y="5" rx="2" />
 								<path d="M2 10h20" />
-							</svg>
+							</svg> */}
 						</CardHeader>
 						<CardContent>
 							<div className="text-2xl font-bold">{totalSales}</div>
@@ -274,7 +272,7 @@ export default async function DashboardPage() {
 						</CardContent>
 					</Card>
 				</div>
-				<div>
+				{/* <div>
 					<Card>
 						<CardHeader>
 							<CardTitle>Highest Selling Products</CardTitle>
@@ -317,7 +315,7 @@ export default async function DashboardPage() {
 							</Table>
 						</CardContent>
 					</Card>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);
