@@ -1,5 +1,22 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## About this project
+
+This e-commerce website is designed to offer a comprehensive shopping experience to users. Customers can browse, select, and purchase products with the assurance of a secure payment gateway. They have the ability to add products to their carts and make hassle-free transactions.
+
+On the other hand, sellers have the capability to manage their product listings. They can add new products, edit existing listings, update their inventory, and remove products as needed. Additionally, the platform empowers sellers to keep a close watch on their sales and effectively track their performance and revenue.
+
+Tech Stack: 
+- Next JS 13
+- Clerk JS
+- Prisma ORM
+- PostgreSQL Database
+- Shadcn UI
+- Tailwind CSS
+- Razorpay
+- Zod
+- TypeScript
+
 # Getting Started
 
 First, run the development server:
