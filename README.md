@@ -6,6 +6,23 @@ This e-commerce website is designed to offer a comprehensive shopping experience
 
 On the other hand, sellers have the capability to manage their product listings. They can add new products, edit existing listings, update their inventory, and remove products as needed. Additionally, the platform empowers sellers to keep a close watch on their sales and effectively track their performance and revenue.
 
+## Project functioning
+
+For users:
+- View all products, choose by category, or search for a product.
+- Sort the products based on price and date.
+- Add product to cart.
+- Customize your cart.
+- Purchase a single product or whole cart.
+- View transaction and order history.
+- Manage your personal account.
+
+For Sellers:
+- Add a new product.
+- Update your product's inventory and other details.
+- Delete a product.
+- Track and manage your sales, and take immediate action.
+
 Tech Stack: 
 - Next JS 13
 - Clerk JS
